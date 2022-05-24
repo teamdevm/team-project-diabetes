@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Diabetes.Domain\Diabetes.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MediatR" Version="10.0.1" />
+      <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+    </ItemGroup>
+
+</Project>
