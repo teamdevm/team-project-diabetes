@@ -20,4 +20,9 @@
       <Content Remove="obj\**" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Diabetes.Application\Diabetes.Application.csproj" />
+      <ProjectReference Include="..\Diabetes.Persistence\Diabetes.Persistence.csproj" />
+    </ItemGroup>
+
 </Project>

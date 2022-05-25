@@ -7,3 +7,4 @@
 /Diabetes.Domain/obj/
 /Diabetes.MVC/bin/
 /Diabetes.MVC/obj/
+/Diabetes.MVC/*.db

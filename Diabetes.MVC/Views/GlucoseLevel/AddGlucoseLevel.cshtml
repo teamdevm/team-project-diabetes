@@ -1,0 +1,35 @@
+@model Diabetes.MVC.Models.CreateGlucoseLevelViewModel
+
+<div class="top-buffer"></div>
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <form asp-action="AddGlucoseLevel" role="form">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label asp-for="ValueInMmol" class="col-lg-3 col-sm-3 control-label"></label>
+                    <div class="col-lg-3 col-sm-6">
+                        <input asp-for="ValueInMmol" class="form-control" />
+                    </div>
+                    <span asp-validation-for="ValueInMmol"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="MeasuringDateTime" class="col-lg-3 col-sm-3 control-label"></label>
+                    <div class="col-lg-3 col-sm-6">
+                        <input asp-for="MeasuringDateTime" class="form-control" type="datetime"/>
+                    </div>
+                    <span asp-validation-for="MeasuringDateTime"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Comment" class="col-lg-3 col-sm-3 control-label"></label>
+                    <div class="col-lg-3 col-sm-6">
+                        <input asp-for="Comment" class="form-control"/>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-sm-8 pull-right">
+                    <button id="btnCancel" class="btn btn-default" type="button">Cancel</button>
+                    <button class="btn btn-success" id="btn" type="submit">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

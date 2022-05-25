@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Diabetes.Application.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Diabetes.Persistence
@@ -9,7 +11,8 @@ namespace Diabetes.Persistence
             IConfiguration configuration)
         {
             var connectionString = configuration["DefaultConnection"];
-            //services.AddDbContext<>(opt=>opt.UseSqlite(connectionString));
+            services.AddDbContext<DataDbContext>(opt=>opt.UseSqlite(connectionString));
+            services.AddTransient<IGlucoseLevelDbContext, DataDbContext>();
             return services;
         }
     }
