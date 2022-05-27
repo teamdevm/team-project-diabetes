@@ -1,35 +1,52 @@
+@using Diabetes.MVC.Models.Components
 @model Diabetes.MVC.Models.CreateGlucoseLevelViewModel
 
-<div class="top-buffer"></div>
-<div class="panel panel-primary">
-    <div class="panel-body">
-        <form asp-action="AddGlucoseLevel" role="form">
-            <div class="form-horizontal">
-                <div class="form-group">
-                    <label asp-for="ValueInMmol" class="col-lg-3 col-sm-3 control-label"></label>
-                    <div class="col-lg-3 col-sm-6">
-                        <input asp-for="ValueInMmol" class="form-control" />
-                    </div>
-                    <span asp-validation-for="ValueInMmol"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="MeasuringDateTime" class="col-lg-3 col-sm-3 control-label"></label>
-                    <div class="col-lg-3 col-sm-6">
-                        <input asp-for="MeasuringDateTime" class="form-control" type="datetime"/>
-                    </div>
-                    <span asp-validation-for="MeasuringDateTime"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Comment" class="col-lg-3 col-sm-3 control-label"></label>
-                    <div class="col-lg-3 col-sm-6">
-                        <input asp-for="Comment" class="form-control"/>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-sm-8 pull-right">
-                    <button id="btnCancel" class="btn btn-default" type="button">Cancel</button>
-                    <button class="btn btn-success" id="btn" type="submit">Submit</button>
-                </div>
-            </div>
-        </form>
+@await Component.InvokeAsync("AddSelector", new{ model = new AddSelectorModel(false, false, true) })
+
+
+
+<form asp-controller="GlucoseLevel" asp-action="AddGlucoseLevel" role="form" method="post">
+    <div class="mb-3">
+        <label asp-for="ValueInMmol" class="form-label"></label>
+        <input asp-for="ValueInMmol" class="form-control" type="number" value="0">
+        <span asp-validation-for="ValueInMmol" class="text-danger"></span>
     </div>
-</div>
+    <div class="mb-3">
+        <label asp-for="MeasuringDate" class="form-label"></label>
+        <input asp-for="MeasuringDate" type="date" class="form-control" id="datePicker">
+        <span asp-validation-for="MeasuringDate" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="MeasuringTime" class="form-label"></label>
+        <input asp-for="MeasuringTime" type="time" class="form-control" id="timePicker">
+        <span asp-validation-for="MeasuringTime" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Comment" class="form-label"></label>
+        <textarea asp-for="Comment" class="form-control"></textarea>
+    </div>
+    <div class="mb-3">
+        <label asp-for="BeforeAfterEating" class="form-label"></label>
+        <select name="eating" onchange="$('#eatingValue').val(this.value)">
+            <option value="Before">До еды</option>
+            <option value="After">После еды</option>
+        </select>
+        <input asp-for="BeforeAfterEating" id="eatingValue" value="Before" class="invisible">
+        <span asp-validation-for="BeforeAfterEating" class="text-danger"></span>
+    </div>
+    <div class="col-lg-6 col-sm-8 pull-right">
+        <button id="btnCancel" class="btn btn-default" type="button">Отмена</button>
+        <button class="btn btn-success" id="btn" type="submit">Подтвердить</button>
+    </div>
+</form>
+
+<script>
+var now = new Date()
+var day = ("0" + now.getDate()).slice(-2);
+var month = ("0" + (now.getMonth() + 1)).slice(-2);
+var date = now.getFullYear()+"-"+(month)+"-"+(day) ;
+var time = now.toLocaleTimeString().substr(0,5)
+
+$('#datePicker').val(date);
+$('#timePicker').val(time);
+</script>

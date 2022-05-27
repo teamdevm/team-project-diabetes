@@ -38,9 +38,10 @@ namespace Diabetes.MVC.Controllers
             var command = new CreateGlucoseLevelCommand
             {
                 UserId = Guid.NewGuid(), //Временно, пока нет авторизации
-                ValueInMmol = viewModel.ValueInMmol,
+                ValueInMmol = viewModel.ValueInMmol.Value,
                 Comment = viewModel.Comment,
-                MeasuringDateTime = viewModel.MeasuringDateTime
+                BeforeAfterEating = viewModel.BeforeAfterEating,
+                MeasuringDateTime = DateTime.ParseExact($"{viewModel.MeasuringDate} {viewModel.MeasuringTime}", "dd.MM.yyyy HH:mm", System.Globalization.CultureInfo.InvariantCulture)
             };
             
             await _mediator.Send(command);
