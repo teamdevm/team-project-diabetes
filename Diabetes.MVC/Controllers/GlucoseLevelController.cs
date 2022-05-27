@@ -41,7 +41,7 @@ namespace Diabetes.MVC.Controllers
                 ValueInMmol = viewModel.ValueInMmol.Value,
                 Comment = viewModel.Comment,
                 BeforeAfterEating = viewModel.BeforeAfterEating,
-                MeasuringDateTime = DateTime.ParseExact($"{viewModel.MeasuringDate} {viewModel.MeasuringTime}", "dd.MM.yyyy HH:mm", System.Globalization.CultureInfo.InvariantCulture)
+                MeasuringDateTime = DateTime.ParseExact($"{viewModel.MeasuringDate} {viewModel.MeasuringTime}", "yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture)
             };
             
             await _mediator.Send(command);
