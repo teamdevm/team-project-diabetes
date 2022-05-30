@@ -1,0 +1,50 @@
+@using Diabetes.MVC.Models.Components
+@model Diabetes.MVC.Models.CreateInsulinViewModel
+
+@await Component.InvokeAsync("AddSelector", new{ model = new AddSelectorModel(false, true, false) })
+
+<form asp-controller="Insulin" asp-action="AddInsulin" role="form" method="post">
+    <div class="mb-3">
+        <label asp-for="Value" class="form-label"></label>
+        <input asp-for="Value" class="form-control" type="number" value="0">
+        <span asp-validation-for="Value" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="MeasuringDate" class="form-label"></label>
+        <input asp-for="MeasuringDate" type="date" class="form-control" id="datePicker">
+        <span asp-validation-for="MeasuringDate" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="MeasuringTime" class="form-label"></label>
+        <input asp-for="MeasuringTime" type="time" class="form-control" id="timePicker">
+        <span asp-validation-for="MeasuringTime" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Comment" class="form-label"></label>
+        <textarea asp-for="Comment" class="form-control"></textarea>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Type" class="form-label"></label>
+        <select name="type" onchange="$('#type').val(this.value)">
+            <option value="Long">Длинный</option>
+            <option value="Short">Короткий</option>
+        </select>
+        <input asp-for="Type" id="type" value="Before" class="invisible">
+        <span asp-validation-for="Type" class="text-danger"></span>
+    </div>
+    <div class="col-lg-6 col-sm-8 pull-right">
+        <button id="btnCancel" class="btn btn-default" type="button">Отмена</button>
+        <button class="btn btn-success" id="btn" type="submit">Подтвердить</button>
+    </div>
+</form>
+
+<script>
+var now = new Date()
+var day = ("0" + now.getDate()).slice(-2);
+var month = ("0" + (now.getMonth() + 1)).slice(-2);
+var date = now.getFullYear()+"-"+(month)+"-"+(day) ;
+var time = now.toLocaleTimeString().substr(0,5)
+
+$('#datePicker').val(date);
+$('#timePicker').val(time);
+</script>

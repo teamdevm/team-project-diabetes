@@ -8,6 +8,7 @@ namespace Diabetes.Application.GlucoseLevel.Commands.CreateGlucoseLevel
                 public Guid UserId { get; set; }
                 public double ValueInMmol { get; set; }
                 public DateTime MeasuringDateTime { get; set; }
+                public string BeforeAfterEating { get; set; }
                 public string Comment { get; set; }
     }
 }
