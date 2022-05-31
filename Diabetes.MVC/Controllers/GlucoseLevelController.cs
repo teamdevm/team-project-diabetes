@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Diabetes.Application.GlucoseLevel.Commands.CreateGlucoseLevel;
 using Diabetes.MVC.Models;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Diabetes.MVC.Controllers
@@ -18,6 +19,7 @@ namespace Diabetes.MVC.Controllers
 
 
         [HttpGet]
+        [Authorize]
         public IActionResult AddGlucoseLevel(string returnUrl)
         {
             var viewModel = new CreateGlucoseLevelViewModel

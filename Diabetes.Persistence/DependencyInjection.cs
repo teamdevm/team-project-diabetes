@@ -1,4 +1,5 @@
 ﻿using Diabetes.Application.Interfaces;
+using Diabetes.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,8 +11,9 @@ namespace Diabetes.Persistence
         public static IServiceCollection AddPersistence(this IServiceCollection services,
             IConfiguration configuration)
         {
-            var connectionString = configuration["DefaultConnection"];
-            services.AddDbContext<DataDbContext>(opt=>opt.UseSqlite(connectionString));
+            services.AddDbContext<DataDbContext>(opt=>opt.UseSqlite(configuration.GetConnectionString("Default")));
+            services.AddDbContext<AccountContext>(opt=>opt.UseSqlite(configuration.GetConnectionString("Users")));
+
             services.AddTransient<IGlucoseLevelDbContext, DataDbContext>();
             return services;
         }
