@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Diabetes.Application.GlucoseLevel.Commands.CreateGlucoseLevel;
+using Diabetes.Application.GlucoseLevel.Commands.UpdateGlucosesLevel;
 using Diabetes.MVC.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 
 namespace Diabetes.MVC.Controllers
 {
@@ -41,9 +43,34 @@ namespace Diabetes.MVC.Controllers
                 ValueInMmol = viewModel.ValueInMmol.Value,
                 Comment = viewModel.Comment,
                 BeforeAfterEating = viewModel.BeforeAfterEating,
-                MeasuringDateTime = DateTime.ParseExact($"{viewModel.MeasuringDate} {viewModel.MeasuringTime}", "yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture)
+                MeasuringDateTime = DateTime.ParseExact($"{viewModel.MeasuringDate} " +
+                $"{viewModel.MeasuringTime}", "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture)
             };
             
+            await _mediator.Send(command);
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateGlucoseLevel
+            (CreateGlucoseLevelViewModel viewModel, DateTime oldTime)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+            var command = new UpdateGlucoseLevelCommand
+            {
+                UserId = Guid.NewGuid(), //Временно, пока нет авторизации
+                ValueInMmol = viewModel.ValueInMmol.Value,
+                Comment = viewModel.Comment,
+                BeforeAfterEating = viewModel.BeforeAfterEating,
+                oldMeasuringDateTime = oldTime,
+                newMeasuringDateTime = DateTime.ParseExact($"{viewModel.MeasuringDate} " +
+                $"{viewModel.MeasuringTime}", "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture)
+            };
+
             await _mediator.Send(command);
 
             return RedirectToAction("Index", "Home");
