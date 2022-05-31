@@ -8,7 +8,7 @@ namespace Diabetes.MVC.Models
         [Required(ErrorMessage = "Обязательное поле")]
         [Range(0,100, ErrorMessage = "Значение должно быть от 0 до 100")]
         [DisplayName("Значение (ед.)")]
-        public double? Value { get; set; }
+        public double Value { get; set; }
         
         [Required(ErrorMessage = "Обязательное поле")]
         [DisplayName("Дата измерения")]
