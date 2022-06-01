@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Diabetes.Application;
 using Diabetes.Persistence;
+using Diabetes.Persistence.Contexts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -28,6 +25,16 @@ namespace Diabetes.MVC
             services.AddControllersWithViews();
             services.AddApplication();
             services.AddPersistence(Configuration);
+            services.AddIdentity<Account, IdentityRole>(opts=> {
+                    opts.User.RequireUniqueEmail = true;
+                    opts.Password.RequiredLength = 6;
+                    opts.Password.RequireNonAlphanumeric = true;   
+                    opts.Password.RequireLowercase = true; 
+                    opts.Password.RequireUppercase = true; 
+                    opts.Password.RequireDigit = true; 
+                })
+                .AddRussianIdentityErrorDescriber()
+                .AddEntityFrameworkStores<AccountContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,7 +56,8 @@ namespace Diabetes.MVC
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseAuthentication();
+            app.UseAuthorization();     
 
             app.UseEndpoints(endpoints =>
             {

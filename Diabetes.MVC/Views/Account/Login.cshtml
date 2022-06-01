@@ -1,0 +1,24 @@
+@model Diabetes.MVC.Models.User.LoginViewModel
+
+@{
+    Layout = "_LayoutWithoutMenu";
+}
+
+<form asp-controller="Account" asp-action="Login" role="form" method="post" asp-route-returnUrl="@Model.ReturnUrl">
+    <div asp-validation-summary="ModelOnly"></div>
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label"></label>
+        <input asp-for="Email" class="form-control">
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Password" class="form-label"></label>
+        <input asp-for="Password" class="form-control">
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <div class="col-lg-6 col-sm-8 pull-right">
+        <button class="btn btn-success" id="btn" type="submit">Подтвердить</button>
+    </div>
+</form>
+<br/>
+<a class="link-primary" asp-controller="Account" asp-action="Register">Регистрация</a>

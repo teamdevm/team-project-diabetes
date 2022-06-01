@@ -25,4 +25,8 @@
       <ProjectReference Include="..\Diabetes.Persistence\Diabetes.Persistence.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="PiotrTrojan.AspNetCore.IdentityErrorLocalization.ru-RU" Version="1.0.7" />
+    </ItemGroup>
+
 </Project>
