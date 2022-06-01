@@ -7,11 +7,6 @@
 <form asp-controller="Account" asp-action="Register" role="form" method="post">
     <div asp-validation-summary="ModelOnly"></div>
     <div class="mb-3">
-        <label asp-for="Name" class="form-label"></label>
-        <input asp-for="Name" class="form-control">
-        <span asp-validation-for="Name" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
         <label asp-for="Email" class="form-label"></label>
         <input asp-for="Email" class="form-control">
         <span asp-validation-for="Email" class="text-danger"></span>
@@ -25,6 +20,11 @@
         <label asp-for="ConfirmPassword" class="form-label"></label>
         <input asp-for="ConfirmPassword" class="form-control">
         <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control">
+        <span asp-validation-for="Name" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="DiabetesType" class="form-label"></label>

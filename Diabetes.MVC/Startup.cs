@@ -33,6 +33,7 @@ namespace Diabetes.MVC
                     opts.Password.RequireUppercase = true; 
                     opts.Password.RequireDigit = true; 
                 })
+                .AddRussianIdentityErrorDescriber()
                 .AddEntityFrameworkStores<AccountContext>();
         }
 
