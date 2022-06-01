@@ -75,5 +75,24 @@ namespace Diabetes.MVC.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteGlucoseLevel(CreateGlucoseLevelViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+            var command = new CreateGlucoseLevelCommand
+            {
+                UserId = Guid.NewGuid(), //Временно, пока нет авторизации
+                MeasuringDateTime = DateTime.ParseExact($"{viewModel.MeasuringDate} " +
+                $"{viewModel.MeasuringTime}", "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture)
+            };
+
+            await _mediator.Send(command);
+
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
