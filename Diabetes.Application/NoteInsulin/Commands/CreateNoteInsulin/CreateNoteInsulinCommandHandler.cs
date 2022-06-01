@@ -27,8 +27,7 @@ namespace Diabetes.Application.NoteInsulin.Commands.CreateNoteInsulin
                 Comment = request.Comment
             };
 
-            await _dbContext.InsulinNotes.AddAsync(noteInsulin, cancellationToken);
-            await _dbContext.SaveChangesAsync(cancellationToken);
+            InsulinActionsDb.AddToDb(_dbContext, noteInsulin, cancellationToken);
 
             return Unit.Value;
         }
