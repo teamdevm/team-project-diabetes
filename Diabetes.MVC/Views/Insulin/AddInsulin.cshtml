@@ -1,6 +1,10 @@
 @using Diabetes.MVC.Models.Components
 @model Diabetes.MVC.Models.CreateInsulinViewModel
 
+@{
+    ViewData["Title"] = "Инсулин";
+}
+
 @await Component.InvokeAsync("AddSelector", new{ model = new AddSelectorModel(false, true, false) })
 
 <form asp-controller="Insulin" asp-action="AddInsulin" role="form" method="post">
