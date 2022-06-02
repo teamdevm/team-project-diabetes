@@ -4,6 +4,7 @@ using Diabetes.MVC.Models.User;
 using Diabetes.Persistence;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Diabetes.MVC.Controllers
 {
@@ -18,6 +19,7 @@ namespace Diabetes.MVC.Controllers
             _signInManager = signInManager;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
             return View();
@@ -101,6 +103,7 @@ namespace Diabetes.MVC.Controllers
          
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Logout()
         {
 
