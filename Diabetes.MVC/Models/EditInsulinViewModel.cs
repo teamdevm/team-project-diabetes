@@ -1,10 +1,15 @@
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Diabetes.MVC.Models
 {
-    public class CreateInsulinViewModel
-    { 
+    public class EditInsulinViewModel
+    {
+        [Required(ErrorMessage = "Обязательное поле")]
+        [DisplayName("Guid записи")]
+        public string Id { get; set; }
+
         [Required(ErrorMessage = "Обязательное поле")]
         [Range(0,100, ErrorMessage = "Значение должно быть от 0 до 100")]
         [DisplayName("Значение (ед.)")]

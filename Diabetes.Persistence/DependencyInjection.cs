@@ -15,6 +15,7 @@ namespace Diabetes.Persistence
             services.AddDbContext<AccountContext>(opt=>opt.UseSqlite(configuration.GetConnectionString("Users")));
 
             services.AddTransient<IGlucoseLevelDbContext, DataDbContext>();
+            services.AddTransient<INoteInsulinDbContext, DataDbContext>();
             return services;
         }
     }
