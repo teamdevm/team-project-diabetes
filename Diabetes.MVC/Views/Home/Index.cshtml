@@ -1,11 +1,11 @@
 ﻿@model Diabetes.MVC.Models.HomeViewModel
 
 @{
-     ViewData["Title"] = "Домашняя страница";
- }
+    ViewData["Title"] = "Домашняя страница";
+}
 
 <div class="container mobile-container">
-    <h1>Привет, Name</h1>
+    <h1>Привет, @Model.UserName</h1>
 </div>
 
 <div class="row mt-5"></div>
