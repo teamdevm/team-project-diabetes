@@ -1,0 +1,27 @@
+@model Diabetes.MVC.Models.Components.AddSelectorModel
+
+@{
+    ViewData["meal-img"] = Model.IsMealActive ? "/icons/meal(active).svg" : "/icons/meal(inactive).svg";
+    ViewData["insulin-img"] = Model.IsInsulinActive ? "/icons/insulin(active).svg" : "/icons/insulin(inactive).svg";
+    ViewData["sugar-img"] = Model.IsSugarActive ? "/icons/sugar(active).svg" : "/icons/sugar(inactive).svg";
+    
+    ViewData["meal-class"] = Model.IsMealActive ? "active" : "inactive";
+    ViewData["insulin-class"] = Model.IsInsulinActive ? "active" : "inactive";
+    ViewData["sugar-class"] = Model.IsSugarActive ? "active" : "inactive";
+}
+
+<div class="mobile-container container d-flex justify-content-around">
+    <a asp-controller="Meal" asp-action="AddMeal" class="d-flex flex-column align-items-center text-decoration-none primary">
+        <img src=@ViewData["meal-img"] class="@ViewData["meal-class"] icon">
+        <span>Еда</span>
+    </a>
+    <a asp-controller="Insulin" asp-action="AddInsulin" class="d-flex flex-column text-decoration-none align-items-center primary">
+        <img src=@ViewData["insulin-img"] class="@ViewData["insulin-class"] icon">
+        <span>Инсулин</span>
+    </a>
+    <a asp-controller="GlucoseLevel" asp-action="AddGlucoseLevel" class="d-flex flex-column text-decoration-none align-items-center primary">
+        <img src=@ViewData["sugar-img"] class="@ViewData["sugar-class"] icon">
+        <span>Сахар</span>
+    </a>
+</div>
+<div class="row mt-5"></div>

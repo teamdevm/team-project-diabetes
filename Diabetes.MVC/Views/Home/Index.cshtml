@@ -1,0 +1,47 @@
+﻿@model Diabetes.MVC.Models.HomeViewModel
+
+@{
+    ViewData["Title"] = "Домашняя страница";
+}
+
+<div class="container mobile-container">
+    <h1>Привет, @Model.UserName</h1>
+</div>
+
+<div class="row mt-5"></div>
+
+<div class="container mobile-container">
+    <h2>Последние действия</h2>
+</div>
+
+<div class="row mt-3"></div>
+
+<div class="container mobile-container">
+    @foreach (var item in Model.ActionHistoryItems)
+    {
+        <div class="card mb-3">
+            <div class="row no-gutters">
+                <div class="col-8">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Title</h5>
+                        <h4 class="card-text">@item.Value</h4>
+                        <span class="card-text"><small >@item.Details</small></span>
+                        <p class="card-text"><small class="text-muted">@item.DateTime.ToString("dd-MM-yyyy HH:mm")</small></p>
+                    </div>
+                </div>
+                <div class="col-2 d-flex align-items-center">
+                    <a href="#"><img src="~/icons/edit.svg"></a>
+                </div>
+                <div class="col-1 d-flex align-items-center">
+                    <a href="#"><img src="~/icons/delete.svg"></a>
+                </div>
+            </div>
+        </div>
+    }
+    
+    <div class="row mt-3"></div>
+    <div class="row">
+        <button class="btn btn-primary">Показать больше</button>
+    </div>
+
+</div>

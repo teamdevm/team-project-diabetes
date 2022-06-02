@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Remove="obj\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="obj\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="obj\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Remove="obj\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Diabetes.Application\Diabetes.Application.csproj" />
+      <ProjectReference Include="..\Diabetes.Persistence\Diabetes.Persistence.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="PiotrTrojan.AspNetCore.IdentityErrorLocalization.ru-RU" Version="1.0.7" />
+    </ItemGroup>
+
+</Project>

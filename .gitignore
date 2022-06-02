@@ -1,0 +1,10 @@
+﻿/.idea/
+/Diabetes.Persistence/bin/
+/Diabetes.Persistence/obj/
+/Diabetes.Application/bin/
+/Diabetes.Application/obj/
+/Diabetes.Domain/bin/
+/Diabetes.Domain/obj/
+/Diabetes.MVC/bin/
+/Diabetes.MVC/obj/
+/Diabetes.MVC/*.db
