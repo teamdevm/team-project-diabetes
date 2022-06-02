@@ -1,3 +1,4 @@
+using System;
 using Diabetes.Application;
 using Diabetes.Persistence;
 using Diabetes.Persistence.Contexts;
@@ -25,6 +26,10 @@ namespace Diabetes.MVC
             services.AddControllersWithViews();
             services.AddApplication();
             services.AddPersistence(Configuration);
+            services.Configure<SecurityStampValidatorOptions>(options =>
+            {
+                options.ValidationInterval = TimeSpan.FromMinutes(10);
+            });
             services.AddIdentity<Account, IdentityRole>(opts=> {
                     opts.User.RequireUniqueEmail = true;
                     opts.Password.RequiredLength = 6;

@@ -16,6 +16,7 @@
 
     <ItemGroup>
       <Folder Include="GlucoseLevel\Queries" />
+      <Folder Include="NoteInsulin\Commands\CreateNoteInsulin" />
     </ItemGroup>
 
 </Project>
