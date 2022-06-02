@@ -66,7 +66,7 @@ namespace Diabetes.MVC.Controllers
             }
             var command = new UpdateGlucoseLevelCommand
             {
-                Id = viewModel.Id,
+                Id = Guid.Parse(viewModel.Id),
                 ValueInMmol = viewModel.ValueInMmol.Value,
                 Comment = viewModel.Comment,
                 BeforeAfterEating = viewModel.BeforeAfterEating,
@@ -88,7 +88,7 @@ namespace Diabetes.MVC.Controllers
             }
             var command = new DeleteGlucoseLevelCommand
             {
-                Id = viewModel.Id
+                Id = Guid.Parse(viewModel.Id)
             };
 
             await _mediator.Send(command);

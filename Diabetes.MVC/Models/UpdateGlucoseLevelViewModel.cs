@@ -26,7 +26,7 @@ namespace Diabetes.MVC.Models
         [DisplayName("Заметка")]
         public string Comment { get; set; }
 
-        public Guid Id { get; set; }
+        public string Id { get; set; }
         public string ReturnUrl { get; set; }
     }
 }

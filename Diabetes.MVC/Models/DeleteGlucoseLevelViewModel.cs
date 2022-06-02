@@ -7,7 +7,7 @@ namespace Diabetes.MVC.Models
 {
     public class DeleteGlucoseLevelViewModel
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
         public string ReturnUrl { get; set; }
     }
 }
