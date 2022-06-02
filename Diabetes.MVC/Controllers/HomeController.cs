@@ -33,7 +33,7 @@ namespace Diabetes.MVC.Controllers
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
-            var command = new GetActionHistoryItemsCommand
+            GetActionHistoryItemsCommand command = new GetActionHistoryItemsCommand
             {
                 UserId = new Guid(user.Id),
                 Number = actionHistoryItemsNumber
@@ -41,20 +41,11 @@ namespace Diabetes.MVC.Controllers
 
             List<ActionHistoryItem> list = await _mediator.Send(command);
 
-            HomeViewModel viewModel = null;
-            if (user != null)
-                viewModel = new HomeViewModel
-                {
-                    UserName = user.Name,
-                    ActionHistoryItems = list
-                };
-            else
-                viewModel = new HomeViewModel
-                {
-                    UserName = "",
-                    ActionHistoryItems = list
-                };
-
+            HomeViewModel viewModel = new HomeViewModel
+            {
+                UserName = user.Name,
+                ActionHistoryItems = list
+            };
 
             return View(viewModel);
         }

@@ -66,6 +66,10 @@ namespace Diabetes.Application.ActionHistoryItems.Commands.GetActionHistoryItems
             var set = new List<ActionHistoryItem>();
             int iIns = 0;
             int iGlu = 0;
+
+            if (queryGlucose.Count == 0 && queryInsulin.Count == 0)
+                return set;
+
             for (int i = 0; i < request.Number; i++)
             {
                 if (queryGlucose.Count == 0 || queryGlucose.Count == iGlu)
