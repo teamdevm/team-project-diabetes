@@ -64,17 +64,22 @@ namespace Diabetes.MVC.Controllers
             {
                 return View(viewModel);
             }
-            var command = new UpdateGlucoseLevelCommand
-            {
-                Id = Guid.Parse(viewModel.Id),
-                ValueInMmol = viewModel.ValueInMmol.Value,
-                Comment = viewModel.Comment,
-                BeforeAfterEating = viewModel.BeforeAfterEating,
-                MeasuringDateTime = DateTime.ParseExact($"{viewModel.MeasuringDate} " +
-                $"{viewModel.MeasuringTime}", "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture)
-            };
 
-            await _mediator.Send(command);
+            bool isValid = Guid.TryParse(viewModel.Id, out Guid vwId);
+            if (isValid)
+            {
+                var command = new UpdateGlucoseLevelCommand
+                {
+                    Id = vwId,
+                    ValueInMmol = viewModel.ValueInMmol.Value,
+                    Comment = viewModel.Comment,
+                    BeforeAfterEating = viewModel.BeforeAfterEating,
+                    MeasuringDateTime = DateTime.ParseExact($"{viewModel.MeasuringDate} " +
+                    $"{viewModel.MeasuringTime}", "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture)
+                };
+
+                await _mediator.Send(command);
+            }
 
             return RedirectToAction("Index", "Home");
         }
@@ -86,13 +91,17 @@ namespace Diabetes.MVC.Controllers
             {
                 return View(viewModel);
             }
-            var command = new DeleteGlucoseLevelCommand
+            bool isValid = Guid.TryParse(viewModel.Id, out Guid vwId);
+            if (isValid)
             {
-                Id = Guid.Parse(viewModel.Id)
-            };
+                var command = new DeleteGlucoseLevelCommand
+                {
+                    Id = vwId
+                };
 
-            await _mediator.Send(command);
-
+                await _mediator.Send(command);
+            }
+            
             return RedirectToAction("Index", "Home");
         }
     }
