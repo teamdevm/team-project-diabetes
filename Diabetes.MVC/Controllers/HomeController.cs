@@ -26,11 +26,51 @@ namespace Diabetes.MVC.Controllers
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
+            var list = new List<ActionHistoryItem>
+            {
+                new ActionHistoryItem
+                {
+                    Type = "Инсулин",
+                    Value = "100",
+                    Details = "Короткий",
+                    DateTime = DateTime.Now
+                },
+                new ActionHistoryItem
+                {
+                    Type = "Глюкоза",
+                    Value = "20",
+                    Details = "До еды",
+                    DateTime = DateTime.Now
+                },
+                new ActionHistoryItem
+                {
+                    Type = "Инсулин",
+                    Value = "50",
+                    Details = "Длинный",
+                    DateTime = DateTime.Now
+                },
+                new ActionHistoryItem
+                {
+                    Type = "Инсулин",
+                    Value = "50",
+                    Details = "Длинный",
+                    DateTime = DateTime.Now
+                },
+                new ActionHistoryItem
+                {
+                    Type = "Инсулин",
+                    Value = "50",
+                    Details = "Длинный",
+                    DateTime = DateTime.Now
+                }
+            };
+
             var viewModel = new HomeViewModel
             {
-                UserName = user.Name
+                UserName = user.Name,
+                ActionHistoryItems = list
             };
-            
+
             return View(viewModel);
         }
     }
