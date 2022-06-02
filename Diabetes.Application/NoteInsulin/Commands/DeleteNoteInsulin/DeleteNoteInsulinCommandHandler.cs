@@ -21,8 +21,11 @@ namespace Diabetes.Application.NoteInsulin.Commands.CreateNoteInsulin
 
             if (entity != null)
             {
-                _dbContext.InsulinNotes.Remove(entity);
-                await _dbContext.SaveChangesAsync(cancellationToken);
+                if (entity.UserId == request.UserId)
+                {
+                    _dbContext.InsulinNotes.Remove(entity);
+                    await _dbContext.SaveChangesAsync(cancellationToken);
+                }
             }
 
             return Unit.Value;

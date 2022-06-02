@@ -17,22 +17,20 @@ namespace Diabetes.Application.NoteInsulin.Commands.CreateNoteInsulin
 
         public async Task<Unit> Handle(EditNoteInsulinCommand request, CancellationToken cancellationToken)
         {
-            Domain.NoteInsulin lastEntity = _dbContext.InsulinNotes.Find(request.Id);
+            Domain.NoteInsulin entity = _dbContext.InsulinNotes.Find(request.Id);
 
-            if (lastEntity != null)
+            if (entity != null)
             {
-                var entity = new Domain.NoteInsulin
+                if (entity.UserId == request.UserId)
                 {
-                    UserId = request.UserId,
-                    Id = request.Id,
-                    InsulinValue = request.InsulinValue,
-                    MeasuringDateTime = request.MeasuringDateTime,
-                    InsulinType = request.InsulinType,
-                    Comment = request.Comment
-                };
+                    entity.InsulinValue = request.InsulinValue;
+                    entity.MeasuringDateTime = request.MeasuringDateTime;
+                    entity.InsulinType = request.InsulinType;
+                    entity.Comment = request.Comment;
 
-                _dbContext.InsulinNotes.Update(entity);
-                await _dbContext.SaveChangesAsync(cancellationToken);
+                    _dbContext.InsulinNotes.Update(entity);
+                    await _dbContext.SaveChangesAsync(cancellationToken);
+                }
             }
 
             return Unit.Value;
