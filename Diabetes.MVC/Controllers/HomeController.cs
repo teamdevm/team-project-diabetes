@@ -30,35 +30,40 @@ namespace Diabetes.MVC.Controllers
             {
                 new ActionHistoryItem
                 {
-                    Type = "Инсулин",
+                    Type = ActionHistoryType.Insulin,
+                    Title = "Инсулин",
                     Value = "100",
                     Details = "Короткий",
                     DateTime = DateTime.Now
                 },
                 new ActionHistoryItem
                 {
-                    Type = "Глюкоза",
+                    Type = ActionHistoryType.GlucoseLevel,
+                    Title = "Глюкоза",
                     Value = "20",
                     Details = "До еды",
                     DateTime = DateTime.Now
                 },
                 new ActionHistoryItem
                 {
-                    Type = "Инсулин",
+                    Type = ActionHistoryType.Insulin,
+                    Title = "Инсулин",
                     Value = "50",
                     Details = "Длинный",
                     DateTime = DateTime.Now
                 },
                 new ActionHistoryItem
                 {
-                    Type = "Инсулин",
+                    Type = ActionHistoryType.Insulin,
+                    Title = "Инсулин",
                     Value = "50",
                     Details = "Длинный",
                     DateTime = DateTime.Now
                 },
                 new ActionHistoryItem
                 {
-                    Type = "Инсулин",
+                    Type = ActionHistoryType.Insulin,
+                    Title = "Инсулин",
                     Value = "50",
                     Details = "Длинный",
                     DateTime = DateTime.Now
