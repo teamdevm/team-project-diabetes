@@ -8,6 +8,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
+using System.Security.Claims;
 
 namespace Diabetes.MVC.Controllers
 {
@@ -34,6 +35,7 @@ namespace Diabetes.MVC.Controllers
         }
 
         [HttpPost] // вставка (удаление и изменение - по схожей схеме)
+        [Authorize]
         public async Task<IActionResult> AddGlucoseLevel(CreateGlucoseLevelViewModel viewModel)
         {
             // валидация
@@ -44,7 +46,7 @@ namespace Diabetes.MVC.Controllers
             // создание команды
             var command = new CreateGlucoseLevelCommand
             {
-                UserId = Guid.NewGuid(), //Временно, пока нет авторизации
+                UserId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)),
                 ValueInMmol = viewModel.ValueInMmol.Value,
                 Comment = viewModel.Comment,
                 BeforeAfterEating = viewModel.BeforeAfterEating,
@@ -59,6 +61,7 @@ namespace Diabetes.MVC.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         public async Task<IActionResult> UpdateGlucoseLevel
             (UpdateGlucoseLevelViewModel viewModel) // изменение
         {
@@ -87,6 +90,7 @@ namespace Diabetes.MVC.Controllers
         }
 
         [HttpDelete] // удаление
+        [Authorize]
         public async Task<IActionResult> DeleteGlucoseLevel(DeleteGlucoseLevelViewModel viewModel)
         {
             if (!ModelState.IsValid)
