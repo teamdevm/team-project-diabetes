@@ -3,9 +3,8 @@ using MediatR;
 
 namespace Diabetes.Application.GlucoseLevel.Commands.DeleteGlucoseLevel
 {
-    class DeleteGlucoseLevelCommand : IRequest<Unit>
+    public class DeleteGlucoseLevelCommand : IRequest<Unit>
     {
-        public Guid UserId { get; set; }
-        public DateTime MeasuringDateTime { get; set; }
+        public Guid Id { get; set; }
     }
 }

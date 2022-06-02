@@ -17,7 +17,7 @@ namespace Diabetes.Application.GlucoseLevel.Commands.DeleteGlucoseLevel
         public async Task<Unit> Handle(DeleteGlucoseLevelCommand request, CancellationToken cancellationToken)
         {
             //ищем уровень глюкозы в БД
-            var keys = new object[2] { request.UserId, request.MeasuringDateTime };
+            var keys = new object[1] { request.Id };
             var glucoseLevel = _dbContext.GlucoseLevels.FindAsync(keys, cancellationToken).Result;
             if (glucoseLevel == null) throw new Exception("Value not found");
 

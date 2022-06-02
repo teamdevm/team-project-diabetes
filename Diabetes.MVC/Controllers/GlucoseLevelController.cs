@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Diabetes.Application.GlucoseLevel.Commands.CreateGlucoseLevel;
 using Diabetes.Application.GlucoseLevel.Commands.UpdateGlucosesLevel;
+using Diabetes.Application.GlucoseLevel.Commands.DeleteGlucoseLevel;
 using Diabetes.MVC.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -30,13 +31,15 @@ namespace Diabetes.MVC.Controllers
             return View(viewModel);
         }
 
-        [HttpPost]
+        [HttpPost] // вставка (удаление и изменение - по схожей схеме)
         public async Task<IActionResult> AddGlucoseLevel(CreateGlucoseLevelViewModel viewModel)
         {
+            // валидация
             if (!ModelState.IsValid)
             {
                 return View(viewModel);
             }
+            // создание команды
             var command = new CreateGlucoseLevelCommand
             {
                 UserId = Guid.NewGuid(), //Временно, пока нет авторизации
@@ -47,6 +50,7 @@ namespace Diabetes.MVC.Controllers
                 $"{viewModel.MeasuringTime}", "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture)
             };
             
+            // отправка команды на сервер
             await _mediator.Send(command);
 
             return RedirectToAction("Index", "Home");
@@ -54,7 +58,7 @@ namespace Diabetes.MVC.Controllers
 
         [HttpPut]
         public async Task<IActionResult> UpdateGlucoseLevel
-            (CreateGlucoseLevelViewModel viewModel, DateTime oldTime)
+            (UpdateGlucoseLevelViewModel viewModel) // изменение
         {
             if (!ModelState.IsValid)
             {
@@ -62,12 +66,11 @@ namespace Diabetes.MVC.Controllers
             }
             var command = new UpdateGlucoseLevelCommand
             {
-                UserId = Guid.NewGuid(), //Временно, пока нет авторизации
+                Id = viewModel.Id,
                 ValueInMmol = viewModel.ValueInMmol.Value,
                 Comment = viewModel.Comment,
                 BeforeAfterEating = viewModel.BeforeAfterEating,
-                oldMeasuringDateTime = oldTime,
-                newMeasuringDateTime = DateTime.ParseExact($"{viewModel.MeasuringDate} " +
+                MeasuringDateTime = DateTime.ParseExact($"{viewModel.MeasuringDate} " +
                 $"{viewModel.MeasuringTime}", "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture)
             };
 
@@ -76,18 +79,16 @@ namespace Diabetes.MVC.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteGlucoseLevel(CreateGlucoseLevelViewModel viewModel)
+        [HttpDelete] // удаление
+        public async Task<IActionResult> DeleteGlucoseLevel(DeleteGlucoseLevelViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
                 return View(viewModel);
             }
-            var command = new CreateGlucoseLevelCommand
+            var command = new DeleteGlucoseLevelCommand
             {
-                UserId = Guid.NewGuid(), //Временно, пока нет авторизации
-                MeasuringDateTime = DateTime.ParseExact($"{viewModel.MeasuringDate} " +
-                $"{viewModel.MeasuringTime}", "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture)
+                Id = viewModel.Id
             };
 
             await _mediator.Send(command);
