@@ -30,8 +30,18 @@ namespace Diabetes.MVC.Controllers
             {
                 new ActionHistoryItem
                 {
+                    Id = Guid.Parse("019A5C4D-03A3-47C6-A1A8-D6E7198A0252"),
                     Type = ActionHistoryType.Insulin,
-                    Title = "Инсулин",
+                    Title = "Insulin 1",
+                    Value = "100",
+                    Details = "Короткий",
+                    DateTime = DateTime.Now
+                },
+                new ActionHistoryItem
+                {
+                    Id = Guid.Parse("26F45CC9-089E-4B5F-BED9-9AFA0660AC51"),
+                    Type = ActionHistoryType.GlucoseLevel,
+                    Title = "Глюкоза",
                     Value = "100",
                     Details = "Короткий",
                     DateTime = DateTime.Now
@@ -46,24 +56,8 @@ namespace Diabetes.MVC.Controllers
                 },
                 new ActionHistoryItem
                 {
-                    Type = ActionHistoryType.Insulin,
-                    Title = "Инсулин",
-                    Value = "50",
-                    Details = "Длинный",
-                    DateTime = DateTime.Now
-                },
-                new ActionHistoryItem
-                {
-                    Type = ActionHistoryType.Insulin,
-                    Title = "Инсулин",
-                    Value = "50",
-                    Details = "Длинный",
-                    DateTime = DateTime.Now
-                },
-                new ActionHistoryItem
-                {
-                    Type = ActionHistoryType.Insulin,
-                    Title = "Инсулин",
+                    Type = ActionHistoryType.GlucoseLevel,
+                    Title = "Глюкоза",
                     Value = "50",
                     Details = "Длинный",
                     DateTime = DateTime.Now

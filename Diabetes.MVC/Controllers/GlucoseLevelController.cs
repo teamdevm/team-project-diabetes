@@ -89,24 +89,26 @@ namespace Diabetes.MVC.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpDelete] // удаление
+        [HttpGet] // удаление
         [Authorize]
-        public async Task<IActionResult> DeleteGlucoseLevel(DeleteGlucoseLevelViewModel viewModel)
+        public async Task<IActionResult> DeleteGlucoseLevel(Guid id)
         {
-            if (!ModelState.IsValid)
+            /*if (!ModelState.IsValid)
             {
                 return View(viewModel);
             }
             bool isValid = Guid.TryParse(viewModel.Id, out Guid vwId);
             if (isValid)
             {
+            */if(id == Guid.Empty) return RedirectToAction("Index", "Home");
+                
                 var command = new DeleteGlucoseLevelCommand
                 {
-                    Id = vwId
+                    Id = id
                 };
 
                 await _mediator.Send(command);
-            }
+            //}
             
             return RedirectToAction("Index", "Home");
         }
