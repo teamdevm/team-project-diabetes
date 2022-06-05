@@ -63,6 +63,10 @@ namespace Diabetes.Application.ActionHistoryItems.Commands.GetActionHistoryItems
                     j++;
             }
 
+            int ahiCount = request.Number;
+            if (queryInsulin.Count + queryGlucose.Count < 5)
+                ahiCount = queryInsulin.Count + queryGlucose.Count;
+
             var set = new List<ActionHistoryItem>();
             int iIns = 0;
             int iGlu = 0;
@@ -70,7 +74,7 @@ namespace Diabetes.Application.ActionHistoryItems.Commands.GetActionHistoryItems
             if (queryGlucose.Count == 0 && queryInsulin.Count == 0)
                 return set;
 
-            for (int i = 0; i < request.Number; i++)
+            for (int i = 0; i < ahiCount; i++)
             {
                 if (queryGlucose.Count == 0 || queryGlucose.Count == iGlu)
                 {
