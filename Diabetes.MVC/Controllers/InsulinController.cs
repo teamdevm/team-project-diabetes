@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Diabetes.MVC.Controllers
 {
@@ -17,6 +18,7 @@ namespace Diabetes.MVC.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult AddInsulin(string returnUrl)
         {
             var viewModel = new CreateInsulinViewModel {ReturnUrl = returnUrl};
@@ -24,6 +26,7 @@ namespace Diabetes.MVC.Controllers
         }
         
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> AddInsulin(CreateInsulinViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -45,7 +48,8 @@ namespace Diabetes.MVC.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpPost]
+        [HttpPut]
+        [Authorize]
         public async Task<IActionResult> EditInsulin(EditInsulinViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -74,7 +78,8 @@ namespace Diabetes.MVC.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpPost]
+        [HttpDelete]
+        [Authorize]
         public async Task<IActionResult> DeleteInsulin(DeleteInsulinViewModel viewModel)
         {
             if (!ModelState.IsValid)
