@@ -23,6 +23,7 @@ namespace Diabetes.Application.NoteInsulin.Commands.CreateNoteInsulin
                 Id = Guid.NewGuid(),
                 InsulinValue = request.InsulinValue,
                 MeasuringDateTime = request.MeasuringDateTime,
+                CreationDateTime = DateTime.Now,
                 InsulinType = request.InsulinType,
                 Comment = request.Comment
             };

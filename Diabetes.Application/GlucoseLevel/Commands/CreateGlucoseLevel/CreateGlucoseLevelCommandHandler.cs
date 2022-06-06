@@ -23,6 +23,7 @@ namespace Diabetes.Application.GlucoseLevel.Commands.CreateGlucoseLevel
                 Id = Guid.NewGuid(),
                 ValueInMmol = request.ValueInMmol,
                 MeasuringDateTime = request.MeasuringDateTime,
+                CreationDateTime = DateTime.Now,
                 BeforeAfterEating = request.BeforeAfterEating,
                 Comment = request.Comment
             };

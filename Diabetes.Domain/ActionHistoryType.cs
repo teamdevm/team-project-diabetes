@@ -1,4 +1,4 @@
-namespace Diabetes.MVC.Models
+namespace Diabetes.Domain
 {
     public enum ActionHistoryType
     {

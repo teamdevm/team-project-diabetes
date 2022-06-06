@@ -1,3 +1,4 @@
+using Diabetes.Domain;
 using System.Collections.Generic;
 
 namespace Diabetes.MVC.Models

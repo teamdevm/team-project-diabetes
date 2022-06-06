@@ -3,6 +3,7 @@ using Diabetes.MVC.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 
@@ -36,7 +37,7 @@ namespace Diabetes.MVC.Controllers
 
             var command = new CreateNoteInsulinCommand
             {
-                UserId = Guid.NewGuid(),
+                UserId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)),
                 InsulinValue = viewModel.Value,
                 MeasuringDateTime = DateTime.ParseExact($"{viewModel.MeasuringDate} {viewModel.MeasuringTime}", "yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture),
                 InsulinType = viewModel.Type,
@@ -64,7 +65,7 @@ namespace Diabetes.MVC.Controllers
             {
                 var command = new EditNoteInsulinCommand
                 {
-                    UserId = Guid.NewGuid(),
+                    UserId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)),
                     Id = vwId,
                     InsulinValue = viewModel.Value,
                     MeasuringDateTime = DateTime.ParseExact($"{viewModel.MeasuringDate} {viewModel.MeasuringTime}", "yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture),
@@ -94,7 +95,7 @@ namespace Diabetes.MVC.Controllers
             {
                 var command = new DeleteNoteInsulinCommand
                 {
-                    UserId = Guid.NewGuid(),
+                    UserId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)),
                     Id = vwId,
                 };
 
