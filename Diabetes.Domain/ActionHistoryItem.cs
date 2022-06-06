@@ -10,5 +10,6 @@ namespace Diabetes.Domain
         public string Value { get; set; }
         public string Details { get; set; }
         public DateTime DateTime { get; set; }
+        public DateTime CreationDateTime { get; set; }
     }
 }
