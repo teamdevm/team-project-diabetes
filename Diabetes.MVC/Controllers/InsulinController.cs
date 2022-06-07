@@ -4,11 +4,13 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using Diabetes.Domain;
 using Diabetes.MVC.Extensions;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Diabetes.MVC.Controllers
 {
+    [Route("[controller]/[action]")]
     public class InsulinController:Controller
     {
         private readonly IMediator _mediator;
@@ -39,7 +41,8 @@ namespace Diabetes.MVC.Controllers
             {
                 UserId = User.GetId(),
                 InsulinValue = viewModel.Value,
-                MeasuringDateTime = DateTime.ParseExact($"{viewModel.MeasuringDate} {viewModel.MeasuringTime}", "yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture),
+                MeasuringDateTime = DateTime.ParseExact($"{viewModel.MeasuringDate} {viewModel.MeasuringTime}", 
+                    "yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture),
                 InsulinType = viewModel.Type,
                 Comment = viewModel.Comment
             };
@@ -48,8 +51,28 @@ namespace Diabetes.MVC.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+        
+        [HttpGet("{id:guid}")]
+        [Authorize]
+        public IActionResult EditInsulin(Guid id)
+        {
+            //Getting item by id
+            var model = new NoteInsulin();
+            
+            var viewModel = new EditInsulinViewModel
+            {
+                Id = id,
+                Value = model.InsulinValue,
+                MeasuringTime = model.MeasuringDateTime.ToString("HH:mm"),
+                MeasuringDate = model.MeasuringDateTime.ToString("yyyy-MM-dd"),
+                Comment = model.Comment,
+                Type = model.InsulinType
+            };
+            
+            return View(viewModel);
+        }
 
-        [HttpPut]
+        [HttpPost("{id:guid}")]
         [Authorize]
         public async Task<IActionResult> EditInsulin(EditInsulinViewModel viewModel)
         {
@@ -57,34 +80,29 @@ namespace Diabetes.MVC.Controllers
             {
                 return View(viewModel);
             }
-
-            Guid vwId;
-            bool isValid = Guid.TryParse(viewModel.Id, out vwId);
-
-            if (isValid)
+            var command = new EditNoteInsulinCommand 
             {
-                var command = new EditNoteInsulinCommand
-                {
-                    UserId = User.GetId(),
-                    Id = vwId,
-                    InsulinValue = viewModel.Value,
-                    MeasuringDateTime = DateTime.ParseExact($"{viewModel.MeasuringDate} {viewModel.MeasuringTime}", "yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture),
-                    InsulinType = viewModel.Type,
-                    Comment = viewModel.Comment
-                };
+                UserId = User.GetId(),
+                Id = viewModel.Id,
+                InsulinValue = viewModel.Value,
+                MeasuringDateTime = DateTime.ParseExact($"{viewModel.MeasuringDate} {viewModel.MeasuringTime}",
+                        "yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture),
+                InsulinType = viewModel.Type,
+                Comment = viewModel.Comment
 
-                await _mediator.Send(command);
-            }
+            };
+
+            await _mediator.Send(command);
 
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpGet("[controller]/[action]/{id}")]
+        [HttpGet("{id:guid}")]
         [Authorize]
         public async Task<IActionResult> DeleteInsulin(Guid id)
         {
             if(id == Guid.Empty) 
-                return RedirectToAction("Index", "Home");
+                return NotFound();
             
             var command = new DeleteNoteInsulinCommand 
             {

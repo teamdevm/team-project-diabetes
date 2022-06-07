@@ -33,7 +33,7 @@
                 @if (item.Type == ActionHistoryType.GlucoseLevel)
                 {
                     <div class="col-2 d-flex align-items-center">
-                        <a href="#"><img src="~/icons/edit.svg"></a>
+                        <a asp-controller="GlucoseLevel" asp-action="EditGlucoseLevel" asp-route-id="@item.Id"><img src="~/icons/edit.svg"></a>
                     </div>
                     <div class="col-1 d-flex align-items-center">
                         <a asp-controller="GlucoseLevel" asp-action="DeleteGlucoseLevel" asp-route-id="@item.Id"><img src="~/icons/delete.svg"></a>
@@ -41,7 +41,7 @@
                 }else if (item.Type == ActionHistoryType.Insulin)
                 {
                     <div class="col-2 d-flex align-items-center">
-                        <a href="#"><img src="~/icons/edit.svg"></a>
+                        <a asp-controller="Insulin" asp-action="EditInsulin" asp-route-id="@item.Id"><img src="~/icons/edit.svg"></a>
                     </div>
                     <div class="col-1 d-flex align-items-center">
                         <a asp-controller="Insulin" asp-action="DeleteInsulin" asp-route-id="@item.Id"><img src="~/icons/delete.svg"></a>

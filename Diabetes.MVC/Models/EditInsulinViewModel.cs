@@ -8,7 +8,7 @@ namespace Diabetes.MVC.Models
     {
         [Required(ErrorMessage = "Обязательное поле")]
         [DisplayName("Guid записи")]
-        public string Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required(ErrorMessage = "Обязательное поле")]
         [Range(0,100, ErrorMessage = "Значение должно быть от 0 до 100")]
@@ -29,7 +29,7 @@ namespace Diabetes.MVC.Models
         
         [DisplayName("Заметка")]
         public string Comment { get; set; }
-        
+
         public string ReturnUrl { get; set; }
     }
 }

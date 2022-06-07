@@ -9,10 +9,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 using System.Security.Claims;
+using Diabetes.Domain;
 using Diabetes.MVC.Extensions;
 
 namespace Diabetes.MVC.Controllers
 {
+    [Route("[controller]/[action]")]
     public class GlucoseLevelController: Controller
     {
         private readonly IMediator _mediator;
@@ -35,7 +37,7 @@ namespace Diabetes.MVC.Controllers
             return View(viewModel);
         }
 
-        [HttpPost] // вставка (удаление и изменение - по схожей схеме)
+        [HttpPost] // вставка
         [Authorize]
         public async Task<IActionResult> AddGlucoseLevel(CreateGlucoseLevelViewModel viewModel)
         {
@@ -60,42 +62,59 @@ namespace Diabetes.MVC.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-
-        [HttpPut]
+        
+        [HttpGet("{id:guid}")]
         [Authorize]
-        public async Task<IActionResult> UpdateGlucoseLevel
-            (UpdateGlucoseLevelViewModel viewModel) // изменение
+        public IActionResult EditGlucoseLevel(Guid id)
+        {
+            //Getting item by id
+            var model = new GlucoseLevel();
+            
+            var viewModel = new EditGlucoseLevelViewModel
+            {
+                Id = id,
+                
+                ValueInMmol = model.ValueInMmol,
+                MeasuringTime = model.MeasuringDateTime.ToString("HH:mm"),
+                MeasuringDate = model.MeasuringDateTime.ToString("yyyy-MM-dd"),
+                Comment = model.Comment,
+                BeforeAfterEating = model.BeforeAfterEating
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost("{id:guid}")]
+        [Authorize]
+        public async Task<IActionResult> EditGlucoseLevel (EditGlucoseLevelViewModel viewModel) // изменение
         {
             if (!ModelState.IsValid)
             {
                 return View(viewModel);
             }
-
-            bool isValid = Guid.TryParse(viewModel.Id, out Guid vwId);
-            if (isValid)
+            
+            var command = new UpdateGlucoseLevelCommand 
             {
-                var command = new UpdateGlucoseLevelCommand
-                {
-                    Id = vwId,
-                    ValueInMmol = viewModel.ValueInMmol.Value,
-                    Comment = viewModel.Comment,
-                    BeforeAfterEating = viewModel.BeforeAfterEating,
-                    MeasuringDateTime = DateTime.ParseExact($"{viewModel.MeasuringDate} " +
-                    $"{viewModel.MeasuringTime}", "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture)
-                };
-
-                await _mediator.Send(command);
-            }
-
+                Id = viewModel.Id,
+                UserId = User.GetId(),
+                ValueInMmol = viewModel.ValueInMmol.Value,
+                Comment = viewModel.Comment,
+                BeforeAfterEating = viewModel.BeforeAfterEating,
+                MeasuringDateTime = DateTime.ParseExact($"{viewModel.MeasuringDate} " +
+                $"{viewModel.MeasuringTime}", "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture)
+            };
+            
+            await _mediator.Send(command);
+            
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpGet("[controller]/[action]/{id}")]
+        [HttpGet("{id:guid}")]
         [Authorize]
         public async Task<IActionResult> DeleteGlucoseLevel(Guid id)
         { 
             if(id == Guid.Empty) 
-                return RedirectToAction("Index", "Home");
+                return NotFound();
             
             var command = new DeleteGlucoseLevelCommand 
             {

@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Diabetes.Application.Interfaces;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Diabetes.Application.NoteInsulin.Commands.CreateNoteInsulin
 {
@@ -17,20 +18,20 @@ namespace Diabetes.Application.NoteInsulin.Commands.CreateNoteInsulin
 
         public async Task<Unit> Handle(EditNoteInsulinCommand request, CancellationToken cancellationToken)
         {
-            Domain.NoteInsulin entity = _dbContext.InsulinNotes.Find(request.Id);
+            var insulin = _dbContext.InsulinNotes.FirstOrDefaultAsync
+                (i=>i.Id == request.Id && i.UserId == request.UserId, cancellationToken).Result;
 
-            if (entity != null)
+            if (insulin != null)
             {
-                if (entity.UserId == request.UserId)
-                {
-                    entity.InsulinValue = request.InsulinValue;
-                    entity.MeasuringDateTime = request.MeasuringDateTime;
-                    entity.InsulinType = request.InsulinType;
-                    entity.Comment = request.Comment;
 
-                    _dbContext.InsulinNotes.Update(entity);
-                    await _dbContext.SaveChangesAsync(cancellationToken);
-                }
+                insulin.InsulinValue = request.InsulinValue;
+                insulin.MeasuringDateTime = request.MeasuringDateTime;
+                insulin.InsulinType = request.InsulinType;
+                insulin.Comment = request.Comment;
+                insulin.CreationDateTime = DateTime.Now;
+
+                _dbContext.InsulinNotes.Update(insulin);
+                await _dbContext.SaveChangesAsync(cancellationToken);
             }
 
             return Unit.Value;

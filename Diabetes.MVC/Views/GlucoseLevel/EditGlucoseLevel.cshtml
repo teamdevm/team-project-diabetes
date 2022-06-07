@@ -1,13 +1,14 @@
 @using Diabetes.MVC.Models.Components
-@model Diabetes.MVC.Models.CreateGlucoseLevelViewModel
-
-@await Component.InvokeAsync("AddSelector", new{ model = new AddSelectorModel(false, false, true) })
+@model Diabetes.MVC.Models.EditGlucoseLevelViewModel
 
 @{
     ViewData["Title"] = "Уровень глюкозы";
 }
 
-<form asp-controller="GlucoseLevel" asp-action="AddGlucoseLevel" role="form" method="post">
+<form asp-controller="GlucoseLevel" asp-action="EditGlucoseLevel" method="post">
+    <div class="mb-3">
+        <input asp-for="Id" class="form-control invisible">
+    </div>
     <div class="mb-3">
         <label asp-for="ValueInMmol" class="form-label"></label>
         <input asp-for="ValueInMmol" class="form-control" type="number" step="0.01" value="0">
@@ -41,14 +42,3 @@
         <button class="btn btn-success" id="btn" type="submit">Подтвердить</button>
     </div>
 </form>
-
-<script>
-var now = new Date()
-var day = ("0" + now.getDate()).slice(-2);
-var month = ("0" + (now.getMonth() + 1)).slice(-2);
-var date = now.getFullYear()+"-"+(month)+"-"+(day) ;
-var time = now.toLocaleTimeString().substr(0,5)
-
-$('#datePicker').val(date);
-$('#timePicker').val(time);
-</script>
