@@ -1,6 +1,6 @@
 using System;
 
-namespace Diabetes.MVC.Models
+namespace Diabetes.Domain
 {
     public class ActionHistoryItem
     {
@@ -10,5 +10,6 @@ namespace Diabetes.MVC.Models
         public string Value { get; set; }
         public string Details { get; set; }
         public DateTime DateTime { get; set; }
+        public DateTime CreationDateTime { get; set; }
     }
 }

@@ -3,8 +3,8 @@ using Diabetes.MVC.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Security.Claims;
 using System.Threading.Tasks;
+using Diabetes.MVC.Extensions;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Diabetes.MVC.Controllers
@@ -37,7 +37,7 @@ namespace Diabetes.MVC.Controllers
 
             var command = new CreateNoteInsulinCommand
             {
-                UserId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)),
+                UserId = User.GetId(),
                 InsulinValue = viewModel.Value,
                 MeasuringDateTime = DateTime.ParseExact($"{viewModel.MeasuringDate} {viewModel.MeasuringTime}", "yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture),
                 InsulinType = viewModel.Type,
@@ -65,7 +65,7 @@ namespace Diabetes.MVC.Controllers
             {
                 var command = new EditNoteInsulinCommand
                 {
-                    UserId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)),
+                    UserId = User.GetId(),
                     Id = vwId,
                     InsulinValue = viewModel.Value,
                     MeasuringDateTime = DateTime.ParseExact($"{viewModel.MeasuringDate} {viewModel.MeasuringTime}", "yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture),
@@ -79,30 +79,20 @@ namespace Diabetes.MVC.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpGet]
+        [HttpGet("[controller]/[action]/{id}")]
         [Authorize]
         public async Task<IActionResult> DeleteInsulin(Guid id)
         {
-            /*
-            if (!ModelState.IsValid)
+            if(id == Guid.Empty) 
+                return RedirectToAction("Index", "Home");
+            
+            var command = new DeleteNoteInsulinCommand 
             {
-                return View(viewModel);
-            }
-
-            Guid vwId;
-            bool isValid = Guid.TryParse(viewModel.Id, out vwId);
-
-            if (isValid)
-            {
-            */
-                var command = new DeleteNoteInsulinCommand
-                {
-                    UserId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)),
-                    Id = id,
-                };
-
-                await _mediator.Send(command);
-            //}
+                UserId = User.GetId(), 
+                Id = id,
+            };
+            
+            await _mediator.Send(command);
 
             return RedirectToAction("Index", "Home");
         }

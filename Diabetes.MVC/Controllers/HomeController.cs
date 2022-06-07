@@ -9,16 +9,23 @@ using Diabetes.MVC.Models;
 using Diabetes.Persistence;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Diabetes.Domain;
+using Diabetes.Application.ActionHistoryItems.Commands.GetActionHistoryItems;
+using MediatR;
 
 namespace Diabetes.MVC.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly UserManager<Account> _userManager;
+        const int actionHistoryItemsNumber = 5;
 
-        public HomeController(UserManager<Account> userManager)
+        private readonly UserManager<Account> _userManager;
+        private readonly IMediator _mediator;
+
+        public HomeController(IMediator mediator, UserManager<Account> userManager)
         {
             _userManager = userManager;
+            _mediator = mediator;
         }
 
         [Authorize]
@@ -26,45 +33,15 @@ namespace Diabetes.MVC.Controllers
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
-            var list = new List<ActionHistoryItem>
+            var command = new GetActionHistoryItemsCommand
             {
-                new ActionHistoryItem
-                {
-                    Id = Guid.Parse("019A5C4D-03A3-47C6-A1A8-D6E7198A0252"),
-                    Type = ActionHistoryType.Insulin,
-                    Title = "Insulin 1",
-                    Value = "100",
-                    Details = "Короткий",
-                    DateTime = DateTime.Now
-                },
-                new ActionHistoryItem
-                {
-                    Id = Guid.Parse("26F45CC9-089E-4B5F-BED9-9AFA0660AC51"),
-                    Type = ActionHistoryType.GlucoseLevel,
-                    Title = "Глюкоза",
-                    Value = "100",
-                    Details = "Короткий",
-                    DateTime = DateTime.Now
-                },
-                new ActionHistoryItem
-                {
-                    Type = ActionHistoryType.GlucoseLevel,
-                    Title = "Глюкоза",
-                    Value = "20",
-                    Details = "До еды",
-                    DateTime = DateTime.Now
-                },
-                new ActionHistoryItem
-                {
-                    Type = ActionHistoryType.GlucoseLevel,
-                    Title = "Глюкоза",
-                    Value = "50",
-                    Details = "Длинный",
-                    DateTime = DateTime.Now
-                }
+                UserId = new Guid(user.Id),
+                Number = actionHistoryItemsNumber
             };
 
-            var viewModel = new HomeViewModel
+            List<ActionHistoryItem> list = await _mediator.Send(command);
+
+            HomeViewModel viewModel = new HomeViewModel
             {
                 UserName = user.Name,
                 ActionHistoryItems = list

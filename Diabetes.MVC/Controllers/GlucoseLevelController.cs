@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 using System.Security.Claims;
+using Diabetes.MVC.Extensions;
 
 namespace Diabetes.MVC.Controllers
 {
@@ -46,7 +47,7 @@ namespace Diabetes.MVC.Controllers
             // создание команды
             var command = new CreateGlucoseLevelCommand
             {
-                UserId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)),
+                UserId = User.GetId(),
                 ValueInMmol = viewModel.ValueInMmol.Value,
                 Comment = viewModel.Comment,
                 BeforeAfterEating = viewModel.BeforeAfterEating,
@@ -89,27 +90,21 @@ namespace Diabetes.MVC.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpGet] // удаление
+        [HttpGet("[controller]/[action]/{id}")]
         [Authorize]
         public async Task<IActionResult> DeleteGlucoseLevel(Guid id)
-        {
-            /*if (!ModelState.IsValid)
-            {
-                return View(viewModel);
-            }
-            bool isValid = Guid.TryParse(viewModel.Id, out Guid vwId);
-            if (isValid)
-            {
-            */if(id == Guid.Empty) return RedirectToAction("Index", "Home");
-                
-                var command = new DeleteGlucoseLevelCommand
-                {
-                    Id = id
-                };
-
-                await _mediator.Send(command);
-            //}
+        { 
+            if(id == Guid.Empty) 
+                return RedirectToAction("Index", "Home");
             
+            var command = new DeleteGlucoseLevelCommand 
+            {
+                Id = id,
+                UserId = User.GetId()
+            };
+
+            await _mediator.Send(command);
+
             return RedirectToAction("Index", "Home");
         }
     }
