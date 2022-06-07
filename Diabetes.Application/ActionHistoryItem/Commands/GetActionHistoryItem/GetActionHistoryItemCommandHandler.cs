@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Diabetes.Application.ActionHistoryItems.Commands.GetActionHistoryItems
 {
-    public class GetActionHistoryItemsCommandHandler : IRequestHandler<GetActionHistoryItemsCommand, List<ActionHistoryItem>>
+    public class GetActionHistoryItemsCommandHandler : IRequestHandler<GetActionHistoryItemsCommand, List<Domain.ActionHistoryItem>>
     {
         private readonly IGlucoseLevelDbContext _dbContextClucose;
         private readonly INoteInsulinDbContext _dbContextInsulin;
@@ -22,13 +22,13 @@ namespace Diabetes.Application.ActionHistoryItems.Commands.GetActionHistoryItems
             _dbContextInsulin = dbContextInsulin;
         }
 
-        public async Task<List<ActionHistoryItem>> Handle(GetActionHistoryItemsCommand request, CancellationToken cancellationToken)
+        public async Task<List<Domain.ActionHistoryItem>> Handle(GetActionHistoryItemsCommand request, CancellationToken cancellationToken)
         {
             var queryInsulin = await _dbContextInsulin.InsulinNotes
                 .Where(p => p.UserId == request.UserId)
                 .OrderByDescending(p => p.CreationDateTime)
                 .Take(request.Number)
-                .Select(ins=> new ActionHistoryItem
+                .Select(ins=> new Domain.ActionHistoryItem
                 {
                     Id = ins.Id,
                     Type = ActionHistoryType.Insulin,
@@ -44,7 +44,7 @@ namespace Diabetes.Application.ActionHistoryItems.Commands.GetActionHistoryItems
                 .Where(p => p.UserId == request.UserId)
                 .OrderByDescending(p => p.CreationDateTime)
                 .Take(request.Number)
-                .Select(glu=> new ActionHistoryItem
+                .Select(glu=> new Domain.ActionHistoryItem
                 {
                     Id = glu.Id,
                     Type = ActionHistoryType.GlucoseLevel,

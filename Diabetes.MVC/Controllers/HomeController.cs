@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Diabetes.Domain;
 using Diabetes.Application.ActionHistoryItems.Commands.GetActionHistoryItems;
+using Diabetes.Application.ActionHistoryItem.Commands.GetItemForUpdDel;
 using MediatR;
 
 namespace Diabetes.MVC.Controllers
@@ -48,6 +49,28 @@ namespace Diabetes.MVC.Controllers
             };
 
             return View(viewModel);
+        }
+
+        [HttpGet]
+        // тест в postman: GET https://localhost:5001/Home/getrecord
+        // Id - из БД, Type - Глюкоза или Инсулин
+        // (в теории могут попасться записи с одним guid, тк таблицы разные => пока решила разделить)
+
+        // возможно, нужно будет править или вообще убирать метод из контроллера, но для тестов такой вид должен подойти
+        public async Task<IActionResult> getrecord(HistoryItemViewModel viewModel)
+        {
+            ActionHistoryType? type = null;
+            if (viewModel.Type == "Глюкоза") type = ActionHistoryType.GlucoseLevel;
+            else if (viewModel.Type == "Инсулин") type = ActionHistoryType.Insulin;
+
+            GetItemForUpdDelCommand command = new GetItemForUpdDelCommand
+            {
+                Id = Guid.Parse(viewModel.Id),
+                Type = type
+            };
+
+            ActionHistoryItem item = await _mediator.Send(command);
+            /*здесь брейкпоинт, чтобы посмотреть, какая запись нашлась*/ return View(viewModel);
         }
     }
 }
