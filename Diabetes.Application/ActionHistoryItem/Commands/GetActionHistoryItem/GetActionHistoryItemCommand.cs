@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Diabetes.Application.ActionHistoryItems.Commands.GetActionHistoryItems
 {
-    public class GetActionHistoryItemsCommand : IRequest<List<ActionHistoryItem>>
+    public class GetActionHistoryItemsCommand : IRequest<List<Domain.ActionHistoryItem>>
     {
         public Guid UserId { get; set; }
         public int Number { get; set; }

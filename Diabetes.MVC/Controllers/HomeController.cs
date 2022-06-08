@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Diabetes.Domain;
 using Diabetes.Application.ActionHistoryItems.Commands.GetActionHistoryItems;
+using Diabetes.Application.ActionHistoryItem.Commands.GetItemForUpdDel;
 using MediatR;
 
 namespace Diabetes.MVC.Controllers
