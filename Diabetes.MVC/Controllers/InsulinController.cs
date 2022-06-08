@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using Diabetes.Application.NoteInsulin.Commands.GetNoteInsulin;
 using Diabetes.Domain;
 using Diabetes.MVC.Extensions;
 using Microsoft.AspNetCore.Authorization;
@@ -54,14 +55,18 @@ namespace Diabetes.MVC.Controllers
         
         [HttpGet("{id:guid}")]
         [Authorize]
-        public IActionResult EditInsulin(Guid id)
+        public async Task<IActionResult> EditInsulin(Guid id)
         {
-            //Getting item by id
-            var model = new NoteInsulin();
+            var getInsulinCommand = new GetNoteInsulinCommand
+            {
+                Id = id
+            };
+
+            var model = await _mediator.Send(getInsulinCommand);
             
             var viewModel = new EditInsulinViewModel
             {
-                Id = id,
+                Id = model.Id,
                 Value = model.InsulinValue,
                 MeasuringTime = model.MeasuringDateTime.ToString("HH:mm"),
                 MeasuringDate = model.MeasuringDateTime.ToString("yyyy-MM-dd"),

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 using System.Security.Claims;
+using Diabetes.Application.GlucoseLevel.Commands.GetGlucoseLevel;
 using Diabetes.Domain;
 using Diabetes.MVC.Extensions;
 
@@ -65,15 +66,17 @@ namespace Diabetes.MVC.Controllers
         
         [HttpGet("{id:guid}")]
         [Authorize]
-        public IActionResult EditGlucoseLevel(Guid id)
+        public async Task<IActionResult> EditGlucoseLevel(Guid id)
         {
-            //Getting item by id
-            var model = new GlucoseLevel();
-            
+            var getGlucoseCommand = new GetGlucoseLevelCommand
+            {
+                Id = id
+            };
+            var model = await _mediator.Send(getGlucoseCommand);
+
             var viewModel = new EditGlucoseLevelViewModel
             {
-                Id = id,
-                
+                Id = model.Id,
                 ValueInMmol = model.ValueInMmol,
                 MeasuringTime = model.MeasuringDateTime.ToString("HH:mm"),
                 MeasuringDate = model.MeasuringDateTime.ToString("yyyy-MM-dd"),
