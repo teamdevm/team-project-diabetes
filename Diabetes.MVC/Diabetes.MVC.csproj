@@ -29,4 +29,8 @@
       <PackageReference Include="PiotrTrojan.AspNetCore.IdentityErrorLocalization.ru-RU" Version="1.0.7" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Models\Home" />
+    </ItemGroup>
+
 </Project>
