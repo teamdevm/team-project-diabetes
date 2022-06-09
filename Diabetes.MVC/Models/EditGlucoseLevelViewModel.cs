@@ -7,7 +7,8 @@ namespace Diabetes.MVC.Models
     public class EditGlucoseLevelViewModel
     {
         [Required(ErrorMessage = "Обязательное поле")]
-        [Range(0, 20, ErrorMessage = "Значение должно быть от 0 до 20")]
+        [RegularExpression("^[1-9]([0-9]{0,1})?(\\,[0-9]{1,2})?$", 
+            ErrorMessage = "Допустимы числа от 1 до 100, с двумя знаками после запятой и разделителем - \',\'")]
         [DisplayName("Значение в ммоль/л")]
         public double? ValueInMmol { get; set; }
 
