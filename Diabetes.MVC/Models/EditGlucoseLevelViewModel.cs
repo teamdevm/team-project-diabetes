@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Diabetes.MVC.Models
 {
-    public class UpdateGlucoseLevelViewModel
+    public class EditGlucoseLevelViewModel
     {
         [Required(ErrorMessage = "Обязательное поле")]
         [Range(0, 20, ErrorMessage = "Значение должно быть от 0 до 20")]
@@ -26,7 +26,7 @@ namespace Diabetes.MVC.Models
         [DisplayName("Заметка")]
         public string Comment { get; set; }
 
-        public string Id { get; set; }
+        public Guid Id { get; set; }
         public string ReturnUrl { get; set; }
     }
 }

@@ -1,18 +1,14 @@
-﻿@using Diabetes.Domain
-@model Diabetes.MVC.Models.HomeViewModel
+@using Diabetes.Domain
+@model Diabetes.MVC.Models.ActionsViewModel
 
 @{
-    ViewData["Title"] = "Домашняя страница";
+    ViewData["Title"] = "Записи";
 }
-
-<div class="container mobile-container">
-    <h1>Привет, @Model.UserName</h1>
-</div>
 
 <div class="row mt-5"></div>
 
 <div class="container mobile-container">
-    <h2>Последние действия</h2>
+    <h2>Все действия</h2>
 </div>
 
 <div class="row mt-3"></div>
@@ -50,10 +46,5 @@
             </div>
         </div>
     }
-    
-    <div class="row mt-3"></div>
-    <div class="row">
-        <a class="btn btn-primary" asp-controller="Home" asp-action="Actions">Показать больше</a>
-    </div>
 
 </div>

@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Diabetes.Application.Interfaces;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Diabetes.Application.GlucoseLevel.Commands.UpdateGlucosesLevel
 {
@@ -17,19 +18,21 @@ namespace Diabetes.Application.GlucoseLevel.Commands.UpdateGlucosesLevel
         public async Task<Unit> Handle(UpdateGlucoseLevelCommand request, CancellationToken cancellationToken)
         {
             //ищем уровень глюкозы в БД
-            var keys = new object[1] { request.Id };
-            var glucoseLevel = _dbContext.GlucoseLevels.FindAsync(keys, cancellationToken).Result;
-            if (glucoseLevel == null) throw new Exception ("Value not found");
+            var glucoseLevel = _dbContext.GlucoseLevels.FirstOrDefaultAsync
+                (g=>g.Id == request.Id && g.UserId == request.UserId, cancellationToken).Result;
+            if (glucoseLevel != null)
+            {
+                //обновляем поля
+                glucoseLevel.BeforeAfterEating = request.BeforeAfterEating;
+                glucoseLevel.Comment = request.Comment;
+                glucoseLevel.MeasuringDateTime = request.MeasuringDateTime;
+                glucoseLevel.ValueInMmol = request.ValueInMmol;
+                glucoseLevel.CreationDateTime = DateTime.Now;
 
-            //обновляем поля
-            glucoseLevel.BeforeAfterEating = request.BeforeAfterEating;
-            glucoseLevel.Comment = request.Comment;
-            glucoseLevel.MeasuringDateTime = request.MeasuringDateTime;
-            glucoseLevel.ValueInMmol = request.ValueInMmol;
-
-            //сохраняем изменения
-            _dbContext.GlucoseLevels.Update(glucoseLevel);
-            await _dbContext.SaveChangesAsync(cancellationToken);
+                //сохраняем изменения
+                _dbContext.GlucoseLevels.Update(glucoseLevel);
+                await _dbContext.SaveChangesAsync(cancellationToken);
+            }
 
             return Unit.Value;
         }
