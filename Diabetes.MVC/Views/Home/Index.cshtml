@@ -1,11 +1,12 @@
-﻿@model Diabetes.MVC.Models.HomeViewModel
+﻿@using Diabetes.Domain
+@model Diabetes.MVC.Models.HomeViewModel
 
 @{
-     ViewData["Title"] = "Домашняя страница";
- }
+    ViewData["Title"] = "Домашняя страница";
+}
 
 <div class="container mobile-container">
-    <h1>Привет, Name</h1>
+    <h1>Привет, @Model.UserName</h1>
 </div>
 
 <div class="row mt-5"></div>
@@ -29,19 +30,30 @@
                         <p class="card-text"><small class="text-muted">@item.DateTime.ToString("dd-MM-yyyy HH:mm")</small></p>
                     </div>
                 </div>
-                <div class="col-2 d-flex align-items-center">
-                    <a href="#"><img src="~/icons/edit.svg"></a>
-                </div>
-                <div class="col-1 d-flex align-items-center">
-                    <a href="#"><img src="~/icons/delete.svg"></a>
-                </div>
+                @if (item.Type == ActionHistoryType.GlucoseLevel)
+                {
+                    <div class="col-2 d-flex align-items-center">
+                        <a asp-controller="GlucoseLevel" asp-action="EditGlucoseLevel" asp-route-id="@item.Id"><img src="~/icons/edit.svg"></a>
+                    </div>
+                    <div class="col-1 d-flex align-items-center">
+                        <a asp-controller="GlucoseLevel" asp-action="DeleteGlucoseLevel" asp-route-id="@item.Id"><img src="~/icons/delete.svg"></a>
+                    </div>
+                }else if (item.Type == ActionHistoryType.Insulin)
+                {
+                    <div class="col-2 d-flex align-items-center">
+                        <a asp-controller="Insulin" asp-action="EditInsulin" asp-route-id="@item.Id"><img src="~/icons/edit.svg"></a>
+                    </div>
+                    <div class="col-1 d-flex align-items-center">
+                        <a asp-controller="Insulin" asp-action="DeleteInsulin" asp-route-id="@item.Id"><img src="~/icons/delete.svg"></a>
+                    </div>
+                }
             </div>
         </div>
     }
     
     <div class="row mt-3"></div>
     <div class="row">
-        <button class="btn btn-primary">Показать больше</button>
+        <a class="btn btn-primary" asp-controller="Home" asp-action="Actions">Показать больше</a>
     </div>
 
 </div>

@@ -1,0 +1,52 @@
+@model Diabetes.MVC.Models.EditInsulinViewModel
+
+@{
+    ViewData["Title"] = "Инсулин";
+}
+
+<form asp-controller="Insulin" asp-action="EditInsulin" method="post">
+    <div class="mb-3">
+        <input asp-for="Id" class="form-control invisible">
+    </div>
+    <div class="mb-3">
+        <label asp-for="Value" class="form-label"></label>
+        <input asp-for="Value" class="form-control" type="number">
+        <span asp-validation-for="Value" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="MeasuringDate" class="form-label"></label>
+        <input asp-for="MeasuringDate" type="date" class="form-control" id="datePicker">
+        <span asp-validation-for="MeasuringDate" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="MeasuringTime" class="form-label"></label>
+        <input asp-for="MeasuringTime" type="time" class="form-control" id="timePicker">
+        <span asp-validation-for="MeasuringTime" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Comment" class="form-label"></label>
+        <textarea asp-for="Comment" class="form-control"></textarea>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Type" class="form-label"></label>
+        <select id="select" name="type" onchange="$('#type').val(this.value)">
+            @if (Model.Type == "Long")
+            {
+                <option selected  value="Long">Длинный</option>
+                <option value="Short">Короткий</option>
+            }
+            else
+            {
+                <option  value="Long">Длинный</option>
+                <option selected value="Short">Короткий</option>
+            }
+            
+        </select>
+        <input asp-for="Type" id="type" value="Long" class="invisible">
+        <span asp-validation-for="Type" class="text-danger"></span>
+    </div>
+    <div class="col-lg-6 col-sm-8 pull-right">
+        <a class="btn btn-default" asp-controller="Home" asp-action="Index" onchange="setSelection()">Отмена</a>
+        <button class="btn btn-success" id="btn" type="submit">Подтвердить</button>
+    </div>
+</form>

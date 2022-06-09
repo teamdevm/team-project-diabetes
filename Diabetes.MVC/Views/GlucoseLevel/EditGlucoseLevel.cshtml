@@ -1,0 +1,53 @@
+@using Diabetes.MVC.Models.Components
+@model Diabetes.MVC.Models.EditGlucoseLevelViewModel
+
+@{
+    ViewData["Title"] = "Уровень глюкозы";
+}
+
+<form asp-controller="GlucoseLevel" asp-action="EditGlucoseLevel" method="post">
+    <div class="mb-3">
+        <input asp-for="Id" class="form-control invisible">
+    </div>
+    <div class="mb-3">
+        <label asp-for="ValueInMmol" class="form-label"></label>
+        <input asp-for="ValueInMmol" class="form-control" type="number" step="0.01">
+        <span asp-validation-for="ValueInMmol" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="MeasuringDate" class="form-label"></label>
+        <input asp-for="MeasuringDate" type="date" class="form-control" id="datePicker" min="0001-01-01" max="9999-12-31">
+        <span asp-validation-for="MeasuringDate" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="MeasuringTime" class="form-label"></label>
+        <input asp-for="MeasuringTime" type="time" class="form-control" id="timePicker">
+        <span asp-validation-for="MeasuringTime" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Comment" class="form-label"></label>
+        <textarea asp-for="Comment" class="form-control"></textarea>
+    </div>
+    <div class="mb-3">
+        <label asp-for="BeforeAfterEating" class="form-label"></label>
+        <select id="select" name="eating" onchange="$('#eatingValue').val(this.value)">
+            @if (Model.BeforeAfterEating == "Before")
+            {
+                <option selected value="Before">До еды</option>
+                <option value="After">После еды</option>
+            }
+            else
+            {
+                <option value="Before">До еды</option>
+                <option selected value="After">После еды</option>
+            }
+
+        </select>
+        <input asp-for="BeforeAfterEating" id="eatingValue" value="Before" class="invisible" onchange="setSelection()">
+        <span asp-validation-for="BeforeAfterEating" class="text-danger"></span>
+    </div>
+    <div class="col-lg-6 col-sm-8 pull-right">
+        <a class="btn btn-default" asp-controller="Home" asp-action="Index">Отмена</a>
+        <button class="btn btn-success" id="btn" type="submit">Подтвердить</button>
+    </div>
+</form>
