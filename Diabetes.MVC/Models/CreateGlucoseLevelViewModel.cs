@@ -1,16 +1,21 @@
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Diabetes.MVC.Attributes.Validation;
 
 namespace Diabetes.MVC.Models
 {
     public class CreateGlucoseLevelViewModel
     { 
         [Required(ErrorMessage = "Обязательное поле")]
-        [RegularExpression("^[1-9]([0-9]{0,1})?(\\,[0-9]{1,2})?$", 
-            ErrorMessage = "Допустимы числа от 1 до 100, с двумя знаками после запятой и разделителем - \',\'")]
+        [Double(1,20, ErrorMessage = "Допустимы числа от 1 до 20, с двумя знаками после запятой")]
         [DisplayName("Значение в ммоль/л")]
-        public double? ValueInMmol { get; set; }
+        public string ValueInMmol {
+            get => _valueInMmol?.Replace('.',',');
+            init => _valueInMmol = value;
+        }
+
+        private readonly string _valueInMmol = "";
         
         [Required(ErrorMessage = "Обязательное поле")]
         [DisplayName("Дата измерения")]

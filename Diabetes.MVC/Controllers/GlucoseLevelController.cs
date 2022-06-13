@@ -51,7 +51,7 @@ namespace Diabetes.MVC.Controllers
             var command = new CreateGlucoseLevelCommand
             {
                 UserId = User.GetId(),
-                ValueInMmol = viewModel.ValueInMmol.Value,
+                ValueInMmol = double.Parse(viewModel.ValueInMmol),
                 Comment = viewModel.Comment,
                 BeforeAfterEating = viewModel.BeforeAfterEating,
                 MeasuringDateTime = DateTime.ParseExact($"{viewModel.MeasuringDate} " +
@@ -77,7 +77,7 @@ namespace Diabetes.MVC.Controllers
             var viewModel = new EditGlucoseLevelViewModel
             {
                 Id = model.Id,
-                ValueInMmol = model.ValueInMmol,
+                ValueInMmol = model.ValueInMmol.ToString(),
                 MeasuringTime = model.MeasuringDateTime.ToString("HH:mm"),
                 MeasuringDate = model.MeasuringDateTime.ToString("yyyy-MM-dd"),
                 Comment = model.Comment,
@@ -100,7 +100,7 @@ namespace Diabetes.MVC.Controllers
             {
                 Id = viewModel.Id,
                 UserId = User.GetId(),
-                ValueInMmol = viewModel.ValueInMmol.Value,
+                ValueInMmol = double.Parse(viewModel.ValueInMmol),
                 Comment = viewModel.Comment,
                 BeforeAfterEating = viewModel.BeforeAfterEating,
                 MeasuringDateTime = DateTime.ParseExact($"{viewModel.MeasuringDate} " +
