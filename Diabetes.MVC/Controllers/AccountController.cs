@@ -41,7 +41,7 @@ namespace Diabetes.MVC.Controllers
                     Email = model.Email,
                     Name = model.Name,
                     UserName = model.Email,
-                    Birthdate = model.Birthdate.Value,
+                    Birthdate = model.Birthdate,
                     Gender = model.Gender,
                     Height = model.Height,
                     Weight = model.Weight,
