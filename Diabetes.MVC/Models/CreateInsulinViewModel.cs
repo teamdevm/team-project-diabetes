@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Diabetes.MVC.Attributes.Validation;
 using Diabetes.Domain.Normalized.Enums;
 
 namespace Diabetes.MVC.Models
@@ -7,9 +8,14 @@ namespace Diabetes.MVC.Models
     public class CreateInsulinViewModel
     { 
         [Required(ErrorMessage = "Обязательное поле")]
-        [Range(0,100, ErrorMessage = "Значение должно быть от 0 до 100")]
         [DisplayName("Значение (ед.)")]
-        public double Value { get; set; }
+        [Double(1,100, ErrorMessage = "Допустимы числа от 1 до 100, с двумя знаками после запятой")]
+        public string Value {
+            get => _value?.Replace('.',',');
+            init => _value = value;
+        }
+
+        private readonly string _value = "";
         
         [Required(ErrorMessage = "Обязательное поле")]
         [DisplayName("Дата измерения")]

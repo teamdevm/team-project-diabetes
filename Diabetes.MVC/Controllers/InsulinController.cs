@@ -41,7 +41,7 @@ namespace Diabetes.MVC.Controllers
             var command = new CreateNoteInsulinCommand
             {
                 UserId = User.GetId(),
-                InsulinValue = viewModel.Value,
+                InsulinValue = double.Parse(viewModel.Value),
                 MeasuringDateTime = DateTime.ParseExact($"{viewModel.MeasuringDate} {viewModel.MeasuringTime}", 
                     "yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture),
                 InsulinType = viewModel.InsulinType,
@@ -67,7 +67,7 @@ namespace Diabetes.MVC.Controllers
             var viewModel = new EditInsulinViewModel
             {
                 Id = model.Id,
-                Value = model.Value.Value,
+                Value = model.Value.ToString(), 
                 MeasuringTime = model.MeasuringDateTime.ToString("HH:mm"),
                 MeasuringDate = model.MeasuringDateTime.ToString("yyyy-MM-dd"),
                 Comment = model.Comment,
@@ -89,7 +89,7 @@ namespace Diabetes.MVC.Controllers
             {
                 UserId = User.GetId(),
                 Id = viewModel.Id,
-                InsulinValue = viewModel.Value,
+                InsulinValue = double.Parse(viewModel.Value),
                 MeasuringDateTime = DateTime.ParseExact($"{viewModel.MeasuringDate} {viewModel.MeasuringTime}",
                         "yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture),
                 InsulinType = viewModel.InsulinType,

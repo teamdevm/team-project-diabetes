@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Diabetes.MVC.Attributes.Validation;
 using Diabetes.Domain.Normalized.Enums;
 
 namespace Diabetes.MVC.Models
@@ -8,9 +9,14 @@ namespace Diabetes.MVC.Models
     public class EditGlucoseLevelViewModel
     {
         [Required(ErrorMessage = "Обязательное поле")]
-        [Range(0, 20, ErrorMessage = "Значение должно быть от 0 до 20")]
         [DisplayName("Значение в ммоль/л")]
-        public double? ValueInMmol { get; set; }
+        [Double(1,20, ErrorMessage = "Допустимы числа от 1 до 20, с двумя знаками после запятой")]
+        public string ValueInMmol {
+            get => _valueInMmol?.Replace('.',',');
+            init => _valueInMmol = value;
+        }
+
+        private readonly string _valueInMmol = "";
 
         [Required(ErrorMessage = "Обязательное поле")]
         [DisplayName("Дата измерения")]

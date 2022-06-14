@@ -40,6 +40,11 @@ namespace Diabetes.MVC
                 })
                 .AddRussianIdentityErrorDescriber()
                 .AddEntityFrameworkStores<AccountContext>();
+            
+            services.AddMvcCore().AddMvcOptions(options =>
+            {
+                options.ModelBindingMessageProvider.SetAttemptedValueIsInvalidAccessor((x,y) => $"Значение \"{x}\" недопустимо");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
