@@ -17,13 +17,13 @@ namespace Diabetes.Application.GlucoseLevel.Commands.DeleteGlucoseLevel
 
         public async Task<Unit> Handle(DeleteGlucoseLevelCommand request, CancellationToken cancellationToken)
         {
-            var glucoseLevel = await _dbContext.GlucoseLevels
+            var glucose = await _dbContext.GlucoseNotes
                 .FirstOrDefaultAsync(g=>g.Id == request.Id && g.UserId == request.UserId, cancellationToken);
 
-            if (glucoseLevel != null)
+            if (glucose != null)
             {
                 //удаляем и сохраняем изменения
-                _dbContext.GlucoseLevels.Remove(glucoseLevel);
+                _dbContext.GlucoseNotes.Remove(glucose);
                 await _dbContext.SaveChangesAsync(cancellationToken);
             }
 
