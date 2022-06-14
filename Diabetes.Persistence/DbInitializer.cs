@@ -6,7 +6,6 @@ namespace Diabetes.Persistence
     {
         public static void Initialize(DbContext context)
         {
-            context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
         }
     }
