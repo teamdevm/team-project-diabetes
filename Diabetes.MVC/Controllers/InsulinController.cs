@@ -44,7 +44,7 @@ namespace Diabetes.MVC.Controllers
                 InsulinValue = double.Parse(viewModel.Value),
                 MeasuringDateTime = DateTime.ParseExact($"{viewModel.MeasuringDate} {viewModel.MeasuringTime}", 
                     "yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture),
-                InsulinType = viewModel.Type,
+                InsulinType = viewModel.InsulinType,
                 Comment = viewModel.Comment
             };
 
@@ -67,11 +67,11 @@ namespace Diabetes.MVC.Controllers
             var viewModel = new EditInsulinViewModel
             {
                 Id = model.Id,
-                Value = model.InsulinValue.ToString(),
+                Value = model.Value.ToString(), 
                 MeasuringTime = model.MeasuringDateTime.ToString("HH:mm"),
                 MeasuringDate = model.MeasuringDateTime.ToString("yyyy-MM-dd"),
                 Comment = model.Comment,
-                Type = model.InsulinType
+                InsulinType = model.InsulinType
             };
             
             return View(viewModel);
@@ -92,7 +92,7 @@ namespace Diabetes.MVC.Controllers
                 InsulinValue = double.Parse(viewModel.Value),
                 MeasuringDateTime = DateTime.ParseExact($"{viewModel.MeasuringDate} {viewModel.MeasuringTime}",
                         "yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture),
-                InsulinType = viewModel.Type,
+                InsulinType = viewModel.InsulinType,
                 Comment = viewModel.Comment
 
             };

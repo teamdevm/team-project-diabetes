@@ -1,3 +1,4 @@
+@using Diabetes.Domain.Normalized.Enums
 @model Diabetes.MVC.Models.EditInsulinViewModel
 
 @{
@@ -28,22 +29,9 @@
         <textarea asp-for="Comment" class="form-control"></textarea>
     </div>
     <div class="mb-3">
-        <label asp-for="Type" class="form-label"></label>
-        <select id="select" name="type" onchange="$('#type').val(this.value)">
-            @if (Model.Type == "Long")
-            {
-                <option selected  value="Long">Длинный</option>
-                <option value="Short">Короткий</option>
-            }
-            else
-            {
-                <option  value="Long">Длинный</option>
-                <option selected value="Short">Короткий</option>
-            }
-            
-        </select>
-        <input asp-for="Type" id="type" value="Long" class="invisible">
-        <span asp-validation-for="Type" class="text-danger"></span>
+        <label asp-for="InsulinType" class="form-label"></label>
+        <select asp-for="InsulinType" asp-items="Html.GetEnumSelectList<InsulinType>()"></select>
+        <span asp-validation-for="InsulinType" class="text-danger"></span>
     </div>
     <div class="col-lg-6 col-sm-8 pull-right">
         <a class="btn btn-default" asp-controller="Home" asp-action="Index" onchange="setSelection()">Отмена</a>

@@ -1,0 +1,40 @@
+@using Diabetes.Domain.Normalized.Enums
+@model Diabetes.MVC.Models.Components.ActionItemsListViewModel
+
+@foreach (var item in Model.Items)
+{
+    <div class="card mb-3">
+        <div class="row no-gutters">
+            <div class="col-8">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Title</h5>
+                    <h4 class="card-text">@item.Value</h4>
+                    <span class="card-text"><small >@item.Details</small></span>
+                    <p class="card-text"><small class="text-muted">@item.DateTime.ToString("dd-MM-yyyy HH:mm")</small></p>
+                </div>
+            </div>
+            @switch(item.Type)
+            {
+                case NoteType.Glucose:
+                    <div class="col-2 d-flex align-items-center">
+                        <a asp-controller="GlucoseLevel" asp-action="EditGlucoseLevel" asp-route-id="@item.Id"><img src="~/icons/edit.svg"></a>
+                    </div>
+                    <div class="col-1 d-flex align-items-center">
+                        <a asp-controller="GlucoseLevel" asp-action="DeleteGlucoseLevel" asp-route-id="@item.Id"><img src="~/icons/delete.svg"></a>
+                    </div>
+                    break;
+                        
+                case NoteType.Insulin:
+                    <div class="col-2 d-flex align-items-center">
+                        <a asp-controller="Insulin" asp-action="EditInsulin" asp-route-id="@item.Id"><img src="~/icons/edit.svg"></a>
+                    </div>
+                    <div class="col-1 d-flex align-items-center">
+                        <a asp-controller="Insulin" asp-action="DeleteInsulin" asp-route-id="@item.Id"><img src="~/icons/delete.svg"></a>
+                    </div>
+                    break;
+                case NoteType.Carbohydrate:
+                    break;
+            }
+        </div>
+    </div>
+}

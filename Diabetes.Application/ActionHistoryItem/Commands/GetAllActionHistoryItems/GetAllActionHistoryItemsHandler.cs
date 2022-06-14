@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Diabetes.Application.ActionHistoryItems.Commands.GetActionHistoryItems;
 using Diabetes.Application.Interfaces;
 using Diabetes.Domain;
+using Diabetes.Domain.Normalized.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,32 +27,14 @@ namespace Diabetes.Application.ActionHistoryItem.Commands.GetAllActionHistoryIte
         {
             var queryInsulin = await _dbContextInsulin.InsulinNotes
                 .Where(p => p.UserId == request.UserId)
-                .OrderByDescending(p => p.CreationDateTime)
-                .Select(ins=> new Domain.ActionHistoryItem
-                {
-                    Id = ins.Id,
-                    Type = ActionHistoryType.Insulin,
-                    Title = "Инсулин",
-                    Value = ins.InsulinValue.ToString(),
-                    Details = ins.InsulinType,
-                    DateTime = ins.MeasuringDateTime,
-                    CreationDateTime = ins.CreationDateTime
-                })
+                .OrderByDescending(p => p.LastUpdate)
+                .Select(ins=> ins.ToHistoryItem())
                 .ToListAsync(cancellationToken);
             
-            var queryGlucose = await _dbContextClucose.GlucoseLevels
+            var queryGlucose = await _dbContextClucose.GlucoseNotes
                 .Where(p => p.UserId == request.UserId)
-                .OrderByDescending(p => p.CreationDateTime)
-                .Select(glu=> new Domain.ActionHistoryItem
-                {
-                    Id = glu.Id,
-                    Type = ActionHistoryType.GlucoseLevel,
-                    Title = "Глюкоза",
-                    Value = glu.ValueInMmol.ToString(),
-                    Details = glu.BeforeAfterEating,
-                    DateTime = glu.MeasuringDateTime,
-                    CreationDateTime = glu.CreationDateTime
-                })
+                .OrderByDescending(p => p.LastUpdate)
+                .Select(glu=> glu.ToHistoryItem())
                 .ToListAsync(cancellationToken);
 
             var actions = queryInsulin.Union(queryGlucose)

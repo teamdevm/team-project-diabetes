@@ -53,7 +53,7 @@ namespace Diabetes.MVC.Controllers
                 UserId = User.GetId(),
                 ValueInMmol = double.Parse(viewModel.ValueInMmol),
                 Comment = viewModel.Comment,
-                BeforeAfterEating = viewModel.BeforeAfterEating,
+                MeasuringTimeType = viewModel.MeasuringTimeType,
                 MeasuringDateTime = DateTime.ParseExact($"{viewModel.MeasuringDate} " +
                 $"{viewModel.MeasuringTime}", "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture)
             };
@@ -77,11 +77,11 @@ namespace Diabetes.MVC.Controllers
             var viewModel = new EditGlucoseLevelViewModel
             {
                 Id = model.Id,
-                ValueInMmol = model.ValueInMmol.ToString(),
+                ValueInMmol = model.Value.ToString(), 
                 MeasuringTime = model.MeasuringDateTime.ToString("HH:mm"),
                 MeasuringDate = model.MeasuringDateTime.ToString("yyyy-MM-dd"),
                 Comment = model.Comment,
-                BeforeAfterEating = model.BeforeAfterEating
+                MeasuringTimeType = model.MeasuringTimeType
             };
 
             return View(viewModel);
@@ -102,7 +102,7 @@ namespace Diabetes.MVC.Controllers
                 UserId = User.GetId(),
                 ValueInMmol = double.Parse(viewModel.ValueInMmol),
                 Comment = viewModel.Comment,
-                BeforeAfterEating = viewModel.BeforeAfterEating,
+                MeasuringTimeType = viewModel.MeasuringTimeType,
                 MeasuringDateTime = DateTime.ParseExact($"{viewModel.MeasuringDate} " +
                 $"{viewModel.MeasuringTime}", "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture)
             };

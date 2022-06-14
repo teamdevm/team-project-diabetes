@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Diabetes.MVC.Attributes.Validation;
+using Diabetes.Domain.Normalized.Enums;
 
 namespace Diabetes.MVC.Models
 {
@@ -31,7 +32,7 @@ namespace Diabetes.MVC.Models
         
         [Required(ErrorMessage = "Обязательное поле")]
         [DisplayName("Тип инсулина")]
-        public string Type { get; set; }
+        public InsulinType InsulinType { get; set; }
         
         [DisplayName("Заметка")]
         public string Comment { get; set; }

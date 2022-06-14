@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Diabetes.MVC.Attributes.Validation;
+using Diabetes.Domain.Normalized.Enums;
 
 namespace Diabetes.MVC.Models
 {
@@ -27,7 +28,7 @@ namespace Diabetes.MVC.Models
         
         [Required(ErrorMessage = "Обязательное поле")]
         [DisplayName("До или после еды")]
-        public string BeforeAfterEating { get; set; }
+        public MeasuringTimeType MeasuringTimeType { get; set; }
         
         [DisplayName("Заметка")]
         public string Comment { get; set; }

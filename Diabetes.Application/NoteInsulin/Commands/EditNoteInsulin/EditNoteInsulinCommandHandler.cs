@@ -18,17 +18,17 @@ namespace Diabetes.Application.NoteInsulin.Commands.CreateNoteInsulin
 
         public async Task<Unit> Handle(EditNoteInsulinCommand request, CancellationToken cancellationToken)
         {
-            var insulin = _dbContext.InsulinNotes.FirstOrDefaultAsync
-                (i=>i.Id == request.Id && i.UserId == request.UserId, cancellationToken).Result;
+            var insulin = await _dbContext.InsulinNotes
+                .FirstOrDefaultAsync(i=>i.Id == request.Id && i.UserId == request.UserId, cancellationToken);
 
             if (insulin != null)
             {
 
-                insulin.InsulinValue = request.InsulinValue;
+                insulin.Value = request.InsulinValue;
                 insulin.MeasuringDateTime = request.MeasuringDateTime;
                 insulin.InsulinType = request.InsulinType;
                 insulin.Comment = request.Comment;
-                insulin.CreationDateTime = DateTime.Now;
+                insulin.LastUpdate = DateTime.Now;
 
                 _dbContext.InsulinNotes.Update(insulin);
                 await _dbContext.SaveChangesAsync(cancellationToken);

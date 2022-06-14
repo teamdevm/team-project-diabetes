@@ -1,4 +1,5 @@
 @using Diabetes.MVC.Models.Components
+@using Diabetes.Domain.Normalized.Enums
 @model Diabetes.MVC.Models.CreateGlucoseLevelViewModel
 
 @await Component.InvokeAsync("AddSelector", new{ model = new AddSelectorModel(false, false, true) })
@@ -28,13 +29,9 @@
         <textarea asp-for="Comment" class="form-control"></textarea>
     </div>
     <div class="mb-3">
-        <label asp-for="BeforeAfterEating" class="form-label"></label>
-        <select name="eating" onchange="$('#eatingValue').val(this.value)">
-            <option value="Before">До еды</option>
-            <option value="After">После еды</option>
-        </select>
-        <input asp-for="BeforeAfterEating" id="eatingValue" value="Before" class="invisible">
-        <span asp-validation-for="BeforeAfterEating" class="text-danger"></span>
+        <label asp-for="MeasuringTimeType" class="form-label"></label>
+        <select asp-for="MeasuringTimeType" asp-items="Html.GetEnumSelectList<MeasuringTimeType>()"></select>
+        <span asp-validation-for="MeasuringTimeType" class="text-danger"></span>
     </div>
     <div class="col-lg-6 col-sm-8 pull-right">
         <a class="btn btn-default" asp-controller="Home" asp-action="Index">Отмена</a>

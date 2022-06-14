@@ -1,3 +1,4 @@
+@using Diabetes.Domain.Normalized.Enums.User
 @model Diabetes.MVC.Models.User.RegisterViewModel
 
 @{
@@ -29,11 +30,7 @@
     </div>
     <div class="mb-3">
         <label asp-for="DiabetesType" class="form-label"></label>
-        <select name="diabetes" onchange="$('#diebetesType').val(this.value)">
-            <option value="Type 1">Первый тип</option>
-            <option value="Type 2">Второй тип</option>
-        </select>
-        <input asp-for="DiabetesType" id="diebetesType" value="Type 1" class="invisible">
+        <select asp-for="DiabetesType" asp-items="Html.GetEnumSelectList<DiabetesType>()"></select>
         <span asp-validation-for="DiabetesType" class="text-danger"></span>
     </div>
     <div class="mb-3">
@@ -43,11 +40,7 @@
     </div>
     <div class="mb-3">
         <label asp-for="Gender" class="form-label"></label>
-        <select name="gender" onchange="$('#gender').val(this.value)">
-            <option value="Male">Мужской</option>
-            <option value="Female">Женский</option>
-        </select>
-        <input asp-for="Gender" id="gender" value="Male" class="invisible">
+        <select asp-for="Gender" asp-items="Html.GetEnumSelectList<Gender>()"></select>
         <span asp-validation-for="Gender" class="text-danger"></span>
     </div>
     <div class="mb-3">
