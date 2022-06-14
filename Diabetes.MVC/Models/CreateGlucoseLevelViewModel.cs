@@ -12,7 +12,7 @@ namespace Diabetes.MVC.Models
         [Double(1,20, ErrorMessage = "Допустимы числа от 1 до 20, с двумя знаками после запятой")]
         [DisplayName("Значение в ммоль/л")]
         public string ValueInMmol {
-            get => _valueInMmol?.Replace('.',',');
+            get => _valueInMmol?.Replace(',','.');
             init => _valueInMmol = value;
         }
 

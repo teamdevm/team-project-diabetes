@@ -3,6 +3,7 @@ using Diabetes.MVC.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Globalization;
 using System.Threading.Tasks;
 using Diabetes.Application.NoteInsulin.Commands.GetNoteInsulin;
 using Diabetes.Domain;
@@ -41,7 +42,7 @@ namespace Diabetes.MVC.Controllers
             var command = new CreateNoteInsulinCommand
             {
                 UserId = User.GetId(),
-                InsulinValue = double.Parse(viewModel.Value),
+                InsulinValue = double.Parse(viewModel.Value, NumberStyles.Float, CultureInfo.InvariantCulture),
                 MeasuringDateTime = DateTime.ParseExact($"{viewModel.MeasuringDate} {viewModel.MeasuringTime}", 
                     "yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture),
                 InsulinType = viewModel.InsulinType,
@@ -89,7 +90,7 @@ namespace Diabetes.MVC.Controllers
             {
                 UserId = User.GetId(),
                 Id = viewModel.Id,
-                InsulinValue = double.Parse(viewModel.Value),
+                InsulinValue = double.Parse(viewModel.Value, NumberStyles.Float, CultureInfo.InvariantCulture),
                 MeasuringDateTime = DateTime.ParseExact($"{viewModel.MeasuringDate} {viewModel.MeasuringTime}",
                         "yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture),
                 InsulinType = viewModel.InsulinType,

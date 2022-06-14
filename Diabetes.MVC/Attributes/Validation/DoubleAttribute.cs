@@ -24,8 +24,8 @@ namespace Diabetes.MVC.Attributes.Validation
         {
             var regex = new Regex("^[1-9]([0-9]{0,2})?((\\,|\\.)[0-9]{1,2})?$");
             var match = regex.IsMatch(value);
-            value = value.Replace('.', ',');
-            var parse = double.TryParse(value, out var res);
+            value = value.Replace(',', '.');
+            var parse = double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture , out var res);
             return  match && 
                     parse &&
                     res >= _min && res <= _max;
