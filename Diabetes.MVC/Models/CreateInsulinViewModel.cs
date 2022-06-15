@@ -11,7 +11,7 @@ namespace Diabetes.MVC.Models
         [DisplayName("Значение (ед.)")]
         [Double(1,100, ErrorMessage = "Допустимы числа от 1 до 100, с двумя знаками после запятой")]
         public string Value {
-            get => _value?.Replace('.',',');
+            get => _value?.Replace(',','.');
             init => _value = value;
         }
 
