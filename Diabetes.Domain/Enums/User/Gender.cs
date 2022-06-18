@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Diabetes.Domain.Normalized.Enums.User
+namespace Diabetes.Domain.Enums.User
 {
     public enum Gender
     {

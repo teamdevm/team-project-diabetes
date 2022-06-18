@@ -1,4 +1,6 @@
-namespace Diabetes.Domain.Normalized.Enums
+using Diabetes.Domain.Normalized.Enums;
+
+namespace Diabetes.Domain.Enums
 {
     public static class EnumsExtensions
     {

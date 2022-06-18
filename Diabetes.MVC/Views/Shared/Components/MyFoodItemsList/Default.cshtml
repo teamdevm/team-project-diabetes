@@ -1,0 +1,24 @@
+@model Diabetes.MVC.Models.Components.UsersFoodItemsListViewModel
+
+@foreach (var item in Model.Items)
+{
+    <details class="card">
+        <summary>
+            <div class="row no-gutters">
+                <div class="col-10">
+                    <div class="card-body">
+                        <h4 class="card-text">@item.Name</h4>
+                        <div class="d-flex justify-content-between">
+                            <span class="card-text"><small class="text-muted">Ккал/Ж/Б/У</small></span>
+                            <span class="card-text"><small class="text-muted">@item.Kcal/@item.Fat/@item.Protein/@item.Carbohydrate</small></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-1 d-flex align-items-center">
+                    <a asp-controller="" asp-action="" asp-route-id="@item.Id"><img src="~/icons/copy.svg"></a>
+                </div>
+            </div>
+        </summary>
+        <p class="mt-2 mb-0">@item.Details</p>
+    </details>
+}

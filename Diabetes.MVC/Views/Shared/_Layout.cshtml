@@ -9,6 +9,8 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <link rel="stylesheet" href="lib/anim/dist/css/animsition.min.css">
+    <script src="lib/anim/dist/js/animsition.min.js"></script>
 </head>
 <body>
 <div class="container mobile-container">
@@ -20,7 +22,7 @@
     <a class="navbar-item" asp-controller="Home" asp-action="Index"><img src="~/icons/home.svg"></a>
     <a class="navbar-item" href="#"><img src="~/icons/statistics.svg"></a>
     <a class="plus-item" asp-controller="Meal" asp-action="AddMeal"><img src="~/icons/add.svg"></a>
-    <a class="navbar-item" href="#"><img src="~/icons/menu.svg"></a>
+    <a class="navbar-item" asp-controller="Food" asp-action="Index"><img src="~/icons/menu.svg"></a>
     <a class="navbar-item" asp-controller="Account" asp-action="Index"><img src="~/icons/account.svg"></a>
 </nav>
 </body>
