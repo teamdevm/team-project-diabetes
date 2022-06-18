@@ -21,7 +21,7 @@ namespace Diabetes.MVC.Controllers
     public class UsersFoodController:Controller
     {
         private readonly IMediator _mediator;
-        private const int PageSize = 5;
+        private const int PageSize = 10;
 
         public UsersFoodController(IMediator mediator)
         {
