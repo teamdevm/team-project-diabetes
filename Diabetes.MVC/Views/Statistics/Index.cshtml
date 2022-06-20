@@ -1,0 +1,66 @@
+﻿@using Diabetes.MVC.Models.Components
+@model Diabetes.MVC.Models.StatisticsViewModel
+@{
+    ViewData["Title"] = "Статистика";
+}
+
+<div class="container mobile-container">
+    <h2>Глюкоза</h2>
+</div>
+
+<div class="container mobile-container">
+    <div class="mb-3">
+        <select name="eating" onchange="$('#param').val(this.value)">
+            <option value="Any">Любое время</option>
+            <option value="Before">До еды</option>
+            <option value="After">После еды</option>
+        </select>
+        <span asp-validation-for="GlucoseAdditional" class="text-danger"></span>
+
+        <select name="timeGlucose" onchange="$('#timeGlucose').val(this.value)">
+            <option value="Today">За сегодня</option>
+            <option value="Week">За неделю</option>
+            <option value="Month">За месяц</option>
+        </select>
+        <span asp-validation-for="GlucoseTimePeriod" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="container mobile-container">
+    <h2>Инсулин</h2>
+</div>
+
+<div class="container mobile-container">
+    <div class="mb-3">
+        <select name="instype" onchange="$('#param').val(this.value)">
+            <option value="Any">Любой</option>
+            <option value="Short">Короткий</option>
+            <option value="Long">Длинный</option>
+        </select>
+        <span asp-validation-for="InsulinAdditional" class="text-danger"></span>
+
+        <select name="timeInsulin" onchange="$('#timeInsulin').val(this.value)">
+            <option value="Today">За сегодня</option>
+            <option value="Week">За неделю</option>
+            <option value="Month">За месяц</option>
+        </select>
+        <span asp-validation-for="InsulinTimePeriod" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="container mobile-container">
+    <h2>Углеводы</h2>
+</div>
+
+<div class="container mobile-container">
+    <div class="mb-3">
+        <select name="time" onchange="$('#timeCarbohydrates').val(this.value)">
+            <option value="Today">За сегодня</option>
+            <option value="Week">За неделю</option>
+            <option value="Month">За месяц</option>
+        </select>
+        <span asp-validation-for="CarbohydratesTimePeriod" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="row mt-3"></div>

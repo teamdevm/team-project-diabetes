@@ -1,31 +1,28 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32510.428
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{0CA4A83D-92C3-4C73-93F9-203C5EBEEABB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Diabetes.Domain", "Diabetes.Domain\Diabetes.Domain.csproj", "{2821D8E8-E437-4925-ACF6-CE7790047D4B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Diabetes.Domain", "Diabetes.Domain\Diabetes.Domain.csproj", "{2821D8E8-E437-4925-ACF6-CE7790047D4B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Diabetes.Application", "Diabetes.Application\Diabetes.Application.csproj", "{97D8AEC3-9DC9-46E6-B622-873506CA075D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Diabetes.Application", "Diabetes.Application\Diabetes.Application.csproj", "{97D8AEC3-9DC9-46E6-B622-873506CA075D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{8627FD09-186C-47A7-B3EA-25161546E1AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Diabetes.Persistence", "Diabetes.Persistence\Diabetes.Persistence.csproj", "{3475CC9C-BD5E-4674-B3D0-2562326A0F36}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Diabetes.Persistence", "Diabetes.Persistence\Diabetes.Persistence.csproj", "{3475CC9C-BD5E-4674-B3D0-2562326A0F36}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F2BA799C-33CC-453E-A54F-0F54BAFCC49D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{869FD619-B1E6-4A13-AF2F-5C3164788B4E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Diabetes.MVC", "Diabetes.MVC\Diabetes.MVC.csproj", "{7570E48D-8A33-465E-BE7D-6329CD8F32DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Diabetes.MVC", "Diabetes.MVC\Diabetes.MVC.csproj", "{7570E48D-8A33-465E-BE7D-6329CD8F32DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{2821D8E8-E437-4925-ACF6-CE7790047D4B} = {0CA4A83D-92C3-4C73-93F9-203C5EBEEABB}
-		{97D8AEC3-9DC9-46E6-B622-873506CA075D} = {0CA4A83D-92C3-4C73-93F9-203C5EBEEABB}
-		{3475CC9C-BD5E-4674-B3D0-2562326A0F36} = {8627FD09-186C-47A7-B3EA-25161546E1AB}
-		{7570E48D-8A33-465E-BE7D-6329CD8F32DD} = {869FD619-B1E6-4A13-AF2F-5C3164788B4E}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{2821D8E8-E437-4925-ACF6-CE7790047D4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -44,5 +41,17 @@ Global
 		{7570E48D-8A33-465E-BE7D-6329CD8F32DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7570E48D-8A33-465E-BE7D-6329CD8F32DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7570E48D-8A33-465E-BE7D-6329CD8F32DD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2821D8E8-E437-4925-ACF6-CE7790047D4B} = {0CA4A83D-92C3-4C73-93F9-203C5EBEEABB}
+		{97D8AEC3-9DC9-46E6-B622-873506CA075D} = {0CA4A83D-92C3-4C73-93F9-203C5EBEEABB}
+		{3475CC9C-BD5E-4674-B3D0-2562326A0F36} = {8627FD09-186C-47A7-B3EA-25161546E1AB}
+		{7570E48D-8A33-465E-BE7D-6329CD8F32DD} = {869FD619-B1E6-4A13-AF2F-5C3164788B4E}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6EA4FEC1-CA73-4FBA-9D29-CF9FD74927FD}
 	EndGlobalSection
 EndGlobal
