@@ -18,7 +18,7 @@ namespace Diabetes.MVC.Models.UsersFood
         
         [Required(ErrorMessage = "Обязательное поле")]
         [DisplayName("Жиры")]
-        [Double(1,100, ErrorMessage = "Допустимы числа от 1 до 100, с двумя знаками после запятой")]
+        [Double(0,100, ErrorMessage = "Допустимы числа от 0 до 100, с двумя знаками после запятой")]
         public string Fat {
             get => _fat?.Replace(',','.');
             init => _fat = value;
@@ -27,7 +27,7 @@ namespace Diabetes.MVC.Models.UsersFood
         
         [Required(ErrorMessage = "Обязательное поле")]
         [DisplayName("Белки")]
-        [Double(1,100, ErrorMessage = "Допустимы числа от 1 до 100, с двумя знаками после запятой")]
+        [Double(0,100, ErrorMessage = "Допустимы числа от 0 до 100, с двумя знаками после запятой")]
         public string Protein {
             get => _protein?.Replace(',','.');
             init => _protein = value;
@@ -36,7 +36,7 @@ namespace Diabetes.MVC.Models.UsersFood
         
         [Required(ErrorMessage = "Обязательное поле")]
         [DisplayName("Углеводы")]
-        [Double(1,100, ErrorMessage = "Допустимы числа от 1 до 100, с двумя знаками после запятой")]
+        [Double(0,100, ErrorMessage = "Допустимы числа от 0 до 100, с двумя знаками после запятой")]
         public string Carbohydrate  {
             get => _сarbohydrate?.Replace(',','.');
             init => _сarbohydrate = value;
@@ -45,9 +45,11 @@ namespace Diabetes.MVC.Models.UsersFood
 
         [DisplayName("Название")]
         [Required(ErrorMessage = "Обязательное поле")]
+        [StringLength(50, ErrorMessage = "Длина должна быть не более 50 символов")]
         public string Name { get; set; }
         
         [DisplayName("Описание")]
+        [StringLength(200, ErrorMessage = "Длина должна быть не более 200 символов")]
         public string Details { get; set; }
     }
 }
