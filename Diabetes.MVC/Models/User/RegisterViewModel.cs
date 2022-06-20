@@ -1,6 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using Diabetes.Domain.Normalized.Enums.User;
+using Diabetes.Domain.Enums.User;
 
 namespace Diabetes.MVC.Models.User
 {

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Diabetes.Application.NoteInsulin.Commands.GetNoteInsulin;
 using Diabetes.Domain;
 using Diabetes.MVC.Extensions;
+using Diabetes.MVC.Models.Insulin;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Diabetes.MVC.Controllers

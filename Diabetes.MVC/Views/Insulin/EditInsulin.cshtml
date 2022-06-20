@@ -1,5 +1,5 @@
-@using Diabetes.Domain.Normalized.Enums
-@model Diabetes.MVC.Models.EditInsulinViewModel
+@using Diabetes.Domain.Enums
+@model Diabetes.MVC.Models.Insulin.EditInsulinViewModel
 
 @{
     ViewData["Title"] = "Инсулин";
@@ -7,7 +7,7 @@
 
 <form asp-controller="Insulin" asp-action="EditInsulin" method="post">
     <div class="mb-3">
-        <input asp-for="Id" class="form-control invisible">
+        <input asp-for="Id" class="form-control d-none">
     </div>
     <div class="mb-3">
         <label asp-for="Value" class="form-label"></label>
@@ -25,7 +25,7 @@
         <span asp-validation-for="MeasuringTime" class="text-danger"></span>
     </div>
     <div class="mb-3">
-        <label asp-for="Comment" class="form-label"></label>
+        <label asp-for="Comment" class="form-label"></label><span><small class="text-muted "> (необязательно)</small></span>
         <textarea asp-for="Comment" class="form-control"></textarea>
     </div>
     <div class="mb-3">

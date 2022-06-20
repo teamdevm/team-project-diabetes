@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Diabetes.Domain.Normalized;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Diabetes.Domain
 {
@@ -13,6 +13,7 @@ namespace Diabetes.Domain
         public double Fat { get; set; }
         public double Carbohydrate { get; set; }
         public string Details { get; set; }
+        public string Discriminator { get; private set; }
 
         public List<FoodPortion> Portions { get; set; } = new();
         public List<Meal> Meals { get; set; } = new();

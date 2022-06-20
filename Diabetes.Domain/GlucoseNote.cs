@@ -1,3 +1,4 @@
+using Diabetes.Domain.Enums;
 using Diabetes.Domain.Normalized;
 using Diabetes.Domain.Normalized.Enums;
 
