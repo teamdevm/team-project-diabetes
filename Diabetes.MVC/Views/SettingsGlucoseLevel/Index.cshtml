@@ -1,0 +1,56 @@
+﻿@using Diabetes.Domain.Normalized.Enums
+@model Diabetes.MVC.Models.SettingsGlucoseLevelViewModel
+
+@{
+    ViewData["Title"] = "Глюкоза";
+}
+
+<form asp-controller="SettingsGlucoseLevel" asp-action="Index" role="form" method="post">
+    <h2>Глюкоза</h2>
+
+    <div asp-for="GlucoseUnits" class="list-group" role="tablist">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 pull-right">
+                    <button class="list-group-item list-group-item-action active"
+                            data-toggle="list" role="tab">
+                        ммоль/л
+                    </button>
+                </div>
+                <div class="col-lg-5 pull-right">
+                    <button class="list-group-item list-group-item-action"
+                            data-toggle="list" role="tab">
+                        мг/дл
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mb-3">
+        <label asp-for="ValueBeforeEating" class="form-label"></label>
+        <input asp-for="ValueBeforeEating" class="form-control">
+        <span asp-validation-for="ValueBeforeEating" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="ValueAfterEating" class="form-label"></label>
+        <input asp-for="ValueAfterEating" class="form-control">
+        <span asp-validation-for="ValueAfterEating" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <span span asp-validation-for="Edited" class="text-danger"></span>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-2 pull-right"> </div>
+            <div class="col-lg-4 pull-right">
+                <button class="btn btn-success" id="btn" type="submit">Подтвердить</button>
+            </div>
+            <div class="col-lg-4 pull-right">
+                <button class="btn btn-danger"
+                        asp-controller="Settings" asp-action="Index">Отмена
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,67 @@
+﻿@using Diabetes.Domain.Normalized.Enums
+@model Diabetes.MVC.Models.SettingsCarbohydratesViewModel
+
+@{
+    ViewData["Title"] = "Углеводы";
+}
+
+<form asp-controller="SettingsCarbohydrates" asp-action="Index" role="form" method="post">
+    <h2>Учет углеводов</h2>
+
+    <div class="list-group" role="tablist">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 pull-right">
+                    <button class="list-group-item list-group-item-action active"
+                            data-toggle="list" role="tab">
+                        Углеводы в граммах
+                    </button>
+                </div>
+                <div class="col-lg-5 pull-right">
+                    <button class="list-group-item list-group-item-action"
+                            data-toggle="list" role="tab">
+                        Хлебные единицы (ХЕ)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mb-3">
+        <label asp-for="CarbohydrateInBreadUnit" class="form-label"></label>
+        <input asp-for="CarbohydrateInBreadUnit" class="form-control" min="0">
+        <span asp-validation-for="CarbohydrateInBreadUnit" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="BreakfastTime" class="form-label"></label>
+        <input asp-for="BreakfastTime" type="time" class="form-control">
+        <span asp-validation-for="BreakfastTime" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="LunchTime" class="form-label"></label>
+        <input asp-for="LunchTime" type="time" class="form-control">
+        <span asp-validation-for="LunchTime" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="DinnerTime" class="form-label"></label>
+        <input asp-for="DinnerTime" type="time" class="form-control">
+        <span asp-validation-for="DinnerTime" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <span span asp-validation-for="Edited" class="text-danger"></span>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-2 pull-right"> </div>
+            <div class="col-lg-4 pull-right">
+                <button class="btn btn-success" id="btn" type="submit">Подтвердить</button>
+            </div>
+            <div class="col-lg-4 pull-right">
+                <button class="btn btn-danger"
+                        asp-controller="Settings" asp-action="Index">
+                    Отмена
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
