@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using Diabetes.MVC.Attributes.Validation;
 using Diabetes.Domain.Normalized.Enums;
 using Diabetes.Domain.Normalized.Enums.Units;
+using static Diabetes.MVC.Models.Profile.CustomValidation;
 
 namespace Diabetes.MVC.Models
 {
@@ -19,30 +20,10 @@ namespace Diabetes.MVC.Models
         [DisplayName("Время начала ужина")]
         public TimeSpan? DinnerTime { get; set; }
 
-        [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
-        public class Int : ValidationAttribute
-        {
-            public override bool IsValid(object value)
-            {
-                return value != null && value is int;
-            }
-        }
-
         [Int(ErrorMessage = "Значение должно быть целым неотрицательным числом")]
         [DisplayName("Количество углеводов в 1 ХЕ")]
         public int CarbohydrateInBreadUnit { get; set; }
+        [DisplayName("Единица измерения употребленных углеводов")]
         public CarbohydrateUnits CarbohydrateUnits { get; set; } = CarbohydrateUnits.Carbohydrate;
-
-        [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
-        public class MustBeTrueAttribute : ValidationAttribute
-        {
-            public override bool IsValid(object value)
-            {
-                return value != null && value is bool && (bool)value;
-            }
-        }
-
-        [MustBeTrue(ErrorMessage = "Изменения не сохранены")]
-        public bool Edited { get; set; } = false;
     }
 }

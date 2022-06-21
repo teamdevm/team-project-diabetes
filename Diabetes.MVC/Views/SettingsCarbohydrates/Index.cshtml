@@ -8,25 +8,29 @@
 <form asp-controller="SettingsCarbohydrates" asp-action="Index" role="form" method="post">
     <h2>Учет углеводов</h2>
 
-    <div class="list-group" role="tablist">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-5 pull-right">
-                    <button class="list-group-item list-group-item-action active"
-                            data-toggle="list" role="tab">
-                        Углеводы в граммах
-                    </button>
-                </div>
-                <div class="col-lg-5 pull-right">
-                    <button class="list-group-item list-group-item-action"
-                            data-toggle="list" role="tab">
-                        Хлебные единицы (ХЕ)
-                    </button>
+    <div class="mb-3">
+        <label asp-for="CarbohydrateUnits" class="form-label"></label>
+
+        <div class="list-group" id="alterList" role="tablist">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 pull-right">
+                        <a class="list-group-item list-group-item-action"
+                           data-toggle="list" href="#gramms" role="tab">
+                            Углеводы в граммах
+                        </a>
+                    </div>
+                    <div class="col-lg-6 pull-right">
+                        <a class="list-group-item list-group-item-action"
+                           data-toggle="list" href="#breads" role="tab">
+                            Хлебные единицы (ХЕ)
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="mb-3">
+    <div class="mb-3" id="additional">
         <label asp-for="CarbohydrateInBreadUnit" class="form-label"></label>
         <input asp-for="CarbohydrateInBreadUnit" class="form-control" min="0">
         <span asp-validation-for="CarbohydrateInBreadUnit" class="text-danger"></span>
@@ -46,8 +50,8 @@
         <input asp-for="DinnerTime" type="time" class="form-control">
         <span asp-validation-for="DinnerTime" class="text-danger"></span>
     </div>
-    <div class="mb-3">
-        <span span asp-validation-for="Edited" class="text-danger"></span>
+    <div class="mb-3 invisible" id="danger">
+        <span class="text-danger">Изменения не сохранены</span>
     </div>
 
     <div class="container">
@@ -65,3 +69,33 @@
         </div>
     </div>
 </form>
+
+<script>
+    $('#additional').addClass('invisible')
+
+    $('#alterList a[href="#gramms"]').on('click', function (e) {
+        e.preventDefault()
+        if ($('#danger').hasClass('invisible'))
+            if (!$(this).hasClass('active'))
+                $('#danger').removeClass('invisible')
+        $(this).addClass('active')
+        $('#alterList a[href = "#breads"]').removeClass('active')
+        $('#additional').addClass('invisible')
+    })
+
+    $('#alterList a[href="#breads"]').on('click', function (e) {
+        e.preventDefault()
+        if ($('#danger').hasClass('invisible'))
+            if (!$(this).hasClass('active'))
+                $('#danger').removeClass('invisible')
+        $(this).addClass('active')
+        $('#alterList a[href = "#gramms"]').removeClass('active')
+        $('#additional').removeClass('invisible')
+    })
+
+    $('input').on('edit change', function (e) {
+        e.preventDefault()
+        if ($('#danger').hasClass('invisible'))
+            $('#danger').removeClass('invisible')
+    })
+</script>

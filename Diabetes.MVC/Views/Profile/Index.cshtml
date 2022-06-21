@@ -1,8 +1,7 @@
 ﻿@using Diabetes.Domain.Normalized.Enums.User
-@model Diabetes.MVC.Models.User.RegisterViewModel
+@model Diabetes.MVC.Models.ProfileViewModel
 
 @{
-    Layout = "_LayoutWithoutMenu";
     ViewData["Title"] = "Аккаунт";
 }
 
@@ -17,11 +16,6 @@
         <label asp-for="Password" class="form-label"></label>
         <input asp-for="Password" class="form-control">
         <span asp-validation-for="Password" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="ConfirmPassword" class="form-label"></label>
-        <input asp-for="ConfirmPassword" class="form-control">
-        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="Name" class="form-label"></label>
@@ -53,17 +47,14 @@
         <input asp-for="Weight" class="form-control" type="number" min="0">
         <span asp-validation-for="Weight" class="text-danger"></span>
     </div>
-    <div class="mb-3">
-        <span span asp-validation-for="Edited" class="text-danger"></span>
+    <div class="mb-3 invisible" id="danger">
+        <span class="text-danger">Изменения не сохранены</span>
     </div>
 
     <div class="container">
         <div class="row">
-            <div class="col-lg-5 col-sm-5 pull-right">
+            <div class="col-lg-9 col-sm-9 pull-right">
                 <button class="btn btn-success" id="btn" type="submit">Подтвердить</button>
-            </div>
-            <div class="col-lg-4 col-sm-4 pull-right">
-                <button class="btn btn-light" type="reset">Очистить</button>
             </div>
             <div class="col-lg-2 pull-right">
                 <button class="btn btn-danger"
@@ -74,3 +65,11 @@
         </div>
     </div>
 </form>
+
+<script>
+    $('input').on('edit change', function (e) {
+        e.preventDefault()
+        if ($('#danger').hasClass('invisible'))
+            $('#danger').removeClass('invisible')
+    })
+</script>

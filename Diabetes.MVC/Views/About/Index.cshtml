@@ -1,30 +1,32 @@
-﻿@{
+﻿@model Diabetes.MVC.Models.AboutViewModel
+
+@{
     ViewData["Title"] = "О приложении";
 }
 
 <div class="container mobile-container">
     <div class="row">
-        <h2>Diabetes v1.0</h2>
+        <h2>@Model.ProgramName</h2>
     </div>
     <div class="row">
-        Приложение для больных диабетом
+         @Model.Description
     </div>
     <div class="row">
-        Разработчики:
+        @Model.Authors[0]
     </div>
     <div class="row">
-        - Валеев Рустам
+        @Model.Authors[1]
     </div>
     <div class="row">
-        - Зырянова Анна
+        @Model.Authors[2]
     </div>
     <div class="row">
-        - Корзников Артем
+        @Model.Authors[3]
     </div>
     <div class="row">
-        - Чирухин Дмитрий
+        @Model.Authors[4]
     </div>
     <div class="row">
-        - Шерстобитов Андрей
+        @Model.Authors[5]
     </div>
 </div>

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Diabetes.MVC.Models;
 
 namespace Diabetes.MVC.Controllers
 {

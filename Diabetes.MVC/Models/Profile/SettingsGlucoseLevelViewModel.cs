@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using Diabetes.MVC.Attributes.Validation;
 using Diabetes.Domain.Normalized.Enums;
 using Diabetes.Domain.Normalized.Enums.Units;
+using static Diabetes.MVC.Models.Profile.CustomValidation;
 
 namespace Diabetes.MVC.Models
 {
@@ -33,17 +34,5 @@ namespace Diabetes.MVC.Models
 
         [DisplayName("Единица измерения уровня глюкозы в крови")]
         public GlucoseUnits GlucoseUnits { get; set; }
-
-        [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
-        public class MustBeTrueAttribute : ValidationAttribute
-        {
-            public override bool IsValid(object value)
-            {
-                return value != null && value is bool && (bool)value;
-            }
-        }
-
-        [MustBeTrue(ErrorMessage = "Изменения не сохранены")]
-        public bool Edited { get; set; } = false;
     }
 }

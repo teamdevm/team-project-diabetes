@@ -68,6 +68,7 @@ namespace Diabetes.MVC.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Edit(RegisterViewModel model)
         {
             return View(model);

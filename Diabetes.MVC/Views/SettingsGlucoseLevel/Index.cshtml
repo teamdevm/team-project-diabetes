@@ -8,20 +8,24 @@
 <form asp-controller="SettingsGlucoseLevel" asp-action="Index" role="form" method="post">
     <h2>Глюкоза</h2>
 
-    <div asp-for="GlucoseUnits" class="list-group" role="tablist">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-5 pull-right">
-                    <button class="list-group-item list-group-item-action active"
-                            data-toggle="list" role="tab">
-                        ммоль/л
-                    </button>
-                </div>
-                <div class="col-lg-5 pull-right">
-                    <button class="list-group-item list-group-item-action"
-                            data-toggle="list" role="tab">
-                        мг/дл
-                    </button>
+    <div class="mb-3">
+        <label asp-for="GlucoseUnits" id="alterList" class="form-label"></label>
+
+        <div asp-for="GlucoseUnits" id="alterList" class="list-group" role="tablist">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 pull-right">
+                        <a class="list-group-item list-group-item-action"
+                           data-toggle="list" href="#mmol" role="tab">
+                            ммоль/л
+                        </a>
+                    </div>
+                    <div class="col-lg-6 pull-right">
+                        <a class="list-group-item list-group-item-action"
+                           data-toggle="list" href="#mlgr" role="tab">
+                            мг/дл
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -36,8 +40,8 @@
         <input asp-for="ValueAfterEating" class="form-control">
         <span asp-validation-for="ValueAfterEating" class="text-danger"></span>
     </div>
-    <div class="mb-3">
-        <span span asp-validation-for="Edited" class="text-danger"></span>
+    <div class="mb-3 invisible" id="danger">
+        <span class="text-danger">Изменения не сохранены</span>
     </div>
 
     <div class="container">
@@ -54,3 +58,29 @@
         </div>
     </div>
 </form>
+
+<script>
+    $('#alterList a[href="#mmol"]').on('click', function (e) {
+        e.preventDefault()
+        if ($('#danger').hasClass('invisible'))
+            if (!$(this).hasClass('active'))
+                $('#danger').removeClass('invisible')
+        $(this).addClass('active')
+        $('#alterList a[href = "#mlgr"]').removeClass('active')
+    })
+
+    $('#alterList a[href="#mlgr"]').on('click', function (e) {
+        e.preventDefault()
+        if ($('#danger').hasClass('invisible'))
+            if (!$(this).hasClass('active'))
+                $('#danger').removeClass('invisible')
+        $(this).addClass('active')
+        $('#alterList a[href = "#mmol"]').removeClass('active')
+    })
+
+    $('input').on('edit change', function (e) {
+        e.preventDefault()
+        if ($('#danger').hasClass('invisible'))
+            $('#danger').removeClass('invisible')
+    })
+</script>
