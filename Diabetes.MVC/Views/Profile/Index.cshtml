@@ -5,11 +5,11 @@
     ViewData["Title"] = "Аккаунт";
 }
 
-<form asp-controller="Account" asp-action="Edit" role="form" method="post">
+<form asp-controller="Profile" asp-action="Index" role="form" method="post">
     <div asp-validation-summary="ModelOnly"></div>
     <div class="mb-3">
         <label asp-for="Email" class="form-label"></label>
-        <input asp-for="Email" class="form-control">
+        <input asp-for="Email" class="form-control" value="@Model.Email">
         <span asp-validation-for="Email" class="text-danger"></span>
     </div>
     <div class="mb-3">
@@ -19,12 +19,12 @@
     </div>
     <div class="mb-3">
         <label asp-for="Name" class="form-label"></label>
-        <input asp-for="Name" class="form-control">
+        <input asp-for="Name" class="form-control" value="@Model.Name">
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="DiabetesType" class="form-label"></label>
-        <select asp-for="DiabetesType" asp-items="Html.GetEnumSelectList<DiabetesType>()"></select>
+        <select asp-for="DiabetesType" asp-items="Html.GetEnumSelectList<DiabetesType>()" value="@Model.DiabetesType"></select>
         <span asp-validation-for="DiabetesType" class="text-danger"></span>
     </div>
     <div class="mb-3">
@@ -34,17 +34,17 @@
     </div>
     <div class="mb-3">
         <label asp-for="Gender" class="form-label"></label>
-        <select asp-for="Gender" asp-items="Html.GetEnumSelectList<Gender>()"></select>
+        <select asp-for="Gender" asp-items="Html.GetEnumSelectList<Gender>()" value="@Model.Gender"></select>
         <span asp-validation-for="Gender" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="Height" class="form-label"></label>
-        <input asp-for="Height" class="form-control" type="number" min="0">
+        <input asp-for="Height" class="form-control" type="number" min="0" value="@Model.Height">
         <span asp-validation-for="Height" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="Weight" class="form-label"></label>
-        <input asp-for="Weight" class="form-control" type="number" min="0">
+        <input asp-for="Weight" class="form-control" type="number" min="0" value="@Model.Weight">
         <span asp-validation-for="Weight" class="text-danger"></span>
     </div>
     <div class="mb-3 invisible" id="danger">
@@ -57,16 +57,18 @@
                 <button class="btn btn-success" id="btn" type="submit">Подтвердить</button>
             </div>
             <div class="col-lg-2 pull-right">
-                <button class="btn btn-danger"
+                <a class="btn btn-danger"
                         asp-controller="Account" asp-action="Index">
                     Отмена
-                </button>
+                </a>
             </div>
         </div>
     </div>
 </form>
 
 <script>
+    $('#datePicker').val(Date(@Model.Birthdate));
+
     $('input').on('edit change', function (e) {
         e.preventDefault()
         if ($('#danger').hasClass('invisible'))

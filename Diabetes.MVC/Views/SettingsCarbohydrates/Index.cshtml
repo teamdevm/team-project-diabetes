@@ -1,4 +1,4 @@
-﻿@using Diabetes.Domain.Normalized.Enums
+﻿@using Diabetes.Domain.Normalized.Enums.Units
 @model Diabetes.MVC.Models.SettingsCarbohydratesViewModel
 
 @{
@@ -9,45 +9,28 @@
     <h2>Учет углеводов</h2>
 
     <div class="mb-3">
-        <label asp-for="CarbohydrateUnits" class="form-label"></label>
-
-        <div class="list-group" id="alterList" role="tablist">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6 pull-right">
-                        <a class="list-group-item list-group-item-action"
-                           data-toggle="list" href="#gramms" role="tab">
-                            Углеводы в граммах
-                        </a>
-                    </div>
-                    <div class="col-lg-6 pull-right">
-                        <a class="list-group-item list-group-item-action"
-                           data-toggle="list" href="#breads" role="tab">
-                            Хлебные единицы (ХЕ)
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <label asp-for="CarbohydrateUnitsUsed" class="form-label col-lg-12"></label>
+        <select asp-for="CarbohydrateUnitsUsed" id="units" asp-items="Html.GetEnumSelectList<CarbohydrateUnits>()" value="@Model.CarbohydrateUnitsUsed"></select>
+        <span asp-validation-for="CarbohydrateUnitsUsed" class="text-danger"></span>
     </div>
     <div class="mb-3" id="additional">
         <label asp-for="CarbohydrateInBreadUnit" class="form-label"></label>
-        <input asp-for="CarbohydrateInBreadUnit" class="form-control" min="0">
+        <input asp-for="CarbohydrateInBreadUnit" class="form-control" id="ad_val" value="@Model.CarbohydrateInBreadUnit">
         <span asp-validation-for="CarbohydrateInBreadUnit" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="BreakfastTime" class="form-label"></label>
-        <input asp-for="BreakfastTime" type="time" class="form-control">
+        <input asp-for="BreakfastTime" type="time" class="form-control" value="@Model.BreakfastTime">
         <span asp-validation-for="BreakfastTime" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="LunchTime" class="form-label"></label>
-        <input asp-for="LunchTime" type="time" class="form-control">
+        <input asp-for="LunchTime" type="time" class="form-control" value="@Model.LunchTime">
         <span asp-validation-for="LunchTime" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="DinnerTime" class="form-label"></label>
-        <input asp-for="DinnerTime" type="time" class="form-control">
+        <input asp-for="DinnerTime" type="time" class="form-control" value="@Model.DinnerTime">
         <span asp-validation-for="DinnerTime" class="text-danger"></span>
     </div>
     <div class="mb-3 invisible" id="danger">
@@ -61,36 +44,29 @@
                 <button class="btn btn-success" id="btn" type="submit">Подтвердить</button>
             </div>
             <div class="col-lg-4 pull-right">
-                <button class="btn btn-danger"
+                <a class="btn btn-danger"
                         asp-controller="Settings" asp-action="Index">
                     Отмена
-                </button>
+                </a>
             </div>
         </div>
     </div>
 </form>
 
 <script>
-    $('#additional').addClass('invisible')
-
-    $('#alterList a[href="#gramms"]').on('click', function (e) {
-        e.preventDefault()
-        if ($('#danger').hasClass('invisible'))
-            if (!$(this).hasClass('active'))
-                $('#danger').removeClass('invisible')
-        $(this).addClass('active')
-        $('#alterList a[href = "#breads"]').removeClass('active')
-        $('#additional').addClass('invisible')
-    })
-
-    $('#alterList a[href="#breads"]').on('click', function (e) {
-        e.preventDefault()
-        if ($('#danger').hasClass('invisible'))
-            if (!$(this).hasClass('active'))
-                $('#danger').removeClass('invisible')
-        $(this).addClass('active')
-        $('#alterList a[href = "#gramms"]').removeClass('active')
+    if ($('#units').val() == '1')
         $('#additional').removeClass('invisible')
+    else
+        $('#additional').addClass('invisible')
+
+    $('#units').on('edit change', function (e) {
+        e.preventDefault()
+        if ($('#units').val() == '1')
+            $('#additional').removeClass('invisible')
+        else
+            $('#additional').addClass('invisible')
+        if ($('#danger').hasClass('invisible'))
+            $('#danger').removeClass('invisible')
     })
 
     $('input').on('edit change', function (e) {

@@ -21,6 +21,10 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Compile Remove="Attributes\Validation\IntAttribute.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\Diabetes.Application\Diabetes.Application.csproj" />
       <ProjectReference Include="..\Diabetes.Persistence\Diabetes.Persistence.csproj" />
     </ItemGroup>

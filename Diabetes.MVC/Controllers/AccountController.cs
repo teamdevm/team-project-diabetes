@@ -57,20 +57,9 @@ namespace Diabetes.MVC.Controllers
                 }
                 else
                 {
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, error.Description);
-                    }
                 }
             }
 
-            return View(model);
-        }
-
-        [HttpPost]
-        [Authorize]
-        public async Task<IActionResult> Edit(RegisterViewModel model)
-        {
             return View(model);
         }
 

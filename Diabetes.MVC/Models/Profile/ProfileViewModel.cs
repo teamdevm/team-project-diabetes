@@ -5,7 +5,6 @@ using Diabetes.MVC.Attributes.Validation;
 using Diabetes.Domain.Normalized.Enums;
 using Diabetes.Domain.Normalized.Enums.Units;
 using Diabetes.Domain.Normalized.Enums.User;
-using static Diabetes.MVC.Models.Profile.CustomValidation;
 
 namespace Diabetes.MVC.Models
 {

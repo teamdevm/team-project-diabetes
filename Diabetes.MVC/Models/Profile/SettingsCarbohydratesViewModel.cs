@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using Diabetes.MVC.Attributes.Validation;
 using Diabetes.Domain.Normalized.Enums;
 using Diabetes.Domain.Normalized.Enums.Units;
-using static Diabetes.MVC.Models.Profile.CustomValidation;
 
 namespace Diabetes.MVC.Models
 {
@@ -20,10 +19,10 @@ namespace Diabetes.MVC.Models
         [DisplayName("Время начала ужина")]
         public TimeSpan? DinnerTime { get; set; }
 
-        [Int(ErrorMessage = "Значение должно быть целым неотрицательным числом")]
+        [Double(0, 999, ErrorMessage = "Значение должно быть целым числом от 0 до 999")]
         [DisplayName("Количество углеводов в 1 ХЕ")]
         public int CarbohydrateInBreadUnit { get; set; }
         [DisplayName("Единица измерения употребленных углеводов")]
-        public CarbohydrateUnits CarbohydrateUnits { get; set; } = CarbohydrateUnits.Carbohydrate;
+        public CarbohydrateUnits CarbohydrateUnitsUsed { get; set; } = CarbohydrateUnits.Carbohydrate;
     }
 }
