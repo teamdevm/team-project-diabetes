@@ -57,12 +57,15 @@ namespace Diabetes.MVC.Controllers
                 }
                 else
                 {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
                 }
             }
 
             return View(model);
         }
-
 
         [HttpGet]
         public IActionResult Login(string returnUrl = null)
