@@ -10,3 +10,5 @@
 /Diabetes.MVC/*.db
 /.vs/Diabetes/v16/.suo
 /.vs/Diabetes/DesignTimeBuild/.dtbcache.v2
+.vs/Diabetes/config/applicationhost.config
+.vs/Diabetes/v16/.suo

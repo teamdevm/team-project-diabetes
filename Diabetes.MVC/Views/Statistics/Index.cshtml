@@ -1,4 +1,6 @@
 ﻿@using Diabetes.MVC.Models.Components
+@using ShieldUI.AspNetCore.Mvc
+@using Diabetes.Domain.Normalized.Enums
 @model Diabetes.MVC.Models.StatisticsViewModel
 @{
     ViewData["Title"] = "Статистика";
@@ -8,23 +10,31 @@
     <h2>Глюкоза</h2>
 </div>
 
-<div class="container mobile-container">
+<form asp-controller="Statistics" asp-action="GlucoseGraphics" role="form" method="get">
     <div class="mb-3">
-        <select name="eating" onchange="$('#param').val(this.value)">
-            <option value="Any">Любое время</option>
-            <option value="Before">До еды</option>
-            <option value="After">После еды</option>
-        </select>
+        <select asp-for="GlucoseAdditional" asp-items="Html.GetEnumSelectList<MeasuringTimeTypeExtended>()" class="submit"></select>
         <span asp-validation-for="GlucoseAdditional" class="text-danger"></span>
 
-        <select name="timeGlucose" onchange="$('#timeGlucose').val(this.value)">
-            <option value="Today">За сегодня</option>
-            <option value="Week">За неделю</option>
-            <option value="Month">За месяц</option>
-        </select>
+        <select asp-for="GlucoseTimePeriod" asp-items="Html.GetEnumSelectList<TimePeriods>()" class="submit"></select>
         <span asp-validation-for="GlucoseTimePeriod" class="text-danger"></span>
     </div>
-</div>
+
+    @(Html.ShieldChart()
+    .Name("chart")
+   .Tooltip(tooltip => tooltip.AxisMarkers(axisMarkers => axisMarkers
+        .Enabled(true)
+        .Mode(ShieldUI.AspNetCore.Mvc.Chart.TooltipAxisMarkerMode.XY)
+        .Width(1)
+        .ZIndex(3)))
+    .Theme("light")
+    .PrimaryHeader(header => header.Text("Budget overview"))
+    .Export(false)
+    .AxisX(axis => axis.CategoricalValues("2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014"))
+    .DataSeries(series =>
+        series.Spline()
+              .Name("Budget in Thousands")
+              .Data(new object[] { 100, 320, 453, 234, 553, 665, 345, 123, 432, 545, 654, 345, 332, 456, 234 })))
+</form>
 
 <div class="container mobile-container">
     <h2>Инсулин</h2>
