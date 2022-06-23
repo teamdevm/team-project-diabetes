@@ -10,7 +10,7 @@ namespace Diabetes.MVC.Models.UsersFood
     {
         [Required(ErrorMessage = "Обязательное поле")]
         [DisplayName("Ккал")]
-        [Double(1,1000, ErrorMessage = "Допустимы числа от 1 до 1000, с двумя знаками после запятой")]
+        [Double(0,1000, ErrorMessage = "Допустимы числа от 1 до 1000, с двумя знаками после запятой")]
         public string Kcal {
             get => _kcal?.Replace(',','.');
             init => _kcal = value;

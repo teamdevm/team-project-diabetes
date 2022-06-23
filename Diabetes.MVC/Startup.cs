@@ -23,6 +23,9 @@ namespace Diabetes.MVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDistributedMemoryCache();
+            services.AddSession();
+            
             services.AddControllersWithViews();
             services.AddApplication();
             services.AddPersistence(Configuration);
@@ -67,7 +70,9 @@ namespace Diabetes.MVC
             app.UseRouting();
 
             app.UseAuthentication();
-            app.UseAuthorization();     
+            app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

@@ -20,6 +20,9 @@ namespace Diabetes.Persistence
             services.AddTransient<INoteInsulinDbContext, DataDbContext>();
             services.AddTransient<IFoodDbContext, DataDbContext>();
             services.AddTransient<IUsersFoodDbContext, DataDbContext>();
+            services.AddTransient<ICarbohydrateNoteDbContext, DataDbContext>();
+            services.AddTransient<IFoodPortionDbContext, DataDbContext>();
+
             return services;
         }
     }
