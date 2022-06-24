@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
+using Diabetes.Domain.Enums.User;
 using Diabetes.Domain.Normalized.Enums.Units;
-using Diabetes.Domain.Normalized.Enums.User;
 using Microsoft.AspNetCore.Identity;
 
 namespace Diabetes.Persistence

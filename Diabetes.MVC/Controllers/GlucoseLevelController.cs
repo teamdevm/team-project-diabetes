@@ -12,6 +12,7 @@ using System.Security.Claims;
 using Diabetes.Application.GlucoseLevel.Commands.GetGlucoseLevel;
 using Diabetes.Domain;
 using Diabetes.MVC.Extensions;
+using Diabetes.MVC.Models.Glucose;
 
 namespace Diabetes.MVC.Controllers
 {

@@ -1,6 +1,7 @@
 @using Diabetes.MVC.Models.Components
 @using Diabetes.Domain.Normalized.Enums
-@model Diabetes.MVC.Models.EditGlucoseLevelViewModel
+@using Diabetes.Domain.Enums
+@model Diabetes.MVC.Models.Glucose.EditGlucoseLevelViewModel
 
 @{
     ViewData["Title"] = "Уровень глюкозы";
@@ -8,7 +9,7 @@
 
 <form asp-controller="GlucoseLevel" asp-action="EditGlucoseLevel" method="post">
     <div class="mb-3">
-        <input asp-for="Id" class="form-control invisible">
+        <input asp-for="Id" class="form-control d-none">
     </div>
     <div class="mb-3">
         <label asp-for="ValueInMmol" class="form-label"></label>
@@ -26,7 +27,7 @@
         <span asp-validation-for="MeasuringTime" class="text-danger"></span>
     </div>
     <div class="mb-3">
-        <label asp-for="Comment" class="form-label"></label>
+        <label asp-for="Comment" class="form-label"></label><span><small class="text-muted "> (необязательно)</small></span>
         <textarea asp-for="Comment" class="form-control"></textarea>
     </div>
     <div class="mb-3">

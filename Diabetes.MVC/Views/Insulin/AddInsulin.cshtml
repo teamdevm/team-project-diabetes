@@ -1,6 +1,7 @@
 @using Diabetes.MVC.Models.Components
 @using Diabetes.Domain.Normalized.Enums
-@model Diabetes.MVC.Models.CreateInsulinViewModel
+@using Diabetes.Domain.Enums
+@model Diabetes.MVC.Models.Insulin.CreateInsulinViewModel
 
 @{
     ViewData["Title"] = "Инсулин";
@@ -25,7 +26,7 @@
         <span asp-validation-for="MeasuringTime" class="text-danger"></span>
     </div>
     <div class="mb-3">
-        <label asp-for="Comment" class="form-label"></label>
+        <label asp-for="Comment" class="form-label"></label><span><small class="text-muted "> (необязательно)</small></span>
         <textarea asp-for="Comment" class="form-control"></textarea>
     </div>
     <div class="mb-3">

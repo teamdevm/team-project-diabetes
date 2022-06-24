@@ -1,22 +1,21 @@
-using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Diabetes.Domain.Enums;
 using Diabetes.MVC.Attributes.Validation;
-using Diabetes.Domain.Normalized.Enums;
 
-namespace Diabetes.MVC.Models
+namespace Diabetes.MVC.Models.Insulin
 {
-    public class CreateGlucoseLevelViewModel
+    public class CreateInsulinViewModel
     { 
         [Required(ErrorMessage = "Обязательное поле")]
-        [Double(1,20, ErrorMessage = "Допустимы числа от 1 до 20, с двумя знаками после запятой")]
-        [DisplayName("Значение в ммоль/л")]
-        public string ValueInMmol {
-            get => _valueInMmol?.Replace(',','.');
-            init => _valueInMmol = value;
+        [DisplayName("Значение (ед.)")]
+        [Double(1,100, ErrorMessage = "Допустимы числа от 1 до 100, с двумя знаками после запятой")]
+        public string Value {
+            get => _value?.Replace(',','.');
+            init => _value = value;
         }
 
-        private readonly string _valueInMmol = "";
+        private readonly string _value = "";
         
         [Required(ErrorMessage = "Обязательное поле")]
         [DisplayName("Дата измерения")]
@@ -27,8 +26,8 @@ namespace Diabetes.MVC.Models
         public string MeasuringTime { get; set; }
         
         [Required(ErrorMessage = "Обязательное поле")]
-        [DisplayName("До или после еды")]
-        public MeasuringTimeType MeasuringTimeType { get; set; }
+        [DisplayName("Тип инсулина")]
+        public InsulinType InsulinType { get; set; }
         
         [DisplayName("Заметка")]
         public string Comment { get; set; }
