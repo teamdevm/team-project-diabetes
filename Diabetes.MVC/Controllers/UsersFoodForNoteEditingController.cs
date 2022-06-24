@@ -10,7 +10,6 @@ using Diabetes.Application.UsersFood.Commands.DeleteUsersFood;
 using Diabetes.Application.UsersFood.Commands.EditUsersFood;
 using Diabetes.Application.UsersFood.Commands.GetUsersFoodItem;
 using Diabetes.Application.UsersFood.Commands.GetUsersFoodItemsList;
-using Diabetes.Domain.Enums;
 using Diabetes.MVC.Extensions;
 using Diabetes.MVC.Models.FoodForNote;
 using Diabetes.MVC.Models.UsersFood;
@@ -21,13 +20,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace Diabetes.MVC.Controllers
 {
     [Route("[controller]/[action]")]
-    public class UsersFoodForNoteController:Controller
+    public class UsersFoodForNoteEditingController:Controller
     {
         private readonly IMediator _mediator;
         private const int PageSize = 10;
         private List<Guid> UsedFood => HttpContext.GetMeal(HttpContextExtensions.AddKey).Foods.Select(f=>f.Food.Id).ToList(); 
 
-        public UsersFoodForNoteController(IMediator mediator)
+        public UsersFoodForNoteEditingController(IMediator mediator)
         {
             _mediator = mediator;
         }
@@ -81,54 +80,37 @@ namespace Diabetes.MVC.Controllers
             return View("Index", vm);
         }
         
-        [HttpGet("{id:guid}")]
+        [HttpGet]
         [Authorize]
-        public async Task<IActionResult> Delete(Guid id)
+        public IActionResult Add(string returnUrl)
         {
-            if(id == Guid.Empty) 
-                return NotFound();
-            
-            var command = new DeleteUsersFoodCommand() 
+            var viewModel = new AddUsersFoodViewModel();
+            return View(viewModel);
+        }
+        
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Add(AddUsersFoodViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
             {
-                UserId = User.GetId(), 
-                Id = id,
+                return View(viewModel);
+            }
+
+            var command = new AddUsersFoodCommand
+            {
+                UserId = User.GetId(),
+                Name = viewModel.Name,
+                Details = viewModel.Details,
+                Carbohydrate = double.Parse(viewModel.Carbohydrate, NumberStyles.Float, CultureInfo.InvariantCulture),
+                Fat = double.Parse(viewModel.Fat, NumberStyles.Float, CultureInfo.InvariantCulture),
+                Kcal = double.Parse(viewModel.Kcal, NumberStyles.Float, CultureInfo.InvariantCulture),
+                Protein = double.Parse(viewModel.Protein, NumberStyles.Float, CultureInfo.InvariantCulture),
             };
-            
+
             await _mediator.Send(command);
 
-            return RedirectToAction("Index", "UsersFoodForNote");
-        }
-        
-        [Authorize]
-        [HttpGet("{id:guid}")]
-        public async Task<IActionResult> AddToNoteList(Guid id)
-        {
-            if(id == Guid.Empty)
-                return RedirectToAction("Index", "FoodForNote");
-
-            var command = new GetFoodByIdCommand {Id = id};
-            var food = await _mediator.Send(command);
-
-            var vm = new FoodForNoteViewModel
-            {
-                FoodId = id,
-                Food = food
-            };
-
-            return View(vm);
-        }
-        
-        [Authorize]
-        [HttpPost("{id:guid}")]
-        public async Task<IActionResult> AddToNoteList(FoodForNoteViewModel vm)
-        {
-            var command = new GetFoodByIdCommand {Id = vm.FoodId};
-            var food = await _mediator.Send(command);
-            vm.Food = food;
-            
-            HttpContext.AddFood(vm, HttpContextExtensions.AddKey);
-
-            return RedirectToAction("Index", "UsersFoodForNote");
+            return RedirectToAction("Index", "UsersFoodForNoteEditing");
         }
         
         [HttpGet("{id:guid}")]
@@ -179,40 +161,60 @@ namespace Diabetes.MVC.Controllers
 
             await _mediator.Send(command);
 
-            return RedirectToAction("Index", "UsersFoodForNote");
+            return RedirectToAction("Index", "UsersFoodForNoteEditing");
         }
         
-        [HttpGet]
         [Authorize]
-        public IActionResult Add(string returnUrl)
+        [HttpGet("{id:guid}")]
+        public async Task<IActionResult> AddToNoteList(Guid id)
         {
-            var viewModel = new AddUsersFoodViewModel();
-            return View(viewModel);
-        }
-        
-        [HttpPost]
-        [Authorize]
-        public async Task<IActionResult> Add(AddUsersFoodViewModel viewModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(viewModel);
-            }
+            if(id == Guid.Empty)
+                return RedirectToAction("Index", "FoodForNoteEditing");
 
-            var command = new AddUsersFoodCommand
+            var command = new GetFoodByIdCommand {Id = id};
+            var food = await _mediator.Send(command);
+
+            var vm = new FoodForNoteViewModel
             {
-                UserId = User.GetId(),
-                Name = viewModel.Name,
-                Details = viewModel.Details,
-                Carbohydrate = double.Parse(viewModel.Carbohydrate, NumberStyles.Float, CultureInfo.InvariantCulture),
-                Fat = double.Parse(viewModel.Fat, NumberStyles.Float, CultureInfo.InvariantCulture),
-                Kcal = double.Parse(viewModel.Kcal, NumberStyles.Float, CultureInfo.InvariantCulture),
-                Protein = double.Parse(viewModel.Protein, NumberStyles.Float, CultureInfo.InvariantCulture),
+                FoodId = id,
+                Food = food
             };
 
+            return View(vm);
+        }
+        
+        [Authorize]
+        [HttpPost("{id:guid}")]
+        public async Task<IActionResult> AddToNoteList(FoodForNoteViewModel vm)
+        {
+            var command = new GetFoodByIdCommand {Id = vm.FoodId};
+            var food = await _mediator.Send(command);
+            vm.Food = food;
+            
+            HttpContext.AddFood(vm, HttpContextExtensions.EditKey);
+
+            var meal = HttpContext.GetMeal(HttpContextExtensions.EditKey);
+
+            return RedirectToAction("Edit", "Carbohydrate", new {id = meal.Id});
+        }
+        
+        [HttpGet("{id:guid}")]
+        [Authorize]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            if(id == Guid.Empty) 
+                return NotFound();
+            
+            var command = new DeleteUsersFoodCommand() 
+            {
+                UserId = User.GetId(), 
+                Id = id,
+            };
+            
             await _mediator.Send(command);
 
-            return RedirectToAction("Index", "UsersFoodForNote");
+            return RedirectToAction("Index", "UsersFoodForNoteEditing");
         }
+        
     }
 }

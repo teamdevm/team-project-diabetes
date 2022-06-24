@@ -37,5 +37,7 @@ namespace Diabetes.MVC.Models.Meal
 
         public string FoodsValue => Foods
             .Select(f => f.MassInGram * f.Food.Carbohydrate / 100).Sum().ToString(CultureInfo.InvariantCulture);
+
+        public Guid Id { get; set; }
     }
 }

@@ -8,7 +8,6 @@ using Diabetes.Application.UsersFood.Commands.AddUsersFood;
 using Diabetes.MVC.Extensions;
 using Diabetes.MVC.Models.FoodForNote;
 using Diabetes.MVC.Models.Foods;
-using Diabetes.MVC.Models.Meal;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,14 +15,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace Diabetes.MVC.Controllers
 {
     [Route("[controller]/[action]")]
-    public class FoodForNoteController:Controller
+    public class FoodForNoteEditingController:Controller
     {
-
         private const int PageSize = 10;
         private IMediator _mediator;
-        private List<Guid> UsedFood => HttpContext.GetMeal(HttpContextExtensions.AddKey).Foods.Select(f=>f.Food.Id).ToList(); 
+        private List<Guid> UsedFood => HttpContext.GetMeal(HttpContextExtensions.EditKey).Foods.Select(f=>f.Food.Id).ToList(); 
 
-        public FoodForNoteController(IMediator mediator)
+        public FoodForNoteEditingController(IMediator mediator)
         {
             _mediator = mediator;
         }
@@ -77,10 +75,33 @@ namespace Diabetes.MVC.Controllers
         
         [Authorize]
         [HttpGet("{id:guid}")]
+        public IActionResult DeleteFromNoteList(Guid id)
+        {
+            if (id != Guid.Empty)
+            {
+                HttpContext.RemoveFood(id, HttpContextExtensions.EditKey);
+            }
+
+            var vm = HttpContext.GetMeal(HttpContextExtensions.EditKey);
+            
+            return RedirectToAction("Edit", "Carbohydrate", new{id = vm.Id});
+        }
+        
+        [Authorize]
+        [HttpGet]
+        public IActionResult Cancel()
+        {
+            HttpContext.Clear(HttpContextExtensions.EditKey);
+
+            return RedirectToAction("Index", "Home");
+        }
+        
+        [Authorize]
+        [HttpGet("{id:guid}")]
         public async Task<IActionResult> AddToNoteList(Guid id)
         {
             if(id == Guid.Empty)
-                return RedirectToAction("Index", "FoodForNote");
+                return RedirectToAction("Index", "FoodForNoteEditing");
 
             var command = new GetFoodByIdCommand {Id = id};
             var food = await _mediator.Send(command);
@@ -102,16 +123,18 @@ namespace Diabetes.MVC.Controllers
             var food = await _mediator.Send(command);
             vm.Food = food;
             
-            HttpContext.AddFood(vm, HttpContextExtensions.AddKey);
+            HttpContext.AddFood(vm, HttpContextExtensions.EditKey);
 
-            return RedirectToAction("Index", "FoodForNote");
+            var meal = HttpContext.GetMeal(HttpContextExtensions.EditKey);
+
+            return RedirectToAction("Edit", "Carbohydrate", new {id = meal.Id});
         }
         
         [Authorize]
         [HttpGet("{id:guid}")]
         public IActionResult EditFromNoteList(Guid id)
         {
-            var vm = HttpContext.GetFoodById(id, HttpContextExtensions.AddKey);
+            var vm = HttpContext.GetFoodById(id, HttpContextExtensions.EditKey);
             
             return View(vm);
         }
@@ -120,29 +143,11 @@ namespace Diabetes.MVC.Controllers
         [HttpPost("{id:guid}")]
         public IActionResult EditFromNoteList(FoodForNoteViewModel vm)
         {
-            HttpContext.Edit(vm, HttpContextExtensions.AddKey);
+            HttpContext.Edit(vm, HttpContextExtensions.EditKey);
 
-            return RedirectToAction("Add", "Carbohydrate");
-        }
-        
-        [Authorize]
-        [HttpGet("{id:guid}")]
-        public IActionResult DeleteFromNoteList(Guid id)
-        {
-            if(id == Guid.Empty)
-                return RedirectToAction("Add", "Carbohydrate");
-            
-            HttpContext.RemoveFood(id, HttpContextExtensions.AddKey);
-            
-            return RedirectToAction("Add", "Carbohydrate");
-        }
-        
-        [Authorize]
-        [HttpPost]
-        public IActionResult RememberData(MealViewModel vm)
-        {
-            HttpContext.RememberData(vm, HttpContextExtensions.AddKey);
-            return RedirectToAction("Add", "Carbohydrate");
+            var meal = HttpContext.GetMeal(HttpContextExtensions.EditKey);
+
+            return RedirectToAction("Edit", "Carbohydrate", new {Id = meal.Id});
         }
         
         [Authorize]
@@ -151,7 +156,7 @@ namespace Diabetes.MVC.Controllers
         {
             
             if(id == Guid.Empty)
-                return RedirectToAction("Index", "FoodForNote");
+                return RedirectToAction("Index", "FoodForNoteEditing");
             
             var commandGet = new GetFoodByIdCommand
             {
@@ -173,7 +178,7 @@ namespace Diabetes.MVC.Controllers
 
             await _mediator.Send(commandAdd);
             
-            return RedirectToAction("Index", "FoodForNote");
+            return RedirectToAction("Index", "FoodForNoteEditing");
         }
     }
 }

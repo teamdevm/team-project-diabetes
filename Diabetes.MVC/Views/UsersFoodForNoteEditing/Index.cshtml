@@ -6,18 +6,18 @@
 }
 
 <div class="d-flex justify-content-around">
-    <a class="btn" asp-controller="FoodForNote" asp-action="Index">Все продукты</a>
-    <a class="btn active" asp-controller="UsersFoodForNote" asp-action="Index">Мои продукты</a>
+    <a class="btn" asp-controller="FoodForNoteEditing" asp-action="Index">Все продукты</a>
+    <a class="btn active" asp-controller="UsersFoodForNoteEditing" asp-action="Index">Мои продукты</a>
 </div>
 
 <div class="row mt-4"></div>
 
 <div class="d-flex justify-content-between container mobile-container">
-    <form class="container mobile-container input-group" asp-controller="UsersFoodForNote" asp-action="Index">
+    <form class="container mobile-container input-group" asp-controller="UsersFoodForNoteEditing" asp-action="Index">
         <input type="search" class="form-control" placeholder="Название продукта..." asp-for="SearchString" />
         <button type="submit" class="btn btn-outline-primary">Поиск</button>
     </form>
-    <a class="btn btn-primary" asp-controller="UsersFoodForNote" asp-action="Add"><img src="~/icons/add.svg"></a>
+    <a class="btn btn-primary" asp-controller="UsersFoodForNoteEditing" asp-action="Add"><img src="~/icons/add.svg"></a>
 </div>
 
 <div class="row mt-4"></div>
@@ -25,7 +25,7 @@
 <div class="container mobile-container">
     @if (Model.FoodItems.Any())
     {
-        @await Component.InvokeAsync("UsersFoodForNoteItemsList", new {model = new UsersFoodItemsListViewModel(Model.FoodItems)})
+        @await Component.InvokeAsync("UsersFoodForNoteEditingItemsList", new {model = new UsersFoodItemsListViewModel(Model.FoodItems)})
         @await Component.InvokeAsync("Pagination",
             new{
                 model = new PaginationViewModel

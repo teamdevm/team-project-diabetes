@@ -9,15 +9,16 @@ namespace Diabetes.MVC.Extensions
 {
     public static class HttpContextExtensions
     {
-        private const string AddFoodKey = "food";
+        public const string AddKey = "Add";
+        public const string EditKey = "Edit";
         
-        public static void AddFood(this HttpContext context, FoodForNoteViewModel foodViewModel)
+        public static void AddFood(this HttpContext context, FoodForNoteViewModel foodViewModel, string key)
         {
             MealViewModel meal;
             
-            if (context.Session.Keys.Contains(AddFoodKey))
+            if (context.Session.Keys.Contains(key))
             {
-                meal = JsonSerializer.Deserialize<MealViewModel>(context.Session.GetString(AddFoodKey));
+                meal = JsonSerializer.Deserialize<MealViewModel>(context.Session.GetString(key));
                 meal?.Foods.Add(foodViewModel);
             }
             else
@@ -26,48 +27,48 @@ namespace Diabetes.MVC.Extensions
                 meal.Foods.Add(foodViewModel);
             }
             
-            context.Session.SetString(AddFoodKey, JsonSerializer.Serialize(meal));
+            context.Session.SetString(key, JsonSerializer.Serialize(meal));
         }
         
-        public static void Clear(this HttpContext context)
+        public static void Clear(this HttpContext context, string key)
         {
-            context.Session.Remove(AddFoodKey);
+            context.Session.Remove(key);
         }
         
-        public static void RemoveFood(this HttpContext context, Guid foodId)
+        public static void RemoveFood(this HttpContext context, Guid foodId, string key)
         {
-            if (!context.Session.Keys.Contains(AddFoodKey)) 
+            if (!context.Session.Keys.Contains(key)) 
                 return;
 
-            var meal = JsonSerializer.Deserialize<MealViewModel>(context.Session.GetString(AddFoodKey)) 
+            var meal = JsonSerializer.Deserialize<MealViewModel>(context.Session.GetString(key)) 
                        ?? new MealViewModel();
             meal.Foods = meal.Foods.Where(f => f.Food.Id != foodId).ToList();
-            context.Session.SetString(AddFoodKey, JsonSerializer.Serialize(meal));
+            context.Session.SetString(key, JsonSerializer.Serialize(meal));
         }
         
-        public static MealViewModel GetMeal(this HttpContext context)
+        public static MealViewModel GetMeal(this HttpContext context, string key)
         {
-            if (context.Session.Keys.Contains(AddFoodKey))
-                return JsonSerializer.Deserialize<MealViewModel>(context.Session.GetString(AddFoodKey));
+            if (context.Session.Keys.Contains(key))
+                return JsonSerializer.Deserialize<MealViewModel>(context.Session.GetString(key));
             
             return new MealViewModel();
         }
         
-        public static FoodForNoteViewModel GetFoodById(this HttpContext context, Guid id)
+        public static FoodForNoteViewModel GetFoodById(this HttpContext context, Guid id, string key)
         {
-            if (!context.Session.Keys.Contains(AddFoodKey))
+            if (!context.Session.Keys.Contains(key))
                 return null;
             
-            var meal = JsonSerializer.Deserialize<MealViewModel>(context.Session.GetString(AddFoodKey));
+            var meal = JsonSerializer.Deserialize<MealViewModel>(context.Session.GetString(key));
             return meal?.Foods.FirstOrDefault(f => f.FoodId == id);
         }
         
-        public static void Edit(this HttpContext context, FoodForNoteViewModel vm)
+        public static void Edit(this HttpContext context, FoodForNoteViewModel vm, string key)
         {
-            if (!context.Session.Keys.Contains(AddFoodKey))
+            if (!context.Session.Keys.Contains(key))
                 return;
             
-            var meal = JsonSerializer.Deserialize<MealViewModel>(context.Session.GetString(AddFoodKey));
+            var meal = JsonSerializer.Deserialize<MealViewModel>(context.Session.GetString(key));
 
             if (meal == null)
                 return;
@@ -75,15 +76,15 @@ namespace Diabetes.MVC.Extensions
             var food = meal.Foods.FirstOrDefault(f => f.FoodId == vm.FoodId);
             food.MassInGram = vm.MassInGram;
             
-            context.Session.SetString(AddFoodKey, JsonSerializer.Serialize(meal));
+            context.Session.SetString(key, JsonSerializer.Serialize(meal));
         }
         
-        public static void RememberData(this HttpContext context, MealViewModel vm)
+        public static void RememberData(this HttpContext context, MealViewModel vm, string key)
         {
             MealViewModel meal;
 
-            if (context.Session.Keys.Contains(AddFoodKey))
-                meal = JsonSerializer.Deserialize<MealViewModel>(context.Session.GetString(AddFoodKey));
+            if (context.Session.Keys.Contains(key))
+                meal = JsonSerializer.Deserialize<MealViewModel>(context.Session.GetString(key));
             else
                 meal = new MealViewModel();
 
@@ -92,7 +93,12 @@ namespace Diabetes.MVC.Extensions
             meal.CreatingTime = vm.CreatingTime;
             meal.Comment = vm.Comment;
                 
-            context.Session.SetString(AddFoodKey, JsonSerializer.Serialize(meal));
+            context.Session.SetString(key, JsonSerializer.Serialize(meal));
+        }
+        
+        public static void AddMeal(this HttpContext context, MealViewModel vm, string key)
+        {
+            context.Session.SetString(key, JsonSerializer.Serialize(vm));
         }
     }
 }
