@@ -3,8 +3,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Diabetes.MVC.Attributes.Validation;
 using Diabetes.Domain.Normalized.Enums;
-using Diabetes.Domain.Normalized.Enums.Units;
-using Diabetes.Domain.Normalized.Enums.User;
+using Diabetes.Domain.Enums.User;
 
 namespace Diabetes.MVC.Models
 {
