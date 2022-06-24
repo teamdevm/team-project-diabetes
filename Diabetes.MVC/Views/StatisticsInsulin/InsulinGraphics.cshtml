@@ -30,15 +30,17 @@
     .PrimaryHeader(header => header.Text("Изменение уровня инсулина"))
     .Export(false)
     .AxisX(axisX => axisX.CategoricalValues(model => model.Categorical))
+    .AxisX(axisX => axisX.Title(title => title.Text("Время")))
+    .AxisY(axisY => axisY.Title(title => title.Text("Значение")))
     .DataSeries(series =>
         series.Spline()
               .Name("Уровень инсулина")
               .Data(model => model.Value)))
 
 <div class="mb-3">
-    <div>Минимальное значение: @(Model.Values.Count == 0 ? "неизвестно" : Model.Values.Min().ToString())</div>
-    <div>Среднее значение: @(Model.Values.Count == 0 ? "неизвестно" : Model.Values.Average().ToString())</div>
-    <div>Максимальное значение: @(Model.Values.Count == 0 ? "неизвестно" : Model.Values.Max().ToString())</div>
+    <div>Минимальное значение: @(Model.Values.Count == 0 ? "неизвестно" : Math.Round(Model.Values.Min(), 2).ToString())</div>
+    <div>Среднее значение: @(Model.Values.Count == 0 ? "неизвестно" : Math.Round(Model.Values.Average(), 2).ToString())</div>
+    <div>Максимальное значение: @(Model.Values.Count == 0 ? "неизвестно" : Math.Round(Model.Values.Max(), 2).ToString())</div>
 </div>
 </div>
 
