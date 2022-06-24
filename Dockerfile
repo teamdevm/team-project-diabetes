@@ -27,4 +27,4 @@ RUN dotnet publish -c release -o /DockerOutput/Website
 FROM mcr.microsoft.com/dotnet/aspnet:5.0
 WORKDIR /DockerOutput/Website
 COPY --from=build /DockerOutput/Website ./
-ENTRYPOINT ["dotnet", "Diabetes.MVC.dll"]
+CMD ASPNETCORE_URLS=http://*:$PORT dotnet Diabetes.MVC.dll
