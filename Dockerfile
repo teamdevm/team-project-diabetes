@@ -2,12 +2,21 @@
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /DockerSource
 
-COPY . .
+COPY *.sln .
+COPY Diabetes.MVC/Diabetes.MVC.csproj ./Diabetes.MVC/
+COPY Diabetes.Application/Diabetes.Application.csproj ./Diabetes.Application/
+COPY Diabetes.Domain/Diabetes.Domain.csproj ./Diabetes.Domain/
+COPY Diabetes.Persistence/Diabetes.Persistence.csproj ./Diabetes.Persistence/
 
 RUN dotnet restore
 
 
-COPY . .
+
+
+COPY Diabetes.MVC/. ./Diabetes.MVC/
+COPY Diabetes.Application/. ./Diabetes.Application/
+COPY Diabetes.Domain/. ./Diabetes.Domain/
+COPY Diabetes.Persistence/. ./Diabetes.Persistence/
 
 WORKDIR /DockerSource/Diabetes.MVC
 
