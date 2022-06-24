@@ -5,7 +5,7 @@ using Diabetes.MVC.Models;
 using Diabetes.Application.Statistics.Commands;
 using System.Linq;
 using System.Collections.Generic;
-using Diabetes.Domain.Normalized.Enums;
+using Diabetes.Domain.Enums;
 using Diabetes.Domain;
 using System;
 using System.Threading.Tasks;

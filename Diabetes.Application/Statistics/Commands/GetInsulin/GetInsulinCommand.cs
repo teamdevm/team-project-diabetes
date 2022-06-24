@@ -1,5 +1,5 @@
 ﻿using System;
-using Diabetes.Domain.Normalized.Enums;
+using Diabetes.Domain.Enums;
 using Diabetes.Domain;
 using System.Collections.Generic;
 using MediatR;

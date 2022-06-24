@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-namespace Diabetes.Domain.Normalized.Enums
+namespace Diabetes.Domain.Enums
 {
     public enum TimePeriods
     {

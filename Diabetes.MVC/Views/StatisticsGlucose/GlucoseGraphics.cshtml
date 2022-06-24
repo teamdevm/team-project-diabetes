@@ -1,5 +1,5 @@
 ﻿@using ShieldUI.AspNetCore.Mvc
-@using Diabetes.Domain.Normalized.Enums
+@using Diabetes.Domain.Enums
 @model Diabetes.MVC.Models.StatisticsGlucoseViewModel
 @{
     ViewData["Title"] = "Статистика";
@@ -36,9 +36,9 @@
               .Data(model => model.Value)))
 
     <div class="mb-3">
-        <div>Минимальное значение: @Model.Values.Min()</div>
-        <div>Среднее значение: @Model.Values.Average()</div>
-        <div>Максимальное значение: @Model.Values.Max()</div>
+        <div>Минимальное значение: @(Model.Values.Count == 0 ? "неизвестно" : Model.Values.Min().ToString())</div>
+        <div>Среднее значение: @(Model.Values.Count == 0 ? "неизвестно" : Model.Values.Average().ToString())</div>
+        <div>Максимальное значение: @(Model.Values.Count == 0 ? "неизвестно" : Model.Values.Max().ToString())</div>
     </div>
 </div>
 

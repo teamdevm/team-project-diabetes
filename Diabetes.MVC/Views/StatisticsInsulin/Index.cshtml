@@ -1,5 +1,5 @@
 ﻿@using ShieldUI.AspNetCore.Mvc
-@using Diabetes.Domain.Normalized.Enums
+@using Diabetes.Domain.Enums
 @model Diabetes.MVC.Models.StatisticsInsulinViewModel
 @{
     ViewData["Title"] = "Статистика";
@@ -29,7 +29,7 @@
     .AxisX(axisX => axisX.CategoricalValues(model => model.Categorical))
     .DataSeries(series =>
         series.Spline()
-              .Name("Уровень глюкозы")
+              .Name("Уровень инсулина")
               .Data(model => model.Value)))
 
     <div class="mb-3">
