@@ -6,9 +6,9 @@ using MediatR;
 
 namespace Diabetes.Application.Statistics.Commands
 {
-    public class GetGlucoseCommand: IRequest<List<GlucoseNote>>
+    public class GetInsulinCommand : IRequest<List<InsulinNote>>
     {
-        public Func<MeasuringTimeType, bool> MeasuringTimeFilter { get; set; }
+        public Func<InsulinType, bool> InsulinFilter { get; set; }
         public Func<DateTime, bool> DateFilter { get; set; }
     }
 }

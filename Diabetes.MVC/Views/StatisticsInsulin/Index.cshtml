@@ -1,0 +1,42 @@
+﻿@using ShieldUI.AspNetCore.Mvc
+@using Diabetes.Domain.Normalized.Enums
+@model Diabetes.MVC.Models.StatisticsInsulinViewModel
+@{
+    ViewData["Title"] = "Статистика";
+}
+
+<div class="d-flex justify-content-around">
+    <a class="btn" asp-controller="StatisticsGlucose" asp-action="Index">Глюкоза</a>
+    <a class="btn active" asp-controller="StatisticsInsulin" asp-action="Index">Инсулин</a>
+    <a class="btn" asp-controller="Statistics" asp-action="CarbohydratesGraphics">Углеводы</a>
+</div>
+
+<div class="container mobile-container">
+    <form asp-controller="StatisticsInsulin" asp-action="InsulinGraphics" role="form" method="get">
+        <select asp-for="InsulinAdditional" asp-items="Html.GetEnumSelectList<InsulinTypeExtended>()" onchange="this.form.submit()"></select>
+        <select asp-for="InsulinTimePeriod" asp-items="Html.GetEnumSelectList<TimePeriods>()" onchange="this.form.submit()"></select>
+    </form>
+
+    @(Html.ShieldChart(Model.GetData())
+    .Name("chart")
+   .Tooltip(tooltip => tooltip.AxisMarkers(axisMarkers => axisMarkers
+        .Enabled(true)
+        .Mode(ShieldUI.AspNetCore.Mvc.Chart.TooltipAxisMarkerMode.XY)
+        .Width(1)
+        .ZIndex(3)))
+    .Theme("light")
+    .Export(false)
+    .AxisX(axisX => axisX.CategoricalValues(model => model.Categorical))
+    .DataSeries(series =>
+        series.Spline()
+              .Name("Уровень глюкозы")
+              .Data(model => model.Value)))
+
+    <div class="mb-3">
+        <div>Минимальное значение: @(Model.Values.Count == 0 ? "неизвестно" : Model.Values.Min().ToString())</div>
+        <div>Среднее значение: @(Model.Values.Count == 0 ? "неизвестно" : Model.Values.Average().ToString())</div>
+        <div>Максимальное значение: @(Model.Values.Count == 0 ? "неизвестно" : Model.Values.Max().ToString())</div>
+    </div>
+</div>
+
+<div class="row mt-3"></div>
