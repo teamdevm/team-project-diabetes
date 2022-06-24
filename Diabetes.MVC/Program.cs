@@ -14,7 +14,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Diabetes.MVC
 {
-    public clafgss Program
+    public class Program
     {
         public static void Main(string[] args)
         {
