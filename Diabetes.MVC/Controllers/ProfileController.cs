@@ -6,7 +6,7 @@ using Diabetes.Persistence;
 using MediatR;
 using System.Threading.Tasks;
 using Diabetes.Domain.Normalized.Enums.Units;
-
+using Diabetes.MVC.Extensions;
 
 namespace Diabetes.MVC.Controllers
 {
@@ -27,8 +27,61 @@ namespace Diabetes.MVC.Controllers
         {
             if (ModelState.IsValid)
             {
+                var user = await _userManager.GetUserAsync(User);
+                IdentityResult result;
 
-            }
+                if (model.Email != user.Email)
+                {
+                    result = await _userManager.SetEmailAsync(user, model.Email);
+                    if (!result.Succeeded)
+                    { 
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
+                        return View(model);
+                    }
+                }
+                if (model.Password != null && model.Password != "")
+                {
+                    if (model.PasswordOld == null && model.PasswordOld != "")
+                    { 
+                        ModelState.AddModelError(string.Empty, "Введите текущий пароль");
+                        return View(model);
+                    }
+
+                    result = await _userManager.ChangePasswordAsync(user, model.PasswordOld, model.Password);
+                    if (!result.Succeeded)
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
+                        return View(model);
+                    }
+                }
+
+                user.Name = model.Name;
+                user.DiabetesType = model.DiabetesType;
+                user.Birthdate = model.Birthdate;
+                user.Gender = model.Gender;
+                user.Height = model.Height;
+                user.Weight = model.Weight;
+
+                result = await _userManager.UpdateAsync(user);
+
+                if (!result.Succeeded)
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                    return View(model);
+                }
+
+                return RedirectToAction("Index", "Account");
+            }           
+
             return View(model);
         }
 

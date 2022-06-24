@@ -23,11 +23,39 @@ namespace Diabetes.MVC.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Index(SettingsGlucoseLevelViewModel model)
+        public async Task<IActionResult> IndexAsync(SettingsGlucoseLevelViewModel model)
         {
             if (ModelState.IsValid)
             {
+                var user = await _userManager.GetUserAsync(User);
 
+                user.GlucoseUnits = model.GlucoseUnitsUsed;
+                user.NormalGlucoseBeforeEating = Convert.ToDouble(model.ValueBeforeEating.Replace('.', ','));
+                user.NormalGlucoseAfterEating = Convert.ToDouble(model.ValueAfterEating.Replace('.', ','));
+                //Если бы хранили в зависимости от единиц
+                /*if (model.GlucoseUnitsUsed == GlucoseUnits.MmolPerLiter)
+                {
+                    user.NormalGlucoseBeforeEating = double.Parse(model.ValueBeforeEating);
+                    user.NormalGlucoseAfterEating = double.Parse(model.ValueAfterEating);
+                }
+                else
+                {
+                    user.NormalGlucoseBeforeEating = double.Parse(model.ValueBeforeEatingAlt);
+                    user.NormalGlucoseAfterEating = double.Parse(model.ValueAfterEatingAlt);
+                }*/
+
+                var result = await _userManager.UpdateAsync(user);
+
+                if (!result.Succeeded)
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                    return View(model);
+                }
+
+                return RedirectToAction("Index", "Settings");
             }
 
             return View(model);
@@ -43,6 +71,8 @@ namespace Diabetes.MVC.Controllers
             {
                 ValueBeforeEating = user.NormalGlucoseBeforeEating.ToString(),
                 ValueAfterEating = user.NormalGlucoseAfterEating.ToString(),
+                ValueBeforeEatingAlt = (user.NormalGlucoseBeforeEating * 20).ToString(),
+                ValueAfterEatingAlt = (user.NormalGlucoseAfterEating * 20).ToString(),
                 GlucoseUnitsUsed = user.GlucoseUnits,
             };
 

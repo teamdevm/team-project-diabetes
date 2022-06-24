@@ -55,10 +55,6 @@
 
 <script>
     if ($('#units').val() == '1') {
-        var val1 = $('#inp1').val() * 20
-        var val2 = $('#inp2').val() * 20
-        $('#inp1').val(val1.toFixed(2))
-        $('#inp2').val(val2.toFixed(2))
 
         $('#vbe').addClass('d-none')
         $('#vae').addClass('d-none')
@@ -103,5 +99,29 @@
             $('#vbe').removeClass('d-none')
             $('#vae').removeClass('d-none')
         }
+    })
+
+    $('#inp_vbe').on('edit change', function (e) {
+        e.preventDefault()
+        var val = $('#inp_vbe').val() * 20
+        $('#inp_vbe_alt').val(val.toFixed(2))
+    })
+
+    $('#inp_vae').on('edit change', function (e) {
+        e.preventDefault()
+        var val = $('#inp_vae').val() * 20
+        $('#inp_vae_alt').val(val.toFixed(2))
+    })
+
+    $('#inp_vbe_alt').on('edit change', function (e) {
+        e.preventDefault()
+        var val = $('#inp_vbe_alt').val() / 20
+        $('#inp_vbe').val(val.toFixed(2))
+    })
+
+    $('#inp_vae_alt').on('edit change', function (e) {
+        e.preventDefault()
+        var val = $('#inp_vae_alt').val() / 20
+        $('#inp_vae').val(val.toFixed(2))
     })
 </script>

@@ -21,7 +21,7 @@ namespace Diabetes.MVC.Models
 
         [Double(0, 999, ErrorMessage = "Значение должно быть целым числом от 0 до 999")]
         [DisplayName("Количество углеводов в 1 ХЕ")]
-        public int CarbohydrateInBreadUnit { get; set; }
+        public int? CarbohydrateInBreadUnit { get; set; }
         [DisplayName("Единица измерения употребленных углеводов")]
         public CarbohydrateUnits CarbohydrateUnitsUsed { get; set; } = CarbohydrateUnits.Carbohydrate;
     }

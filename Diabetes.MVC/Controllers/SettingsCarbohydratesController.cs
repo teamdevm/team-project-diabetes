@@ -22,12 +22,33 @@ namespace Diabetes.MVC.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Index(SettingsCarbohydratesViewModel model)
+        public async Task<IActionResult> IndexAsync(SettingsCarbohydratesViewModel model)
         {
             if (ModelState.IsValid)
             {
+                var user = await _userManager.GetUserAsync(User);
 
+                user.BreakfastTime = model.BreakfastTime;
+                user.LunchTime = model.LunchTime;
+                user.DinnerTime = model.DinnerTime;
+                user.CarbohydrateUnits = model.CarbohydrateUnitsUsed;
+                if (model.CarbohydrateInBreadUnit != null)
+                    user.CarbohydrateInBreadUnit = (int)model.CarbohydrateInBreadUnit;
+
+                var result = await _userManager.UpdateAsync(user);
+
+                if (!result.Succeeded)
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                    return View(model);
+                }
+
+                return RedirectToAction("Index", "Settings");
             }
+
             return View(model);
         }
 

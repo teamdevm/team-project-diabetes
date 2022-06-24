@@ -14,8 +14,13 @@
     </div>
     <div class="mb-3">
         <label asp-for="Password" class="form-label"></label>
-        <input asp-for="Password" class="form-control">
+        <input asp-for="Password" id="pass" class="form-control">
         <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <div class="mb-3 d-none" id="pass_old">
+        <label asp-for="PasswordOld" class="form-label"></label>
+        <input asp-for="PasswordOld" class="form-control">
+        <span asp-validation-for="PasswordOld" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="Name" class="form-label"></label>
@@ -58,7 +63,7 @@
             </div>
             <div class="col-lg-2 pull-right">
                 <a class="btn btn-danger"
-                        asp-controller="Account" asp-action="Index">
+                   asp-controller="Account" asp-action="Index">
                     Отмена
                 </a>
             </div>
@@ -67,11 +72,15 @@
 </form>
 
 <script>
-    $('#datePicker').val(Date(@Model.Birthdate));
-
     $('input').on('edit change', function (e) {
         e.preventDefault()
         if ($('#danger').hasClass('invisible'))
             $('#danger').removeClass('invisible')
+    })
+
+    $('#pass').on('edit change', function (e) {
+        e.preventDefault()
+        if ($('#pass_old').hasClass('d-none'))
+            $('#pass_old').removeClass('d-none')
     })
 </script>
