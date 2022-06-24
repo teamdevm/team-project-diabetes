@@ -8,8 +8,10 @@
 <div class="d-flex justify-content-around">
     <a class="btn" asp-controller="StatisticsGlucose" asp-action="Index">Глюкоза</a>
     <a class="btn active" asp-controller="StatisticsInsulin" asp-action="Index">Инсулин</a>
-    <a class="btn" asp-controller="Statistics" asp-action="CarbohydratesGraphics">Углеводы</a>
+    <a class="btn" asp-controller="StatisticsCarbohydrates" asp-action="Index">Углеводы</a>
 </div>
+
+<div class="row mt-3"></div>
 
 <div class="container mobile-container">
     <form asp-controller="StatisticsInsulin" asp-action="InsulinGraphics" role="form" method="get">
@@ -25,6 +27,7 @@
         .Width(1)
         .ZIndex(3)))
     .Theme("light")
+    .PrimaryHeader(header => header.Text("Изменение уровня инсулина"))
     .Export(false)
     .AxisX(axisX => axisX.CategoricalValues(model => model.Categorical))
     .DataSeries(series =>
