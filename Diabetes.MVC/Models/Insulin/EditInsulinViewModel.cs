@@ -1,10 +1,10 @@
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Diabetes.Domain.Enums;
 using Diabetes.MVC.Attributes.Validation;
-using Diabetes.Domain.Normalized.Enums;
 
-namespace Diabetes.MVC.Models
+namespace Diabetes.MVC.Models.Insulin
 {
     public class EditInsulinViewModel
     {

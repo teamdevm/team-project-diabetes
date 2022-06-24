@@ -1,0 +1,40 @@
+@using Diabetes.MVC.Models.Components
+@model Diabetes.MVC.Models.UsersFood.UsersFoodListViewModel
+
+@{
+    ViewData["Title"] = "Мои продукты";
+}
+
+<div class="d-flex justify-content-around">
+    <a class="btn" asp-controller="Food" asp-action="Index">Все продукты</a>
+    <a class="btn active" asp-controller="UsersFood" asp-action="Index">Мои продукты</a>
+</div>
+
+<div class="row mt-4"></div>
+
+<div class="d-flex justify-content-between container mobile-container">
+    <form class="container mobile-container input-group" asp-controller="UsersFood" asp-action="Index">
+        <input type="search" class="form-control" placeholder="Название продукта..." asp-for="SearchString" />
+        <button type="submit" class="btn btn-outline-primary">Поиск</button>
+    </form>
+    <a class="btn btn-primary" asp-controller="UsersFood" asp-action="Add"><img src="~/icons/add.svg"></a>
+</div>
+
+<div class="row mt-4"></div>
+
+<div class="container mobile-container">
+    @if (Model.FoodItems.Any())
+    {
+        @await Component.InvokeAsync("UsersFoodItemsList", new {model = new UsersFoodItemsListViewModel(Model.FoodItems)})
+        @await Component.InvokeAsync("Pagination",
+            new{
+                model = new PaginationViewModel
+                (Model.SearchString, Model.FoodItems.HasPreviousPage, Model.FoodItems.HasNextPage, Model.FoodItems.PageIndex)
+            })
+    }
+    else
+    {
+        <p class="text-center">У вас пока нет продуктов</p>
+    }
+
+</div>

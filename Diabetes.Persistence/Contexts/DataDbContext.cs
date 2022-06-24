@@ -1,11 +1,14 @@
 ﻿using Diabetes.Application.Interfaces;
 using Diabetes.Domain;
-using Diabetes.Domain.Normalized;
 using Microsoft.EntityFrameworkCore;
 
-namespace Diabetes.Persistence
+namespace Diabetes.Persistence.Contexts
 {
-    public class DataDbContext : DbContext, IGlucoseLevelDbContext, INoteInsulinDbContext
+    public class DataDbContext : DbContext, 
+        IGlucoseLevelDbContext, 
+        INoteInsulinDbContext,
+        IFoodDbContext,
+        IUsersFoodDbContext
     {
         
         public DbSet<Food> Foods { get; set; }

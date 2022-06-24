@@ -37,4 +37,12 @@
       <Folder Include="Models\Home" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="wwwroot\lib\anim\dist\css\animsition.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\anim\dist\css\animsition.min.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\anim\dist\js\animsition.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\anim\dist\js\animsition.min.js" />
+      <_ContentIncludedByDefault Remove="Views\Shared\Components\MyFoodItemsList\Default.cshtml" />
+    </ItemGroup>
+
 </Project>
