@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ShieldUI.AspNetCore.Mvc;
 
 namespace Diabetes.MVC
 {
@@ -43,7 +44,8 @@ namespace Diabetes.MVC
                 })
                 .AddRussianIdentityErrorDescriber()
                 .AddEntityFrameworkStores<AccountContext>();
-            
+
+            services.AddShieldUI();
             services.AddMvcCore().AddMvcOptions(options =>
             {
                 options.ModelBindingMessageProvider.SetAttemptedValueIsInvalidAccessor((x,y) => $"Значение \"{x}\" недопустимо");
@@ -68,6 +70,7 @@ namespace Diabetes.MVC
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseShieldUI();
 
             app.UseAuthentication();
             app.UseAuthorization();

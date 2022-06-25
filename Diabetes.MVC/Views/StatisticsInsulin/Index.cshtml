@@ -1,0 +1,55 @@
+﻿@using ShieldUI.AspNetCore.Mvc
+@using Diabetes.Domain.Enums
+@model Diabetes.MVC.Models.StatisticsInsulinViewModel
+@{
+    ViewData["Title"] = "Статистика";
+}
+
+<div class="d-flex justify-content-around">
+    <a class="btn" asp-controller="StatisticsGlucose" asp-action="Index">Глюкоза</a>
+    <a class="btn active" asp-controller="StatisticsInsulin" asp-action="Index">Инсулин</a>
+    <a class="btn" asp-controller="StatisticsCarbohydrates" asp-action="Index">Углеводы</a>
+</div>
+
+<div class="row mt-3"></div>
+
+<div class="container mobile-container">
+    <form asp-controller="StatisticsInsulin" asp-action="InsulinGraphics" role="form" method="get">
+        <select asp-for="InsulinAdditional" asp-items="Html.GetEnumSelectList<InsulinTypeExtended>()" onchange="this.form.submit()"></select>
+        <select asp-for="InsulinTimePeriod" asp-items="Html.GetEnumSelectList<TimePeriods>()" onchange="this.form.submit()"></select>
+        @if (Model.InsulinTimePeriod == "3")
+        {
+            <div class="row mt-3"></div>
+            <input asp-for="CustomDate" type="date" class="form-control" id="datePicker" min="0001-01-01" max="9999-12-31" onfocusout="this.form.submit()">
+        }
+    </form>
+    <div class="row mt-3"></div>
+    @(Html.ShieldChart(Model.GetData())
+    .Name("chart")
+   .Tooltip(tooltip => tooltip.AxisMarkers(axisMarkers => axisMarkers
+        .Enabled(true)
+        .Mode(ShieldUI.AspNetCore.Mvc.Chart.TooltipAxisMarkerMode.XY)
+        .Width(1)
+        .ZIndex(3)))
+    .Theme("light")
+    .PrimaryHeader(header => header.Text("Введенные дозы инсулина"))
+    .Export(false)
+    .AxisX(axisX => axisX.CategoricalValues(model => model.Categorical))
+    .AxisX(axisX => axisX.Title(title => title.Text("Время")))
+    .AxisX(axisX => axisX.AxisTickText(axisTickText => axisTickText.Enabled(false)))
+    .AxisY(axisY => axisY.Title(title => title.Text("Значение")))
+    .DataSeries(series =>
+        series.Spline()
+              .Name("Принятый инсулин")
+              .Data(model => model.Value)))
+
+    <div class="row mt-3"></div>
+
+    <div class="mb-3">
+        <div><font size="4">Минимальное значение: @(Model.Values.Count == 0 ? "неизвестно" : Math.Round(Model.Values.Min(), 2).ToString())</font></div>
+        <div><font size="4">Среднее значение: @(Model.Values.Count == 0 ? "неизвестно" : Math.Round(Model.Values.Average(), 2).ToString())</font></div>
+        <div><font size="4">Максимальное значение: @(Model.Values.Count == 0 ? "неизвестно" : Math.Round(Model.Values.Max(), 2).ToString())</font></div>
+    </div>
+</div>
+
+<div class="row mt-3"></div>

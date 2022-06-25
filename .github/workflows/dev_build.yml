@@ -1,0 +1,16 @@
+name: Build project
+
+on:
+  pull_request:
+    branches:
+      - dev
+
+  workflow_dispatch:
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          usedocker: true
