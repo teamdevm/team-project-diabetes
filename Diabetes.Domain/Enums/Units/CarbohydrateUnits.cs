@@ -4,9 +4,9 @@ namespace Diabetes.Domain.Normalized.Enums.Units
 {
     public enum CarbohydrateUnits
     {
-        [Display(Name = "Углеводы в граммах")]
+        [Display(Name = "РЈРіР»РµРІРѕРґС‹ РІ РіСЂР°РјРјР°С…")]
         Carbohydrate,
-        [Display(Name = "Хлебные единицы (ХЕ)")]
+        [Display(Name = "РҐР»РµР±РЅС‹Рµ РµРґРёРЅРёС†С‹ (РҐР•)")]
         BreadUnits
     }
 }

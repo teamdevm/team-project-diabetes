@@ -27,15 +27,16 @@ namespace Diabetes.MVC.Controllers
         [Authorize]
         public async Task<IActionResult> IndexAsync(SettingsGlucoseLevelViewModel model)
         {
+            //Значения без округления
+            double vbe, vae, vbe_alt, vae_alt;
+            bool isNanVbe = !double.TryParse(model.ValueBeforeEating.Replace('.', ','), out vbe);
+            bool isNanVae = !double.TryParse(model.ValueAfterEating.Replace('.', ','), out vae);
+            bool isNanVbeAlt = !double.TryParse(model.ValueBeforeEatingAlt.Replace('.', ','), out vbe_alt);
+            bool isNanVaeAlt = !double.TryParse(model.ValueAfterEatingAlt.Replace('.', ','), out vae_alt);
+
             if (!ModelState.IsValid)
             {
                 //Предобработка значений в случае, если был введен неверный разделитель
-                double vbe, vae, vbe_alt, vae_alt;
-                bool isNanVbe = !double.TryParse(model.ValueBeforeEating.Replace('.', ','), out vbe);
-                bool isNanVae = !double.TryParse(model.ValueAfterEating.Replace('.', ','), out vae);
-                bool isNanVbeAlt = !double.TryParse(model.ValueBeforeEatingAlt.Replace('.', ','), out vbe_alt);
-                bool isNanVaeAlt = !double.TryParse(model.ValueAfterEatingAlt.Replace('.', ','), out vae_alt);
-
                 if (model.GlucoseUnitsUsed == GlucoseUnits.MgramPerDeciliter)
                 {
                     if (isNanVae && !isNanVaeAlt)
@@ -69,8 +70,8 @@ namespace Diabetes.MVC.Controllers
                 var user = await _userManager.GetUserAsync(User);
 
                 user.GlucoseUnits = model.GlucoseUnitsUsed;
-                user.NormalGlucoseBeforeEating = Convert.ToDouble(model.ValueBeforeEating.Replace('.', ','));
-                user.NormalGlucoseAfterEating = Convert.ToDouble(model.ValueAfterEating.Replace('.', ','));
+                user.NormalGlucoseBeforeEating = Convert.ToDouble(vbe);
+                user.NormalGlucoseAfterEating = Convert.ToDouble(vae);
                 //Если бы хранили в зависимости от единиц
                 /*if (model.GlucoseUnitsUsed == GlucoseUnits.MmolPerLiter)
                 {

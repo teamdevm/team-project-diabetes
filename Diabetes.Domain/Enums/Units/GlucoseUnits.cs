@@ -4,9 +4,9 @@ namespace Diabetes.Domain.Normalized.Enums.Units
 {
     public enum GlucoseUnits
     {
-        [Display(Name = "ììîëü/ë")]
+        [Display(Name = "Ğ¼Ğ¼Ğ¾Ğ»ÑŒ/Ğ»")]
         MmolPerLiter,
-        [Display(Name = "ìã/äë")]
+        [Display(Name = "Ğ¼Ğ³/Ğ´Ğ»")]
         MgramPerDeciliter
     }
 }
