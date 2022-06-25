@@ -23,6 +23,8 @@ namespace Diabetes.MVC.Controllers
 
         private readonly UserManager<Account> _userManager;
         private readonly IMediator _mediator;
+        
+        private async Task<Account> GetAccount() => await _userManager.FindByNameAsync(User.Identity.Name);
 
         public HomeController(IMediator mediator, UserManager<Account> userManager)
         {
@@ -33,7 +35,7 @@ namespace Diabetes.MVC.Controllers
         [Authorize]
         public async Task<IActionResult> Index()
         {
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var user = await GetAccount();
 
             var command = new GetActionHistoryItemsCommand
             {
@@ -49,12 +51,10 @@ namespace Diabetes.MVC.Controllers
                 ActionHistoryItems = list
             };
 
-            if (HttpContext.Session.Keys.Contains(HttpContextExtensions.EditKey))
-            {
-                var meal = HttpContext.GetMeal(HttpContextExtensions.EditKey);
-                ViewBag.EditingCard = meal.Id;
-            }
-                
+            ViewBag.MinimalGlucoseBeforeEating = user.MinimalGlucoseBeforeEating;     
+            ViewBag.MaximalGlucoseBeforeEating = user.MaximalGlucoseBeforeEating;  
+            ViewBag.MinimalGlucoseAfterEating = user.MinimalGlucoseAfterEating;  
+            ViewBag.MaximalGlucoseAfterEating = user.MaximalGlucoseAfterEating;  
 
             return View(viewModel);
         }
@@ -74,6 +74,13 @@ namespace Diabetes.MVC.Controllers
             {
                 ActionHistoryItems = list
             };
+            
+            var user = await GetAccount();
+            
+            ViewBag.MinimalGlucoseBeforeEating = user.MinimalGlucoseBeforeEating;     
+            ViewBag.MaximalGlucoseBeforeEating = user.MaximalGlucoseBeforeEating;  
+            ViewBag.MinimalGlucoseAfterEating = user.MinimalGlucoseAfterEating;  
+            ViewBag.MaximalGlucoseAfterEating = user.MaximalGlucoseAfterEating; 
 
             return View(viewModel);
         }

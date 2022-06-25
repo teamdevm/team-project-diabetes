@@ -1,5 +1,7 @@
 using System;
 using System.Security.Claims;
+using Diabetes.Persistence;
+using Microsoft.AspNetCore.Identity;
 
 namespace Diabetes.MVC.Extensions
 {

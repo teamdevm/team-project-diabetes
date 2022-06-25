@@ -17,6 +17,7 @@ namespace Diabetes.Domain
                 Title = NoteType.Insulin.ToLocalizedString(),
                 Value = Value.ToString(),
                 Details = InsulinType.ToLocalizedString(),
+                Comment = Comment,
                 DateTime = MeasuringDateTime,
                 CreationDateTime = LastUpdate
             };

@@ -31,7 +31,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Models\FoodForNoteEditing" />
       <Folder Include="Models\Home" />
     </ItemGroup>
 
