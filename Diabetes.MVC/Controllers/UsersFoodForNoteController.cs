@@ -143,6 +143,9 @@ namespace Diabetes.MVC.Controllers
 
             var model = await _mediator.Send(getUsersFoodCommand);
             
+            if (model == null)
+                return RedirectToAction("Index", "UsersFoodForNote");
+            
             var viewModel = new EditUsersFoodViewModel
             {
                 Id = model.Id,

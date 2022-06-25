@@ -135,6 +135,11 @@ namespace Diabetes.MVC.Controllers
         public IActionResult EditFromNoteList(Guid id)
         {
             var vm = HttpContext.GetFoodById(id, HttpContextExtensions.EditKey);
+
+            var meal = HttpContext.GetMeal(HttpContextExtensions.EditKey);
+            
+            if (vm == null)
+                return RedirectToAction("Edit", "Carbohydrate", new {id = meal.Id});
             
             return View(vm);
         }
