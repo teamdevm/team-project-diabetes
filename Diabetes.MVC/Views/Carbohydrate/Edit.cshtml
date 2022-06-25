@@ -9,24 +9,20 @@
 
     <div class="d-flex justify-content-between">
         <h4>Список продуктов</h4>
-        <a class="btn btn-primary" asp-controller="FoodForNoteEditing" asp-action="Index">Добавить продукт</a>
+        <button class="btn btn-primary" type="submit" asp-controller="Carbohydrate" asp-action="AddFoodToListEditing">Добавить продукт</button>
     </div>
 
     @await Component.InvokeAsync("FoodListInMealEditing", new{ model = new FoodForNoteListViewModel(Model.Foods)})
 
     <hr>
-    
-    <div class="d-flex justify-content-end">
-        <button class="btn btn-outline-primary" asp-controller="Carbohydrate" asp-action="RememberEditedData">Запомнить данные</button>
-    </div>
-    
+
     <div class="mb-3">
         <input asp-for="Id" class="form-control d-none">
     </div>
     
     <div class="mb-3">
         <label asp-for="Value" class="form-label"></label>
-        <input oninput="onInput()" id="value"  asp-for="Value" class="form-control">
+        <input oninput="onInput()" id="value" asp-for="Value" class="form-control">
         <span asp-validation-for="Value" class="text-danger"></span>
     </div>
     <div class="mb-3">

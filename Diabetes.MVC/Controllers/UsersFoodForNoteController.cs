@@ -88,6 +88,8 @@ namespace Diabetes.MVC.Controllers
             if(id == Guid.Empty) 
                 return NotFound();
             
+            HttpContext.RemoveFood(id, HttpContextExtensions.AddKey);
+            
             var command = new DeleteUsersFoodCommand() 
             {
                 UserId = User.GetId(), 

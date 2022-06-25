@@ -202,9 +202,7 @@ namespace Diabetes.MVC.Controllers
 
             HttpContext.AddFood(vm, HttpContextExtensions.EditKey);
 
-            var meal = HttpContext.GetMeal(HttpContextExtensions.EditKey);
-
-            return RedirectToAction("Edit", "Carbohydrate", new {id = meal.Id});
+            return RedirectToAction("Edit", "Carbohydrate");
         }
         
         [HttpGet("{id:guid}")]
@@ -213,6 +211,8 @@ namespace Diabetes.MVC.Controllers
         {
             if(id == Guid.Empty) 
                 return NotFound();
+            
+            HttpContext.RemoveFood(id, HttpContextExtensions.EditKey);
             
             var command = new DeleteUsersFoodCommand() 
             {

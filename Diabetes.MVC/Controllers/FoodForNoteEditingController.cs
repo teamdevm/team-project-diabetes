@@ -84,7 +84,7 @@ namespace Diabetes.MVC.Controllers
 
             var vm = HttpContext.GetMeal(HttpContextExtensions.EditKey);
             
-            return RedirectToAction("Edit", "Carbohydrate", new{id = vm.Id});
+            return RedirectToAction("Edit", "Carbohydrate");
         }
         
         [Authorize]
@@ -128,9 +128,7 @@ namespace Diabetes.MVC.Controllers
 
             HttpContext.AddFood(vm, HttpContextExtensions.EditKey);
 
-            var meal = HttpContext.GetMeal(HttpContextExtensions.EditKey);
-
-            return RedirectToAction("Edit", "Carbohydrate", new {id = meal.Id});
+            return RedirectToAction("Edit", "Carbohydrate");
         }
         
         [Authorize]
@@ -160,9 +158,7 @@ namespace Diabetes.MVC.Controllers
             
             HttpContext.Edit(vm, HttpContextExtensions.EditKey);
 
-            var meal = HttpContext.GetMeal(HttpContextExtensions.EditKey);
-
-            return RedirectToAction("Edit", "Carbohydrate", new {Id = meal.Id});
+            return RedirectToAction("Edit", "Carbohydrate");
         }
         
         [Authorize]

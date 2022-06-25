@@ -19,7 +19,7 @@
 <nav class="container navbar fixed-bottom d-flex justify-content-around mobile-container">
     <a class="navbar-item" asp-controller="Home" asp-action="Index"><img src="~/icons/home.svg"></a>
     <a class="navbar-item" href="#"><img src="~/icons/statistics.svg"></a>
-    <a class="plus-item" asp-controller="Carbohydrate" asp-action="Add"><img src="~/icons/add.svg"></a>
+    <a class="plus-item" asp-controller="Carbohydrate" asp-action="Add" asp-route-newCard="true"><img src="~/icons/add.svg"></a>
     <a class="navbar-item" asp-controller="Food" asp-action="Index"><img src="~/icons/menu.svg"></a>
     <a class="navbar-item" asp-controller="Account" asp-action="Index"><img src="~/icons/account.svg"></a>
 </nav>

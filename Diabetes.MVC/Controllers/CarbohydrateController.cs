@@ -29,8 +29,12 @@ namespace Diabetes.MVC.Controllers
         }
 
         [Authorize]
-        public IActionResult Add()
+        [HttpGet("{newCard:bool?}")]
+        public IActionResult Add(bool? newCard)
         {
+            if(newCard is true)
+                HttpContext.Clear(HttpContextExtensions.AddKey);
+            
             var vm = HttpContext.GetMeal(HttpContextExtensions.AddKey);
 
             return View(vm);
@@ -78,21 +82,25 @@ namespace Diabetes.MVC.Controllers
         }
         
         [Authorize]
-        [HttpGet("{id:guid}")]
-        public async Task<IActionResult> Edit(Guid id)
+        [HttpGet("{id:guid?}")]
+        public async Task<IActionResult> Edit(Guid? id)
         {
-            var note = await _mediator.Send(new GetCarbohydrateByIdCommand {Id = id, UserId = User.GetId()});
-
-            if (note == null)
-                return RedirectToAction("Index", "Home");
+            MealViewModel vm;
             
-            var vm = HttpContext.GetMeal(HttpContextExtensions.EditKey);
-
-            if (vm.Id != id)
+            if (id == null)
             {
+                vm = HttpContext.GetMeal(HttpContextExtensions.EditKey);
+            }
+            else
+            {
+                var note = await _mediator.Send(new GetCarbohydrateByIdCommand {Id = id.Value, UserId = User.GetId()});
+                
+                if (note == null)
+                    return RedirectToAction("Index", "Home");
+
                 vm = new MealViewModel
                 {
-                    Id = id,
+                    Id = id.Value,
                     Value = note.Value.ToString(),
                     Comment = note.Comment,
                     CreatingDate = note.MeasuringDateTime.ToString("yyyy-MM-dd"),
@@ -109,15 +117,14 @@ namespace Diabetes.MVC.Controllers
                         };
                     }).ToList()
                 };
-            
                 HttpContext.AddMeal(vm, HttpContextExtensions.EditKey);
             }
-
+            
             return View(vm);
         }
         
         [Authorize]
-        [HttpPost("{id:guid}")]
+        [HttpPost("{id:guid?}")]
         public async Task<IActionResult> Edit(MealViewModel vm)
         {
             vm.Foods = HttpContext.GetMeal(HttpContextExtensions.EditKey).Foods;
@@ -177,10 +184,18 @@ namespace Diabetes.MVC.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult RememberEditedData(MealViewModel vm)
+        public IActionResult AddFoodToListAdding(MealViewModel vm)
+        {
+            HttpContext.RememberData(vm, HttpContextExtensions.AddKey);
+            return RedirectToAction("Index", "FoodForNote", new {id = vm.Id});
+        }
+        
+        [Authorize]
+        [HttpPost]
+        public IActionResult AddFoodToListEditing(MealViewModel vm)
         {
             HttpContext.RememberData(vm, HttpContextExtensions.EditKey);
-            return RedirectToAction("Edit", "Carbohydrate", new {id = vm.Id});
+            return RedirectToAction("Index", "FoodForNoteEditing", new {id = vm.Id});
         }
     }
 }
