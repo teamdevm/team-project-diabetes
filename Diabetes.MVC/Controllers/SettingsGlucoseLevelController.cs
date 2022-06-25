@@ -33,37 +33,59 @@ namespace Diabetes.MVC.Controllers
             bool isNanVae = !double.TryParse(model.ValueAfterEating.Replace('.', ','), out vae);
             bool isNanVbeAlt = !double.TryParse(model.ValueBeforeEatingAlt.Replace('.', ','), out vbe_alt);
             bool isNanVaeAlt = !double.TryParse(model.ValueAfterEatingAlt.Replace('.', ','), out vae_alt);
+            bool isAccurate = false;
 
             if (!ModelState.IsValid)
             {
+                double m_vbe = vbe, m_vae = vae, m_vbe_alt = vbe_alt, m_vae_alt = vae_alt;
                 //Предобработка значений в случае, если был введен неверный разделитель
                 if (model.GlucoseUnitsUsed == GlucoseUnits.MgramPerDeciliter)
                 {
                     if (isNanVae && !isNanVaeAlt)
-                        vae = vae_alt / unit;
+                        m_vae = vae = vae_alt / unit;
                     else if (isNanVbe && !isNanVbeAlt)
-                        vbe = vbe_alt / unit;
+                        m_vbe = vbe = vbe_alt / unit;
+
+                    m_vbe_alt = Math.Round(vbe_alt, 2);
+                    m_vae_alt = Math.Round(vae_alt, 2);
+
+                    if (vae_alt == m_vae_alt && vbe_alt == m_vbe_alt)
+                    {
+                        isAccurate = true;
+                        m_vbe = Math.Round(vbe, 2);
+                        m_vae = Math.Round(vae, 2);
+                    }
                 }
                 else
                 {
                     if (isNanVaeAlt && !isNanVae)
-                        vae_alt = vae / unit;
+                        m_vae_alt = vae_alt = vae / unit;
                     else if (isNanVbeAlt && !isNanVbe)
-                        vbe_alt = vbe / unit;
+                        m_vbe_alt = vbe_alt = vbe / unit;
+
+                    m_vbe = Math.Round(vbe, 2);
+                    m_vae = Math.Round(vae, 2);
+
+                    if (vae == m_vae && vbe == m_vbe)
+                    {
+                        isAccurate = true;
+                        m_vbe_alt = Math.Round(vbe_alt, 2);
+                        m_vae_alt = Math.Round(vae_alt, 2);
+                    }
                 }
 
                 //Не рассматривается случай если введены значения некорректной точности
                 SettingsGlucoseLevelViewModel modelUpdated = null;
-                if (!isNanVae && !isNanVaeAlt && !isNanVbe && !isNanVbeAlt)
+                if (!isNanVae && !isNanVaeAlt && !isNanVbe && !isNanVbeAlt && !isAccurate)
                 { }
                 else
                 {
                     modelUpdated = new SettingsGlucoseLevelViewModel
                     {
-                        ValueBeforeEating = Math.Round(vbe, 2).ToString(),
-                        ValueAfterEating = Math.Round(vae, 2).ToString(),
-                        ValueBeforeEatingAlt = Math.Round(vbe_alt, 2).ToString(),
-                        ValueAfterEatingAlt = Math.Round(vae_alt, 2).ToString(),
+                        ValueBeforeEating = m_vbe.ToString(),
+                        ValueAfterEating = m_vae.ToString(),
+                        ValueBeforeEatingAlt = m_vbe_alt.ToString(),
+                        ValueAfterEatingAlt = m_vae_alt.ToString(),
                         GlucoseUnitsUsed = model.GlucoseUnitsUsed
                     };
 
