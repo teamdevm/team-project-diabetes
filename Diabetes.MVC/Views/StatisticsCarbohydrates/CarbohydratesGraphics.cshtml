@@ -1,0 +1,59 @@
+﻿@using ShieldUI.AspNetCore.Mvc
+@using Diabetes.Domain.Enums
+@model Diabetes.MVC.Models.StatisticsCarbohydratesViewModel
+@{
+    ViewData["Title"] = "Статистика";
+}
+
+<div class="d-flex justify-content-around">
+    <a class="btn" asp-controller="StatisticsGlucose" asp-action="Index">Глюкоза</a>
+    <a class="btn" asp-controller="StatisticsInsulin" asp-action="Index">Инсулин</a>
+    <a class="btn active" asp-controller="StatisticsCarbohydrates" asp-action="Index">Углеводы</a>
+</div>
+
+<div class="row mt-3"></div>
+
+<div class="container mobile-container">
+    <form asp-controller="StatisticsCarbohydrates" asp-action="CarbohydratesGraphics" role="form" method="get">
+        <select asp-for="CarbohydratesTimePeriod" asp-items="Html.GetEnumSelectList<TimePeriods>()" onchange="this.form.submit()"></select>
+        @if (Model.CarbohydratesTimePeriod == "3")
+        {
+            <script>
+                var now = new Date()
+                var day = ("0" + now.getDate()).slice(-2);
+                var month = ("0" + (now.getMonth() + 1)).slice(-2);
+                var date = now.getFullYear() + "-" + (month) + "-" + (day);
+                $('#datePicker').val(date);
+            </script>
+            <div class="row mt-3"></div>
+            <input asp-for="CustomDate" type="date" class="form-control" id="datePicker" min="0001-01-01" max="9999-12-31" onfocusout="this.form.submit()">
+        }
+    </form>
+    <div class="row mt-3"></div>
+    @(Html.ShieldChart(Model.GetData())
+    .Name("chart")
+   .Tooltip(tooltip => tooltip.AxisMarkers(axisMarkers => axisMarkers
+        .Enabled(true)
+        .Mode(ShieldUI.AspNetCore.Mvc.Chart.TooltipAxisMarkerMode.XY)
+        .Width(1)
+        .ZIndex(3)))
+    .Theme("light")
+    .PrimaryHeader(header => header.Text("Полученные углеводы"))
+    .Export(false)
+    .AxisX(axisX => axisX.CategoricalValues(model => model.Categorical))
+    .AxisX(axisX => axisX.AxisTickText(axisTickText => axisTickText.Enabled(false)))
+    .AxisX(axisX => axisX.Title(title => title.Text("Время")))
+    .AxisY(axisY => axisY.Title(title => title.Text("Значение")))
+    .DataSeries(series =>
+        series.Spline()
+              .Name("Углеводы")
+              .Data(model => model.Value)))
+    <div class="row mt-3"></div>
+    <div class="mb-3">
+        <div><font size="5">Минимальное значение: @(Model.Values.Count == 0 ? "неизвестно" : Math.Round(Model.Values.Min(), 2).ToString())</font></div>
+        <div><font size="5">Среднее значение: @(Model.Values.Count == 0 ? "неизвестно" : Math.Round(Model.Values.Average(), 2).ToString())</font></div>
+        <div><font size="5">Максимальное значение: @(Model.Values.Count == 0 ? "неизвестно" : Math.Round(Model.Values.Max(), 2).ToString())</font></div>
+    </div>
+</div>
+
+<div class="row mt-3"></div>

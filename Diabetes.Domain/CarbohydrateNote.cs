@@ -12,7 +12,7 @@ namespace Diabetes.Domain
         public List<Food> Foods { get; set; } = new();
 
         private double PortionsCarbohydrates => Portions.Select(p => p.Food.Carbohydrate / 100.0 * p.MassInGr).Sum();
-
+        public double TotalCarbohydrates => Math.Round(PortionsCarbohydrates + (Value ?? 0), 2);
         public override ActionHistoryItem ToHistoryItem()
         {
             return new ActionHistoryItem
