@@ -15,14 +15,16 @@ namespace Diabetes.MVC.Models
 
         [Required(ErrorMessage = "Обязательное поле")]
         [Display(Name = "Email")]
+        
         public string Email { get; set; }
-
         //[Required(ErrorMessage = "Обязательное поле")]
         [Display(Name = "Пароль")]
+        [DataType(DataType.Password)]
         public string? Password { get; set; }
 
         //[Required(ErrorMessage = "Обязательное поле")]
         [Display(Name = "Введите текущий пароль")]
+        [DataType(DataType.Password)]
         public string? PasswordOld { get; set; }
 
         [Required(ErrorMessage = "Обязательное поле")]

@@ -12,6 +12,8 @@ namespace Diabetes.MVC.Controllers
 {
     public class SettingsGlucoseLevelController : Controller
     {
+        const int unit = 18;
+
         private readonly UserManager<Account> _userManager;
         private readonly IMediator _mediator;
 
@@ -25,6 +27,43 @@ namespace Diabetes.MVC.Controllers
         [Authorize]
         public async Task<IActionResult> IndexAsync(SettingsGlucoseLevelViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                //Предобработка значений в случае, если был введен неверный разделитель
+                double vbe, vae, vbe_alt, vae_alt;
+                bool isNanVbe = !double.TryParse(model.ValueBeforeEating.Replace('.', ','), out vbe);
+                bool isNanVae = !double.TryParse(model.ValueAfterEating.Replace('.', ','), out vae);
+                bool isNanVbeAlt = !double.TryParse(model.ValueBeforeEatingAlt.Replace('.', ','), out vbe_alt);
+                bool isNanVaeAlt = !double.TryParse(model.ValueAfterEatingAlt.Replace('.', ','), out vae_alt);
+
+                if (model.GlucoseUnitsUsed == GlucoseUnits.MgramPerDeciliter)
+                {
+                    if (isNanVae && !isNanVaeAlt)
+                        vae = vae_alt / unit;
+                    else if (isNanVbe && !isNanVbeAlt)
+                        vbe = vbe_alt / unit;
+                }
+                else
+                {
+                    if (isNanVaeAlt && !isNanVae)
+                        vae_alt = vae / unit;
+                    else if (isNanVbeAlt && !isNanVbe)
+                        vbe_alt = vbe / unit;
+                }
+
+                var modelUpdated = new SettingsGlucoseLevelViewModel
+                {
+                    ValueBeforeEating = Math.Round(vbe, 2).ToString(),
+                    ValueAfterEating = Math.Round(vae, 2).ToString(),
+                    ValueBeforeEatingAlt = Math.Round(vbe_alt, 2).ToString(),
+                    ValueAfterEatingAlt = Math.Round(vae_alt, 2).ToString(),
+                    GlucoseUnitsUsed = model.GlucoseUnitsUsed
+                };
+
+                ModelState.Clear();
+                if (TryValidateModel(modelUpdated))
+                    model = modelUpdated;
+            }
             if (ModelState.IsValid)
             {
                 var user = await _userManager.GetUserAsync(User);
@@ -71,9 +110,9 @@ namespace Diabetes.MVC.Controllers
             {
                 ValueBeforeEating = user.NormalGlucoseBeforeEating.ToString(),
                 ValueAfterEating = user.NormalGlucoseAfterEating.ToString(),
-                ValueBeforeEatingAlt = (user.NormalGlucoseBeforeEating * 20).ToString(),
-                ValueAfterEatingAlt = (user.NormalGlucoseAfterEating * 20).ToString(),
-                GlucoseUnitsUsed = user.GlucoseUnits,
+                ValueBeforeEatingAlt = Math.Round((double)(user.NormalGlucoseBeforeEating * unit), 2).ToString(),
+                ValueAfterEatingAlt = Math.Round((double)(user.NormalGlucoseAfterEating * unit), 2).ToString(),
+                GlucoseUnitsUsed = user.GlucoseUnits
             };
 
             return View(viewModel);
