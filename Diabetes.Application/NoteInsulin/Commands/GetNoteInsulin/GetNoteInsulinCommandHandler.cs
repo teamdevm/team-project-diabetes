@@ -6,21 +6,21 @@ using System.Threading.Tasks;
 using MediatR;
 using Diabetes.Application.Interfaces;
 using System.Threading;
+using Diabetes.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace Diabetes.Application.NoteInsulin.Commands.GetNoteInsulin
 {
-    public class GetNoteInsulinCommandHandler: IRequestHandler<GetNoteInsulinCommand, Domain.NoteInsulin>
+    public class GetNoteInsulinCommandHandler: IRequestHandler<GetNoteInsulinCommand, InsulinNote>
     {
         private readonly INoteInsulinDbContext _dbContextInsulin;
         public GetNoteInsulinCommandHandler(INoteInsulinDbContext dbContextInsulin) =>_dbContextInsulin = dbContextInsulin;
-        public async Task<Domain.NoteInsulin> Handle (GetNoteInsulinCommand request, CancellationToken cancellationToken)
+        public async Task<InsulinNote> Handle (GetNoteInsulinCommand request, CancellationToken cancellationToken)
         {
-            List<Domain.NoteInsulin> queryInsulin = await _dbContextInsulin.InsulinNotes
-            .Where(p => p.Id == request.Id)
-            .ToListAsync(cancellationToken);
+            var queryInsulin = await _dbContextInsulin.InsulinNotes
+                .FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken: cancellationToken);
 
-            return queryInsulin.Count == 0 ? null : queryInsulin[0];
+            return queryInsulin;
         }
     }
 }

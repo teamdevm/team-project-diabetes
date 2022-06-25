@@ -1,5 +1,7 @@
 @using Diabetes.MVC.Models.Components
-@model Diabetes.MVC.Models.CreateInsulinViewModel
+@using Diabetes.Domain.Normalized.Enums
+@using Diabetes.Domain.Enums
+@model Diabetes.MVC.Models.Insulin.CreateInsulinViewModel
 
 @{
     ViewData["Title"] = "Инсулин";
@@ -10,7 +12,7 @@
 <form asp-controller="Insulin" asp-action="AddInsulin" role="form" method="post">
     <div class="mb-3">
         <label asp-for="Value" class="form-label"></label>
-        <input asp-for="Value" class="form-control" type="number" value="0">
+        <input asp-for="Value" class="form-control" value="0">
         <span asp-validation-for="Value" class="text-danger"></span>
     </div>
     <div class="mb-3">
@@ -24,20 +26,16 @@
         <span asp-validation-for="MeasuringTime" class="text-danger"></span>
     </div>
     <div class="mb-3">
-        <label asp-for="Comment" class="form-label"></label>
+        <label asp-for="Comment" class="form-label"></label><span><small class="text-muted "> (необязательно)</small></span>
         <textarea asp-for="Comment" class="form-control"></textarea>
     </div>
     <div class="mb-3">
-        <label asp-for="Type" class="form-label"></label>
-        <select name="type" onchange="$('#type').val(this.value)">
-            <option value="Long">Длинный</option>
-            <option value="Short">Короткий</option>
-        </select>
-        <input asp-for="Type" id="type" value="Before" class="invisible">
-        <span asp-validation-for="Type" class="text-danger"></span>
+        <label asp-for="InsulinType" class="form-label"></label>
+        <select asp-for="InsulinType" asp-items="Html.GetEnumSelectList<InsulinType>()"></select>
+        <span asp-validation-for="InsulinType" class="text-danger"></span>
     </div>
     <div class="col-lg-6 col-sm-8 pull-right">
-        <button id="btnCancel" class="btn btn-default" type="button">Отмена</button>
+        <a class="btn btn-default" asp-controller="Home" asp-action="Index">Отмена</a>
         <button class="btn btn-success" id="btn" type="submit">Подтвердить</button>
     </div>
 </form>

@@ -2,6 +2,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Diabetes.Application.Interfaces;
+using Diabetes.Domain;
+using Diabetes.Domain.Normalized;
 using MediatR;
 
 namespace Diabetes.Application.NoteInsulin.Commands.CreateNoteInsulin
@@ -17,13 +19,13 @@ namespace Diabetes.Application.NoteInsulin.Commands.CreateNoteInsulin
 
         public async Task<Unit> Handle(CreateNoteInsulinCommand request, CancellationToken cancellationToken)
         {
-            var noteInsulin = new Domain.NoteInsulin
+            var noteInsulin = new InsulinNote()
             {
                 UserId = request.UserId,
                 Id = Guid.NewGuid(),
-                InsulinValue = request.InsulinValue,
+                Value = request.InsulinValue,
                 MeasuringDateTime = request.MeasuringDateTime,
-                CreationDateTime = DateTime.Now,
+                LastUpdate = DateTime.Now,
                 InsulinType = request.InsulinType,
                 Comment = request.Comment
             };

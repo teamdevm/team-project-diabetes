@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Diabetes.Application.Interfaces;
+using Diabetes.Domain;
 using MediatR;
 
 namespace Diabetes.Application.GlucoseLevel.Commands.CreateGlucoseLevel
@@ -17,18 +18,18 @@ namespace Diabetes.Application.GlucoseLevel.Commands.CreateGlucoseLevel
 
         public async Task<Unit> Handle(CreateGlucoseLevelCommand request, CancellationToken cancellationToken)
         {
-            var glucoseLevel = new Domain.GlucoseLevel
+            var glucose = new GlucoseNote()
             {
                 UserId = request.UserId,
                 Id = Guid.NewGuid(),
-                ValueInMmol = request.ValueInMmol,
+                Value = request.ValueInMmol,
                 MeasuringDateTime = request.MeasuringDateTime,
-                CreationDateTime = DateTime.Now,
-                BeforeAfterEating = request.BeforeAfterEating,
+                LastUpdate = DateTime.Now,
+                MeasuringTimeType = request.MeasuringTimeType,
                 Comment = request.Comment
             };
 
-            await _dbContext.GlucoseLevels.AddAsync(glucoseLevel, cancellationToken);
+            await _dbContext.GlucoseNotes.AddAsync(glucose, cancellationToken);
             await _dbContext.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;

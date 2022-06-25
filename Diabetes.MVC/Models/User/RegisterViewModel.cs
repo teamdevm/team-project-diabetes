@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using Diabetes.Domain.Enums.User;
 
 namespace Diabetes.MVC.Models.User
 {
@@ -26,22 +27,20 @@ namespace Diabetes.MVC.Models.User
         
         [Required(ErrorMessage ="Обязательное поле")]
         [Display(Name = "Тип диабета")]
-        public string? DiabetesType { get; set; }
+        public DiabetesType DiabetesType { get; set; }
         
         [Required(ErrorMessage ="Обязательное поле")]
         [Display(Name = "Дата рождения")]
         [DataType(DataType.Date)]
-        public DateTime? Birthdate { get; set; }
+        public DateTime Birthdate { get; set; }
         
         [Required(ErrorMessage ="Обязательное поле")]
         [Display(Name = "Пол")]
-        public string? Gender { get; set; }
+        public Gender Gender { get; set; }
         
-        [Required(ErrorMessage ="Обязательное поле")]
         [Display(Name = "Рост")]
         public int? Height { get; set; }
         
-        [Required(ErrorMessage ="Обязательное поле")]
         [Display(Name = "Вес")]
         public int? Weight { get; set; }
     }

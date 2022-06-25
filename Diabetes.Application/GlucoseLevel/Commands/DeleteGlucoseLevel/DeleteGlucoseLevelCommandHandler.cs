@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Diabetes.Application.Interfaces;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Diabetes.Application.GlucoseLevel.Commands.DeleteGlucoseLevel
 {
@@ -16,14 +17,15 @@ namespace Diabetes.Application.GlucoseLevel.Commands.DeleteGlucoseLevel
 
         public async Task<Unit> Handle(DeleteGlucoseLevelCommand request, CancellationToken cancellationToken)
         {
-            //ищем уровень глюкозы в БД
-            var keys = new object[1] { request.Id };
-            var glucoseLevel = _dbContext.GlucoseLevels.FindAsync(keys, cancellationToken).Result;
-            if (glucoseLevel == null) throw new Exception("Value not found");
+            var glucose = await _dbContext.GlucoseNotes
+                .FirstOrDefaultAsync(g=>g.Id == request.Id && g.UserId == request.UserId, cancellationToken);
 
-            //удаляем и сохраняем изменения
-            _dbContext.GlucoseLevels.Remove(glucoseLevel);
-            await _dbContext.SaveChangesAsync(cancellationToken);
+            if (glucose != null)
+            {
+                //удаляем и сохраняем изменения
+                _dbContext.GlucoseNotes.Remove(glucose);
+                await _dbContext.SaveChangesAsync(cancellationToken);
+            }
 
             return Unit.Value;
         }

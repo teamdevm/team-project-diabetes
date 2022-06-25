@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Diabetes.Application.ActionHistoryItem.Commands.GetAllActionHistoryItems;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Diabetes.MVC.Models;
@@ -11,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Diabetes.Domain;
 using Diabetes.Application.ActionHistoryItems.Commands.GetActionHistoryItems;
+using Diabetes.MVC.Extensions;
 using MediatR;
 
 namespace Diabetes.MVC.Controllers
@@ -33,9 +35,9 @@ namespace Diabetes.MVC.Controllers
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
-            GetActionHistoryItemsCommand command = new GetActionHistoryItemsCommand
+            var command = new GetActionHistoryItemsCommand
             {
-                UserId = new Guid(user.Id),
+                UserId = User.GetId(),
                 Number = actionHistoryItemsNumber
             };
 
@@ -44,6 +46,25 @@ namespace Diabetes.MVC.Controllers
             HomeViewModel viewModel = new HomeViewModel
             {
                 UserName = user.Name,
+                ActionHistoryItems = list
+            };
+
+            return View(viewModel);
+        }
+        
+        [Authorize]
+        public async Task<IActionResult> Actions()
+        {
+
+            var command = new GetAllActionHistoryItemsCommand
+            {
+                UserId = User.GetId(),
+            };
+
+            var list = await _mediator.Send(command);
+
+            var viewModel = new ActionsViewModel
+            {
                 ActionHistoryItems = list
             };
 

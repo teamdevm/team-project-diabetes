@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Diabetes.Application.Interfaces;
 using Diabetes.Domain;
+using Diabetes.Domain.Normalized.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,13 +12,13 @@ namespace Diabetes.Application.ActionHistoryItems.Commands.GetActionHistoryItems
 {
     public class GetActionHistoryItemsCommandHandler : IRequestHandler<GetActionHistoryItemsCommand, List<Domain.ActionHistoryItem>>
     {
-        private readonly IGlucoseLevelDbContext _dbContextClucose;
+        private readonly IGlucoseLevelDbContext _dbContextGlucose;
         private readonly INoteInsulinDbContext _dbContextInsulin;
 
         public GetActionHistoryItemsCommandHandler(
-            IGlucoseLevelDbContext dbContextClucose, INoteInsulinDbContext dbContextInsulin)
+            IGlucoseLevelDbContext dbContextGlucose, INoteInsulinDbContext dbContextInsulin)
         {
-            _dbContextClucose = dbContextClucose;
+            _dbContextGlucose = dbContextGlucose;
             _dbContextInsulin = dbContextInsulin;
         }
 
@@ -26,34 +26,16 @@ namespace Diabetes.Application.ActionHistoryItems.Commands.GetActionHistoryItems
         {
             var queryInsulin = await _dbContextInsulin.InsulinNotes
                 .Where(p => p.UserId == request.UserId)
-                .OrderByDescending(p => p.CreationDateTime)
+                .OrderByDescending(p => p.LastUpdate)
                 .Take(request.Number)
-                .Select(ins=> new Domain.ActionHistoryItem
-                {
-                    Id = ins.Id,
-                    Type = ActionHistoryType.Insulin,
-                    Title = "Инсулин",
-                    Value = ins.InsulinValue.ToString(),
-                    Details = ins.InsulinType,
-                    DateTime = ins.MeasuringDateTime,
-                    CreationDateTime = ins.CreationDateTime
-                })
+                .Select(ins=> ins.ToHistoryItem())
                 .ToListAsync(cancellationToken);
             
-            var queryGlucose = await _dbContextClucose.GlucoseLevels
+            var queryGlucose = await _dbContextGlucose.GlucoseNotes
                 .Where(p => p.UserId == request.UserId)
-                .OrderByDescending(p => p.CreationDateTime)
+                .OrderByDescending(p => p.LastUpdate)
                 .Take(request.Number)
-                .Select(glu=> new Domain.ActionHistoryItem
-                {
-                    Id = glu.Id,
-                    Type = ActionHistoryType.GlucoseLevel,
-                    Title = "Глюкоза",
-                    Value = glu.ValueInMmol.ToString(),
-                    Details = glu.BeforeAfterEating,
-                    DateTime = glu.MeasuringDateTime,
-                    CreationDateTime = glu.CreationDateTime
-                })
+                .Select(glu=> glu.ToHistoryItem())
                 .ToListAsync(cancellationToken);
 
             var actions = queryInsulin.Union(queryGlucose)
