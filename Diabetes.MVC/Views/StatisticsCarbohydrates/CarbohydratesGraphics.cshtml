@@ -16,7 +16,7 @@
 <div class="container mobile-container">
     <form asp-controller="StatisticsCarbohydrates" asp-action="CarbohydratesGraphics" role="form" method="get">
         <select asp-for="CarbohydratesTimePeriod" asp-items="Html.GetEnumSelectList<TimePeriods>()" onchange="this.form.submit()"></select>
-        @if (Model.CarbohydratesTimePeriod == "4")
+        @if (Model.CarbohydratesTimePeriod == "3")
         {
             <script>
                 var now = new Date()
@@ -40,6 +40,7 @@
     .PrimaryHeader(header => header.Text("Полученные углеводы"))
     .Export(false)
     .AxisX(axisX => axisX.CategoricalValues(model => model.Categorical))
+    .AxisX(axisX => axisX.AxisTickText(axisTickText => axisTickText.Enabled(false)))
     .AxisX(axisX => axisX.Title(title => title.Text("Время")))
     .AxisY(axisY => axisY.Title(title => title.Text("Значение")))
     .DataSeries(series =>

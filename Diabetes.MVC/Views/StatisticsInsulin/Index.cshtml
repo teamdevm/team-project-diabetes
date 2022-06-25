@@ -17,7 +17,7 @@
     <form asp-controller="StatisticsInsulin" asp-action="InsulinGraphics" role="form" method="get">
         <select asp-for="InsulinAdditional" asp-items="Html.GetEnumSelectList<InsulinTypeExtended>()" onchange="this.form.submit()"></select>
         <select asp-for="InsulinTimePeriod" asp-items="Html.GetEnumSelectList<TimePeriods>()" onchange="this.form.submit()"></select>
-        @if (Model.InsulinTimePeriod == "4")
+        @if (Model.InsulinTimePeriod == "3")
         {
             <input asp-for="CustomDate" type="date" class="form-control" id="datePicker" min="0001-01-01" max="9999-12-31" onfocusout="this.form.submit()">
         }
@@ -35,6 +35,7 @@
     .Export(false)
     .AxisX(axisX => axisX.CategoricalValues(model => model.Categorical))
     .AxisX(axisX => axisX.Title(title => title.Text("Время")))
+    .AxisX(axisX => axisX.AxisTickText(axisTickText => axisTickText.Enabled(false)))
     .AxisY(axisY => axisY.Title(title => title.Text("Значение")))
     .DataSeries(series =>
         series.Spline()

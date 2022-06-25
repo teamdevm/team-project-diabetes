@@ -24,7 +24,7 @@ namespace Diabetes.MVC.Controllers
                 ReturnUrl = returnUrl,
             };
 
-            Func<DateTime, bool> DFilter = a => true;
+            Func<DateTime, bool> DFilter = a => (DateTime.Now.Date - a.Date).Days < 7 && (DateTime.Now.Date - a.Date).Days >= 0;
 
             var command = new GetCarbohydratesCommand
             {
@@ -45,14 +45,14 @@ namespace Diabetes.MVC.Controllers
             if (viewModel.CustomDate == null) viewModel.CustomDate = DateTime.Now.ToString("yyyy-MM-dd");
             Func<DateTime, bool> DFilter = viewModel.CarbohydratesTimePeriod switch
             {
-                "1" => a => a.Date == DateTime.Now.Date,
-                "2" => a => (DateTime.Now.Date - a.Date).Days < 7 && (DateTime.Now.Date - a.Date).Days >= 0,
-                "3" => a => (DateTime.Now.Year - a.Year) * 12 +
+                "1" => a => (DateTime.Now.Year - a.Year) * 12 +
                 DateTime.Now.Month - a.Month +
                 (DateTime.Now.Day >= a.Day ? 0 : -1) == 0,
-                "4" => a => a.Date == DateTime.ParseExact(viewModel.CustomDate, "yyyy-MM-dd",
+                "2" => a => a.Date == DateTime.Now.Date,
+                "3" => a => a.Date == DateTime.ParseExact(viewModel.CustomDate, "yyyy-MM-dd",
                 CultureInfo.InvariantCulture).Date,
-                _ => a => true,
+                "4" => a => true,
+                _ => a => (DateTime.Now.Date - a.Date).Days < 7 && (DateTime.Now.Date - a.Date).Days >= 0,
             };
 
             var command = new GetCarbohydratesCommand
