@@ -66,6 +66,9 @@ namespace Diabetes.MVC.Controllers
 
             var model = await _mediator.Send(getInsulinCommand);
             
+            if (model == null)
+                return RedirectToAction("Index", "Home");
+            
             var viewModel = new EditInsulinViewModel
             {
                 Id = model.Id,
