@@ -76,9 +76,7 @@ namespace Diabetes.MVC.Controllers
 
                 //Не рассматривается случай если введены значения некорректной точности
                 SettingsGlucoseLevelViewModel modelUpdated = null;
-                if (!isNanVae && !isNanVaeAlt && !isNanVbe && !isNanVbeAlt && !isAccurate)
-                { }
-                else
+                if ((!isNanVae || !isNanVaeAlt || !isNanVbe || !isNanVbeAlt) && isAccurate)
                 {
                     modelUpdated = new SettingsGlucoseLevelViewModel
                     {
