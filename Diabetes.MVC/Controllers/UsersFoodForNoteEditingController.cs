@@ -24,7 +24,7 @@ namespace Diabetes.MVC.Controllers
     {
         private readonly IMediator _mediator;
         private const int PageSize = 10;
-        private List<Guid> UsedFood => HttpContext.GetMeal(HttpContextExtensions.AddKey).Foods.Select(f=>f.Food.Id).ToList(); 
+        private List<Guid> UsedFood => HttpContext.GetMeal(HttpContextExtensions.EditKey).Foods.Select(f=>f.Food.Id).ToList(); 
 
         public UsersFoodForNoteEditingController(IMediator mediator)
         {
@@ -213,8 +213,9 @@ namespace Diabetes.MVC.Controllers
                 return NotFound();
             
             HttpContext.RemoveFood(id, HttpContextExtensions.EditKey);
+            HttpContext.RemoveFood(id, HttpContextExtensions.AddKey);
             
-            var command = new DeleteUsersFoodCommand() 
+            var command = new DeleteUsersFoodCommand
             {
                 UserId = User.GetId(), 
                 Id = id,
