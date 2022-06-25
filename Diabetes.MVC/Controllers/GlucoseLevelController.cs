@@ -75,6 +75,9 @@ namespace Diabetes.MVC.Controllers
             };
             var model = await _mediator.Send(getGlucoseCommand);
 
+            if (model == null)
+                return RedirectToAction("Index", "Home");
+
             var viewModel = new EditGlucoseLevelViewModel
             {
                 Id = model.Id,
