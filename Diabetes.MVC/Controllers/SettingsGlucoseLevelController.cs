@@ -49,9 +49,7 @@ namespace Diabetes.MVC.Controllers
                     m_vbe_alt = Math.Round(vbe_alt, 2);
                     m_vae_alt = Math.Round(vae_alt, 2);
 
-                    if (vae_alt == m_vae_alt && vbe_alt == m_vbe_alt
-                        && vae_alt.ToString() == model.ValueBeforeEating
-                        && vbe_alt.ToString() == model.ValueAfterEating)
+                    if (vae_alt == m_vae_alt && vbe_alt == m_vbe_alt)
                     {
                         isAccurate = true;
                         m_vbe = Math.Round(vbe, 2);
@@ -68,9 +66,7 @@ namespace Diabetes.MVC.Controllers
                     m_vbe = Math.Round(vbe, 2);
                     m_vae = Math.Round(vae, 2);
 
-                    if (vae == m_vae && vbe == m_vbe
-                        && vae.ToString() == model.ValueBeforeEatingAlt
-                        && vbe.ToString() == model.ValueAfterEatingAlt)
+                    if (vae == m_vae && vbe == m_vbe)
                     {
                         isAccurate = true;
                         m_vbe_alt = Math.Round(vbe_alt, 2);

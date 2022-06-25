@@ -34,6 +34,7 @@ namespace Diabetes.MVC.Models
         [Required(ErrorMessage = "Обязательное поле")]
         [Display(Name = "Дата рождения")]
         [DataType(DataType.Date)]
+        [BirthDate(1, 105, ErrorMessage = "Вам должно быть не менее 1 месяца и не более 105 лет")]
         public DateTime Birthdate { get; set; }
 
         [Required(ErrorMessage = "Обязательное поле")]
