@@ -52,22 +52,35 @@ namespace Diabetes.MVC.Controllers
                         vbe_alt = vbe / unit;
                 }
 
-                var modelUpdated = new SettingsGlucoseLevelViewModel
+                //Не рассматривается случай если введены значения некорректной точности
+                SettingsGlucoseLevelViewModel modelUpdated = null;
+                if (!isNanVae && !isNanVaeAlt && !isNanVbe && !isNanVbeAlt)
+                { }
+                else
                 {
-                    ValueBeforeEating = Math.Round(vbe, 2).ToString(),
-                    ValueAfterEating = Math.Round(vae, 2).ToString(),
-                    ValueBeforeEatingAlt = Math.Round(vbe_alt, 2).ToString(),
-                    ValueAfterEatingAlt = Math.Round(vae_alt, 2).ToString(),
-                    GlucoseUnitsUsed = model.GlucoseUnitsUsed
-                };
+                    modelUpdated = new SettingsGlucoseLevelViewModel
+                    {
+                        ValueBeforeEating = Math.Round(vbe, 2).ToString(),
+                        ValueAfterEating = Math.Round(vae, 2).ToString(),
+                        ValueBeforeEatingAlt = Math.Round(vbe_alt, 2).ToString(),
+                        ValueAfterEatingAlt = Math.Round(vae_alt, 2).ToString(),
+                        GlucoseUnitsUsed = model.GlucoseUnitsUsed
+                    };
 
-                ModelState.Clear();
-                if (TryValidateModel(modelUpdated))
-                    model = modelUpdated;
+                    ModelState.Clear();
+                    if (TryValidateModel(modelUpdated))
+                        model = modelUpdated;
+                }
             }
             if (ModelState.IsValid)
             {
                 var user = await _userManager.GetUserAsync(User);
+
+                if (model.GlucoseUnitsUsed == GlucoseUnits.MgramPerDeciliter)
+                {
+                    vbe = vbe_alt / unit;
+                    vae = vae_alt / unit;
+                }
 
                 user.GlucoseUnits = model.GlucoseUnitsUsed;
                 user.NormalGlucoseBeforeEating = Convert.ToDouble(vbe);

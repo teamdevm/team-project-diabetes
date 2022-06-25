@@ -7,6 +7,7 @@
 
 <form asp-controller="SettingsCarbohydrates" asp-action="Index" role="form" method="post">
     <h2>Учет углеводов</h2>
+    <div class="row mt-5"></div>
 
     <div class="mb-3">
         <label asp-for="CarbohydrateUnitsUsed" class="form-label col-lg-12"></label>
@@ -45,7 +46,7 @@
             </div>
             <div class="col-lg-4 pull-right">
                 <a class="btn btn-danger"
-                        asp-controller="Settings" asp-action="Index">
+                   asp-controller="Settings" asp-action="Index">
                     Отмена
                 </a>
             </div>

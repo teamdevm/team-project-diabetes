@@ -82,5 +82,8 @@
         e.preventDefault()
         if ($('#pass_old').hasClass('d-none'))
             $('#pass_old').removeClass('d-none')
+        if ($('#pass').val() == "")
+            if (!$('#pass_old').hasClass('d-none'))
+                $('#pass_old').addClass('d-none')
     })
 </script>
