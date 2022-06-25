@@ -8,6 +8,8 @@ namespace Diabetes.Persistence.Contexts
         IGlucoseLevelDbContext, 
         INoteInsulinDbContext,
         IFoodDbContext,
+        ICarbohydrateNoteDbContext,
+        IFoodPortionDbContext,
         IUsersFoodDbContext
     {
         
@@ -15,8 +17,8 @@ namespace Diabetes.Persistence.Contexts
         public DbSet<InsulinNote> InsulinNotes { get; set; }
         public DbSet<GlucoseNote> GlucoseNotes  { get; set; }
         public DbSet<CarbohydrateNote> CarbohydrateNotes { get; set; }
-        public DbSet<Meal> Meals { get; set; }
         public DbSet<UsersFood> UsersFoods { get; set; }
+        public DbSet<FoodPortion> FoodPortions { get; set; }
 
         public DataDbContext(DbContextOptions<DataDbContext> opt) : base(opt) {}
         
@@ -24,20 +26,20 @@ namespace Diabetes.Persistence.Contexts
         {
             modelBuilder
                 .Entity<Food>()
-                .HasMany(f=>f.Meals)
+                .HasMany(f=>f.CarbohydrateNotes)
                 .WithMany(m=>m.Foods)
                 .UsingEntity<FoodPortion>(
                     j => j
-                        .HasOne(pt => pt.Meal)
+                        .HasOne(pt => pt.CarbohydrateNote)
                         .WithMany(t => t.Portions)
-                        .HasForeignKey(pt => pt.MealId),
+                        .HasForeignKey(pt => pt.CarbohydrateNoteId),
                     j => j
                         .HasOne(pt => pt.Food)
                         .WithMany(p => p.Portions)
                         .HasForeignKey(pt => pt.FoodId),
                     j =>
                     {
-                        j.HasKey(t => new { t.FoodId, t.MealId });
+                        j.HasKey(t => new { t.FoodId, t.CarbohydrateNoteId });
                         j.ToTable("FoodPortions");
                     });
         }
