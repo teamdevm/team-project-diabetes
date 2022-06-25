@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using System;
 using System.Threading.Tasks;
 using System.Globalization;
+using Diabetes.MVC.Extensions;
 
 namespace Diabetes.MVC.Controllers
 {
@@ -45,9 +46,10 @@ namespace Diabetes.MVC.Controllers
             };
 
             var itemsList = await _mediator.Send(command);
+            itemsList = itemsList.Where(a => a.UserId == User.GetId()).ToList();
 
             viewModel.Categorical = itemsList.Select(a => a.MeasuringDateTime.ToString("dd.MM.yyyy HH:mm")).ToList();
-            viewModel.Values = itemsList.Select(a => a.Value.Value).ToList();
+            viewModel.Values = itemsList.Select(a => Math.Round(a.Value.Value, 2)).ToList();
             viewModel.NormalValuesBeforeEating = itemsList.Select(a => user.NormalGlucoseBeforeEating).ToList();
             viewModel.NormalValuesAfterEating = itemsList.Select(a => user.NormalGlucoseAfterEating).ToList();
             viewModel.HasNormalBeforeEating = user.NormalGlucoseBeforeEating.HasValue;
@@ -87,9 +89,10 @@ namespace Diabetes.MVC.Controllers
             };
 
             var itemsList = await _mediator.Send(command);
+            itemsList = itemsList.Where(a => a.UserId == User.GetId()).ToList();
 
             viewModel.Categorical = itemsList.Select(a => a.MeasuringDateTime.ToString("dd.MM.yyyy HH:mm")).ToList();
-            viewModel.Values = itemsList.Select(a => a.Value.Value).ToList();
+            viewModel.Values = itemsList.Select(a => Math.Round(a.Value.Value, 2)).ToList();
             viewModel.NormalValuesBeforeEating = itemsList.Select(a => user.NormalGlucoseBeforeEating).ToList();
             viewModel.NormalValuesAfterEating = itemsList.Select(a => user.NormalGlucoseAfterEating).ToList();
             return View(viewModel);
