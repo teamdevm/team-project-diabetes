@@ -14,19 +14,19 @@ namespace Diabetes.Persistence
         public Gender Gender { get; set; }
         public int? Height { get; set; }
         public int? Weight { get; set; }
-        
-        public TimeSpan? BreakfastTime { get; set; }
+
+        public TimeSpan? BreakfastTime { get; set; } = new TimeSpan(8, 0, 0);
         public TimeSpan? AfternoonSnackTime { get; set; }
-        public TimeSpan? LunchTime { get; set; }
-        public TimeSpan? DinnerTime { get; set; }
+        public TimeSpan? LunchTime { get; set; } = new TimeSpan(14, 0, 0);
+        public TimeSpan? DinnerTime { get; set; } = new TimeSpan(20, 0, 0);
 
         public int CarbohydrateInBreadUnit { get; set; } = 12;
         
-        public double? NormalGlucoseBeforeEating { get; set; }
+        public double? NormalGlucoseBeforeEating { get; set; } = 4.2;
         public double? MinimalGlucoseBeforeEating { get; set; }
         public double? MaximalGlucoseBeforeEating { get; set; }
-        
-        public double? NormalGlucoseAfterEating { get; set; }
+
+        public double? NormalGlucoseAfterEating { get; set; } = 6.3;
         public double? MinimalGlucoseAfterEating { get; set; }
         public double? MaximalGlucoseAfterEating { get; set; }
 
