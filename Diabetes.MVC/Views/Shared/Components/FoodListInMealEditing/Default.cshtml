@@ -1,0 +1,32 @@
+@model Diabetes.MVC.Models.Components.FoodForNoteListViewModel
+
+<div class="row mt-4"></div>
+
+@if (Model.Items.Any())
+{
+    @foreach (var item in Model.Items)
+    {
+        <div class="card mb-3">
+            <div class="row no-gutters">
+                <div class="col-8">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Food.Name</h5>
+                        <h6 class="card-text d-block"><small class="text-muted">Масса: @item.MassInGram гр.</small></h6>
+                        <h6 class="card-text d-block"><small class="text-muted">Ккал / Ж / Б / У</small></h6>
+                        <h6 class="card-text d-block"><small class="text-muted">@item.Kcal / @item.Fat / @item.Protein / @item.Carbohydrate</small></h6>
+                    </div>
+                </div>
+                <div class="col-2 d-flex align-items-center">
+                    <a asp-controller="FoodForNoteEditing" asp-action="EditFromNoteList" asp-route-id="@item.Food.Id"><img src="~/icons/edit.svg"></a>
+                </div>
+                <div class="col-1 d-flex align-items-center">
+                    <a asp-controller="FoodForNoteEditing" asp-action="DeleteFromNoteList" asp-route-id="@item.Food.Id"><img src="~/icons/delete.svg"></a>
+                </div>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <p class="text-center">Список пуст</p>    
+}

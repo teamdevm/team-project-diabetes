@@ -27,9 +27,11 @@
 
     <ItemGroup>
       <PackageReference Include="PiotrTrojan.AspNetCore.IdentityErrorLocalization.ru-RU" Version="1.0.7" />
+      <PackageReference Include="ShieldUI.AspNetCore.Mvc" Version="1.7.34" />
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Models\FoodForNoteEditing" />
       <Folder Include="Models\Home" />
     </ItemGroup>
 

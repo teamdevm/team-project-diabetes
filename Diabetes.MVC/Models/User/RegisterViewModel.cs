@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using Diabetes.Domain.Enums.User;
+using Diabetes.MVC.Attributes.Validation;
 
 namespace Diabetes.MVC.Models.User
 {
@@ -32,6 +33,7 @@ namespace Diabetes.MVC.Models.User
         [Required(ErrorMessage ="Обязательное поле")]
         [Display(Name = "Дата рождения")]
         [DataType(DataType.Date)]
+        [BirthDate(1,105, ErrorMessage = "Вам должно быть не менее 1 месяца и не более 105 лет")]
         public DateTime Birthdate { get; set; }
         
         [Required(ErrorMessage ="Обязательное поле")]

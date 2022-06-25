@@ -24,7 +24,7 @@
 <div class="row mt-4"></div>
 
 <div class="container mobile-container">
-    @await Component.InvokeAsync("FoodItemsList", new{ model = new FoodItemsListViewModel(Model.FoodItems) })
+    @await Component.InvokeAsync("FoodItemsList", new{ model = new FoodListViewModel(Model.FoodItems) })
     @await Component.InvokeAsync("Pagination",
         new
         {

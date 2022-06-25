@@ -49,6 +49,13 @@ namespace Diabetes.MVC.Controllers
                 ActionHistoryItems = list
             };
 
+            if (HttpContext.Session.Keys.Contains(HttpContextExtensions.EditKey))
+            {
+                var meal = HttpContext.GetMeal(HttpContextExtensions.EditKey);
+                ViewBag.EditingCard = meal.Id;
+            }
+                
+
             return View(viewModel);
         }
         
