@@ -1,0 +1,44 @@
+@model Diabetes.MVC.Models.UsersFood.EditUsersFoodViewModel
+
+@{
+    ViewData["Title"] = "Мои продукты";
+}
+
+<form asp-controller="UsersFoodForNote" asp-action="Edit" method="post">
+    <div class="mb-3">
+        <input asp-for="Id" class="form-control d-none">
+    </div>
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control">
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Kcal" class="form-label"></label>
+        <input asp-for="Kcal" class="form-control">
+        <span asp-validation-for="Kcal" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Protein" class="form-label"></label>
+        <input asp-for="Protein" class="form-control">
+        <span asp-validation-for="Protein" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Fat" class="form-label"></label>
+        <input asp-for="Fat" class="form-control">
+        <span asp-validation-for="Fat" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Carbohydrate" class="form-label"></label>
+        <input asp-for="Carbohydrate" class="form-control">
+        <span asp-validation-for="Carbohydrate" class="text-danger"></span>
+    </div>    
+    <div class="mb-3">
+        <label asp-for="Details" class="form-label"></label><span><small class="text-muted "> (необязательно)</small></span>
+        <textarea asp-for="Details" class="form-control"></textarea>
+    </div>
+    <div class="col-lg-6 col-sm-8 pull-right">
+        <a class="btn btn-default" asp-controller="UsersFoodForNote" asp-action="Index" onchange="setSelection()">Отмена</a>
+        <button class="btn btn-success" id="btn" type="submit">Подтвердить</button>
+    </div>
+</form>

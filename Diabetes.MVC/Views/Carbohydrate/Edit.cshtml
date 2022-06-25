@@ -1,0 +1,78 @@
+@using Diabetes.MVC.Models.Components
+@model Diabetes.MVC.Models.Meal.MealViewModel
+
+@{
+    ViewData["Title"] = "Изменение приёма пищи";
+}
+
+<form role="form" method="post">
+
+    <div class="d-flex justify-content-between">
+        <h4>Список продуктов</h4>
+        <a class="btn btn-primary" asp-controller="FoodForNoteEditing" asp-action="Index">Добавить продукт</a>
+    </div>
+
+    @await Component.InvokeAsync("FoodListInMealEditing", new{ model = new FoodForNoteListViewModel(Model.Foods)})
+
+    <hr>
+    
+    <div class="d-flex justify-content-end">
+        <button class="btn btn-outline-primary" asp-controller="Carbohydrate" asp-action="RememberEditedData">Запомнить данные</button>
+    </div>
+    
+    <div class="mb-3">
+        <input asp-for="Id" class="form-control d-none">
+    </div>
+    
+    <div class="mb-3">
+        <label asp-for="Value" class="form-label"></label>
+        <input oninput="onInput()" id="value"  asp-for="Value" class="form-control">
+        <span asp-validation-for="Value" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <div>
+            <span>Углеводов в продуктах: </span><span id="food-result"></span>
+        </div>
+        <div>
+            <span>Дополнительных углеводов: </span><span id="extra-result"></span>
+        </div>
+        <div>
+            <span>Итого углеводов: </span><span id="result"></span>
+        </div>
+    </div>    
+    <div class="mb-3">
+        <label asp-for="CreatingDate" class="form-label"></label>
+        <input asp-for="CreatingDate" type="date" class="form-control" id="datePicker">
+        <span asp-validation-for="CreatingDate" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="CreatingTime" class="form-label"></label>
+        <input asp-for="CreatingTime" type="time" class="form-control" id="timePicker">
+        <span asp-validation-for="CreatingTime" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Comment" class="form-label"></label><span><small class="text-muted "> (необязательно)</small></span>
+        <textarea asp-for="Comment" class="form-control"></textarea>
+    </div>
+    <div class="col-lg-6 col-sm-8 pull-right">
+        <a class="btn btn-default" asp-controller="FoodForNoteEditing" asp-action="Cancel">Отмена</a>
+        <button class="btn btn-success" id="btn" type="submit" asp-controller="Carbohydrate" asp-action="Edit">Подтвердить</button>
+    </div>
+</form>
+
+<script>
+function onInput(){
+    let value = Number($("#value").val().replace(',','.'));
+    if (!isNaN(value) && value >= 0){
+        $("#food-result").text(Number(@Model.FoodsValue).toFixed(2))
+        $("#result").text((value + @Model.FoodsValue).toFixed(2));
+        $("#extra-result").text((value).toFixed(2));
+    }
+    else{
+        $("#result").text("Некорректное значение");
+        $("#extra-result").text("Некорректное значение");
+    }
+}
+
+onInput();
+</script>

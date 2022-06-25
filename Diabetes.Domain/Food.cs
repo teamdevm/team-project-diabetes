@@ -16,6 +16,6 @@ namespace Diabetes.Domain
         public string Discriminator { get; private set; }
 
         public List<FoodPortion> Portions { get; set; } = new();
-        public List<Meal> Meals { get; set; } = new();
+        public List<CarbohydrateNote> CarbohydrateNotes { get; set; } = new();
     }
 }

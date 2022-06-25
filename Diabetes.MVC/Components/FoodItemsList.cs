@@ -5,7 +5,7 @@ namespace Diabetes.MVC.Components
 {
     public class FoodItemsList:ViewComponent
     {
-        public IViewComponentResult Invoke(FoodItemsListViewModel model)
+        public IViewComponentResult Invoke(FoodListViewModel model)
         {
             return View(model);
         }
