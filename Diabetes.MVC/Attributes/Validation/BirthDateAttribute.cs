@@ -1,7 +1,5 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.Globalization;
-using System.Text.RegularExpressions;
 
 namespace Diabetes.MVC.Attributes.Validation
 {
@@ -9,9 +7,6 @@ namespace Diabetes.MVC.Attributes.Validation
     {
         private int _minMonths;
         private int _maxYears;
-
-        private const int DaysInMonth = 30;
-        private const int DaysInYear = 365;
 
         public BirthDateAttribute(int minMonths, int maxYears)
         {
@@ -26,10 +21,8 @@ namespace Diabetes.MVC.Attributes.Validation
 
         private bool Validate(DateTime value)
         {
-            var dateDelta = DateTime.Now - value;
-            return  dateDelta.Days > DaysInMonth * _minMonths 
-                    && dateDelta.Days < DaysInYear * _maxYears;
-
+            return  DateTime.Now.AddYears(-_maxYears) < value 
+                    && DateTime.Now.AddMonths(-_minMonths) > value;
         }
     }
 }
