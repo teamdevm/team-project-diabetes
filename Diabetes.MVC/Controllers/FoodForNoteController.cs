@@ -98,10 +98,13 @@ namespace Diabetes.MVC.Controllers
         [HttpPost("{id:guid}")]
         public async Task<IActionResult> AddToNoteList(FoodForNoteViewModel vm)
         {
-            var command = new GetFoodByIdCommand {Id = vm.FoodId};
-            var food = await _mediator.Send(command);
-            vm.Food = food;
+            vm.Food = await _mediator.Send(new GetFoodByIdCommand {Id = vm.FoodId});
             
+            if (!ModelState.IsValid)
+            {
+                return View(vm);
+            }
+
             HttpContext.AddFood(vm, HttpContextExtensions.AddKey);
 
             return RedirectToAction("Index", "FoodForNote");
@@ -118,8 +121,15 @@ namespace Diabetes.MVC.Controllers
         
         [Authorize]
         [HttpPost("{id:guid}")]
-        public IActionResult EditFromNoteList(FoodForNoteViewModel vm)
+        public async Task<IActionResult> EditFromNoteList(FoodForNoteViewModel vm)
         {
+            vm.Food = await _mediator.Send(new GetFoodByIdCommand {Id = vm.FoodId});
+            
+            if (!ModelState.IsValid)
+            {
+                return View(vm);
+            }
+            
             HttpContext.Edit(vm, HttpContextExtensions.AddKey);
 
             return RedirectToAction("Add", "Carbohydrate");

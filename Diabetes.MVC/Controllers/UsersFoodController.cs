@@ -105,9 +105,7 @@ namespace Diabetes.MVC.Controllers
             };
 
             var model = await _mediator.Send(getUsersFoodCommand);
-            
-            //TODO:check null
-            
+
             var viewModel = new EditUsersFoodViewModel
             {
                 Id = model.Id,

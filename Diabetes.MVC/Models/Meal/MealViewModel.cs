@@ -13,7 +13,7 @@ namespace Diabetes.MVC.Models.Meal
     public class MealViewModel
     {
         [Required(ErrorMessage = "Обязательное поле")]
-        [DisplayName("Значение")]
+        [DisplayName("Дополнительные углеводы")]
         [Double(0,100, ErrorMessage = "Допустимы числа от 0 до 100, с двумя знаками после запятой")]
         public string Value {
             get => _value?.Replace(',','.');
@@ -31,12 +31,13 @@ namespace Diabetes.MVC.Models.Meal
         public string CreatingTime { get; set; }
         
         [DisplayName("Заметка")]
+        [StringLength(200, ErrorMessage = "Длина должна быть не более 200 символов")]
         public string Comment { get; set; }
 
         public List<FoodForNoteViewModel> Foods { get; set; } = new List<FoodForNoteViewModel>();
 
         public string FoodsValue => Foods
-            .Select(f => f.MassInGram * f.Food.Carbohydrate / 100).Sum().ToString(CultureInfo.InvariantCulture);
+            .Select(f => f.MassInGramNum * f.Food.Carbohydrate / 100).Sum().ToString(CultureInfo.InvariantCulture);
 
         public Guid Id { get; set; }
     }

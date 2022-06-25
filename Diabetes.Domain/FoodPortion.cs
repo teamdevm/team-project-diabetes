@@ -12,6 +12,6 @@ namespace Diabetes.Domain
         public Guid CarbohydrateNoteId { get; set; }
         public CarbohydrateNote CarbohydrateNote { get; set; }
 
-        public int MassInGr { get; set; }
+        public double MassInGr { get; set; }
     }
 }

@@ -60,7 +60,7 @@ namespace Diabetes.MVC.Controllers
                     {
                         FoodId = f.FoodId, 
                         CarbohydrateNoteId = carbohydrateNoteId,
-                        MassInGr = f.MassInGram
+                        MassInGr = f.MassInGramNum
                     }
                 ).ToList()
             };
@@ -105,7 +105,7 @@ namespace Diabetes.MVC.Controllers
                         {
                             Food = f.Food,
                             FoodId = f.FoodId,
-                            MassInGram = f.MassInGr
+                            MassInGram = f.MassInGr.ToString(CultureInfo.InvariantCulture)
                         };
                     }).ToList()
                 };
@@ -139,7 +139,7 @@ namespace Diabetes.MVC.Controllers
                     {
                         FoodId = f.FoodId, 
                         CarbohydrateNoteId = vm.Id,
-                        MassInGr = f.MassInGram
+                        MassInGr = f.MassInGramNum
                     }
                 ).ToList()
             };

@@ -7,7 +7,7 @@
     </div>
     <div class="mb-3">
         <label asp-for="MassInGram" class="form-label"></label>
-        <input id="mass" asp-for="MassInGram" class="form-control" type="number" min="0" max="5000" oninput="onMassChanged()">
+        <input id="mass" asp-for="MassInGram" class="form-control" oninput="onMassChanged()">
         <span asp-validation-for="MassInGram" class="text-danger"></span>
     </div>
     
@@ -37,12 +37,20 @@
 
 <script>
 function onMassChanged(){
-    console.log($("#kcal-val").val())
-    console.log($("#mass").val())
-    
-    $("#kcal").text(($("#kcal-val").val() / 100 * $("#mass").val()).toFixed(2));
-    $("#fat").text(($("#fat-val").val() / 100 * $("#mass").val()).toFixed(2));
-    $("#carbohydrate").text(($("#carbohydrate-val").val() / 100 * $("#mass").val()).toFixed(2));
-    $("#protein").text(($("#protein-val").val() / 100 * $("#mass").val()).toFixed(2));
+    let mass = Number($("#mass").val().replace(',','.'))
+    if(!isNaN(mass)){
+        $("#kcal").text(($("#kcal-val").val() / 100 * mass).toFixed(2));
+        $("#fat").text(($("#fat-val").val() / 100 * mass).toFixed(2));
+        $("#carbohydrate").text(($("#carbohydrate-val").val() / 100 * mass).toFixed(2));
+        $("#protein").text(($("#protein-val").val() / 100 * mass).toFixed(2));
+    }
+    else{
+        $("#kcal").text("Некорректное значение");
+        $("#fat").text("Некорректное значение");
+        $("#carbohydrate").text("Некорректное значение");
+        $("#protein").text("Некорректное значение");
+    }
 }
+
+onMassChanged();
 </script>

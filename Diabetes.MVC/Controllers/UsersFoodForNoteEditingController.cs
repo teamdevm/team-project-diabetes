@@ -176,6 +176,9 @@ namespace Diabetes.MVC.Controllers
 
             var command = new GetFoodByIdCommand {Id = id};
             var food = await _mediator.Send(command);
+            
+            if (food == null)
+                return RedirectToAction("Index", "UsersFoodForNoteEditing");
 
             var vm = new FoodForNoteViewModel
             {
@@ -190,10 +193,13 @@ namespace Diabetes.MVC.Controllers
         [HttpPost("{id:guid}")]
         public async Task<IActionResult> AddToNoteList(FoodForNoteViewModel vm)
         {
-            var command = new GetFoodByIdCommand {Id = vm.FoodId};
-            var food = await _mediator.Send(command);
-            vm.Food = food;
+            vm.Food = await _mediator.Send(new GetFoodByIdCommand {Id = vm.FoodId});
             
+            if (!ModelState.IsValid)
+            {
+                return View(vm);
+            }
+
             HttpContext.AddFood(vm, HttpContextExtensions.EditKey);
 
             var meal = HttpContext.GetMeal(HttpContextExtensions.EditKey);

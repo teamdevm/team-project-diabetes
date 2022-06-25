@@ -35,6 +35,7 @@ namespace Diabetes.MVC.Models.Insulin
         public InsulinType InsulinType { get; set; }
         
         [DisplayName("Заметка")]
+        [StringLength(200, ErrorMessage = "Длина должна быть не более 200 символов")]
         public string Comment { get; set; }
 
         public string ReturnUrl { get; set; }
