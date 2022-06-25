@@ -7,6 +7,7 @@ using System.Linq;
 using System.Globalization;
 using System;
 using System.Threading.Tasks;
+using Diabetes.MVC.Extensions;
 
 namespace Diabetes.MVC.Controllers
 {
@@ -32,6 +33,7 @@ namespace Diabetes.MVC.Controllers
             };
 
             var itemsList = await _mediator.Send(command);
+            itemsList = itemsList.Where(a => a.UserId == User.GetId()).ToList();
 
             viewModel.Categorical = itemsList.Select(a => a.MeasuringDateTime.ToString("dd.MM.yyyy HH:mm")).ToList();
             viewModel.Values = itemsList.Select(a => a.TotalCarbohydrates).ToList();
@@ -61,6 +63,7 @@ namespace Diabetes.MVC.Controllers
             };
 
             var itemsList = await _mediator.Send(command);
+            itemsList = itemsList.Where(a => a.UserId == User.GetId()).ToList();
 
             viewModel.Categorical = itemsList.Select(a => a.MeasuringDateTime.ToString("dd.MM.yyyy HH:mm")).ToList();
             viewModel.Values = itemsList.Select(a => a.TotalCarbohydrates).ToList();
