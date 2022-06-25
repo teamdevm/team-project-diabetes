@@ -34,7 +34,16 @@
                     break;
                 case NoteType.Carbohydrate:
                     <div class="col-2 d-flex align-items-center">
-                        <a asp-controller="Carbohydrate" asp-action="Edit" asp-route-id="@item.Id"><img src="~/icons/edit.svg"></a>
+                        <a asp-controller="Carbohydrate" asp-action="Edit" asp-route-id="@item.Id">
+                            @if (@item.Id == ViewBag.EditingCard)
+                            {
+                                <img src="~/icons/edit(active).svg">
+                            }
+                            else
+                            {
+                                <img src="~/icons/edit.svg">
+                            }
+                        </a>
                     </div>
                     <div class="col-1 d-flex align-items-center">
                         <a asp-controller="Carbohydrate" asp-action="Delete" asp-route-id="@item.Id"><img src="~/icons/delete.svg"></a>
