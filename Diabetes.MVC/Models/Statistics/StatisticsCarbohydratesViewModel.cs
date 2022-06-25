@@ -16,6 +16,9 @@ namespace Diabetes.MVC.Models
         [DisplayName("Временной промежуток")]
         public string CarbohydratesTimePeriod { get; set; }
 
+        [DisplayName("Произвольная дата")]
+        public string CustomDate { get; set; }
+
         public List<double> Values;
         public List<string> Categorical;
         public List<CarbohydratesGraphics> GetData() =>

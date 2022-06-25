@@ -17,6 +17,10 @@
     <form asp-controller="StatisticsGlucose" asp-action="GlucoseGraphics" role="form" method="get">
         <select asp-for="GlucoseAdditional" asp-items="Html.GetEnumSelectList<MeasuringTimeTypeExtended>()" onchange="this.form.submit()"></select>
         <select asp-for="GlucoseTimePeriod" asp-items="Html.GetEnumSelectList<TimePeriods>()" onchange="this.form.submit()"></select>
+        @if (Model.GlucoseTimePeriod == "4")
+        {
+            <input asp-for="CustomDate" type="date" class="form-control" id="datePicker" min="0001-01-01" max="9999-12-31" onfocusout="this.form.submit()">
+        }
     </form>
 
     @(Html.ShieldChart(Model.GetData())
@@ -33,15 +37,30 @@
     .AxisX(axisX => axisX.Title(title => title.Text("Время")))
     .AxisY(axisY => axisY.Title(title => title.Text("Значение")))
     .DataSeries(series =>
-        series.Spline()
-              .Name("Уровень глюкозы")
-              .Data(model => model.Value)))
+    series.Spline()
+        .Name("Реальный уровень глюкозы")
+        .Color("CornflowerBlue")
+        .Data(model => model.Value))
+    .DataSeries(series =>
+    series.Spline()
+        .Name("Нормальный уровень глюкозы до еды")
+        .SeriesDashStyle(ShieldUI.AspNetCore.Mvc.Chart.DashType.Dash)
+        .Color("Gold")
+        .Visible(Model.GlucoseAdditional != "2" && Model.HasNormalBeforeEating)
+        .Data(model => model.NormalValueBeforeEating))
+    .DataSeries(series =>
+    series.Spline()
+        .Name("Нормальный уровень глюкозы после еды")
+        .SeriesDashStyle(ShieldUI.AspNetCore.Mvc.Chart.DashType.Dash)
+        .Color("Coral")
+        .Visible(Model.GlucoseAdditional != "1" && Model.HasNormalAfterEating)
+        .Data(model => model.NormalValueAfterEating)))
 
-<div class="mb-3">
-    <div>Минимальное значение: @(Model.Values.Count == 0 ? "неизвестно" : Math.Round(Model.Values.Min(), 2).ToString())</div>
-    <div>Среднее значение: @(Model.Values.Count == 0 ? "неизвестно" : Math.Round(Model.Values.Average(), 2).ToString())</div>
-    <div>Максимальное значение: @(Model.Values.Count == 0 ? "неизвестно" : Math.Round(Model.Values.Max(), 2).ToString())</div>
-</div>
+    <div class="mb-3">
+        <div>Минимальное значение: @(Model.Values.Count == 0 ? "неизвестно" : Math.Round(Model.Values.Min(), 2).ToString())</div>
+        <div>Среднее значение: @(Model.Values.Count == 0 ? "неизвестно" : Math.Round(Model.Values.Average(), 2).ToString())</div>
+        <div>Максимальное значение: @(Model.Values.Count == 0 ? "неизвестно" : Math.Round(Model.Values.Max(), 2).ToString())</div>
+    </div>
 </div>
 
 <div class="row mt-3"></div>

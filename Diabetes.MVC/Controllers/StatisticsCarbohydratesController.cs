@@ -4,9 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Diabetes.MVC.Models;
 using Diabetes.Application.Statistics.Commands;
 using System.Linq;
-using System.Collections.Generic;
-using Diabetes.Domain.Enums;
-using Diabetes.Domain;
+using System.Globalization;
 using System;
 using System.Threading.Tasks;
 
@@ -28,17 +26,15 @@ namespace Diabetes.MVC.Controllers
 
             Func<DateTime, bool> DFilter = a => true;
 
-            //var command = new GetCarbohydratesCommand
-            //{
-            //    DateFilter = DFilter
-            //};
+            var command = new GetCarbohydratesCommand
+            {
+                DateFilter = DFilter
+            };
 
-            //var itemsList = await _mediator.Send(command);
+            var itemsList = await _mediator.Send(command);
 
-            //viewModel.Categorical = itemsList.Select(a => a.MeasuringDateTime.ToString("dd.MM.yyyy HH:mm")).ToList();
-            //viewModel.Values = itemsList.Select(a => a.Value.Value).ToList();
-            viewModel.Categorical = new List<string>();
-            viewModel.Values = new List<double>();
+            viewModel.Categorical = itemsList.Select(a => a.MeasuringDateTime.ToString("dd.MM.yyyy HH:mm")).ToList();
+            viewModel.Values = itemsList.Select(a => a.TotalCarbohydrates).ToList();
             return View(viewModel);
         }
 
@@ -46,6 +42,7 @@ namespace Diabetes.MVC.Controllers
         [Authorize]
         public async Task<IActionResult> CarbohydratesGraphics(StatisticsCarbohydratesViewModel viewModel)
         {
+            if (viewModel.CustomDate == null) viewModel.CustomDate = DateTime.Now.ToString("yyyy-MM-dd");
             Func<DateTime, bool> DFilter = viewModel.CarbohydratesTimePeriod switch
             {
                 "1" => a => a.Date == DateTime.Now.Date,
@@ -53,20 +50,20 @@ namespace Diabetes.MVC.Controllers
                 "3" => a => (DateTime.Now.Year - a.Year) * 12 +
                 DateTime.Now.Month - a.Month +
                 (DateTime.Now.Day >= a.Day ? 0 : -1) == 0,
+                "4" => a => a.Date == DateTime.ParseExact(viewModel.CustomDate, "yyyy-MM-dd",
+                CultureInfo.InvariantCulture).Date,
                 _ => a => true,
             };
 
-            //var command = new GetCarbohydratesCommand
-            //{
-            //    DateFilter = DFilter
-            //};
+            var command = new GetCarbohydratesCommand
+            {
+                DateFilter = DFilter
+            };
 
-            //var itemsList = await _mediator.Send(command);
+            var itemsList = await _mediator.Send(command);
 
-            //viewModel.Categorical = itemsList.Select(a => a.MeasuringDateTime.ToString("dd.MM.yyyy HH:mm")).ToList();
-            //viewModel.Values = itemsList.Select(a => a.Value.Value).ToList();
-            viewModel.Categorical = new List<string>();
-            viewModel.Values = new List<double>();
+            viewModel.Categorical = itemsList.Select(a => a.MeasuringDateTime.ToString("dd.MM.yyyy HH:mm")).ToList();
+            viewModel.Values = itemsList.Select(a => a.TotalCarbohydrates).ToList();
             return View(viewModel);
         }
     }

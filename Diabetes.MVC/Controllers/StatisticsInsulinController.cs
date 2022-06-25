@@ -4,9 +4,8 @@ using Microsoft.AspNetCore.Authorization;
 using Diabetes.MVC.Models;
 using Diabetes.Application.Statistics.Commands;
 using System.Linq;
-using System.Collections.Generic;
+using System.Globalization;
 using Diabetes.Domain.Enums;
-using Diabetes.Domain;
 using System;
 using System.Threading.Tasks;
 
@@ -47,6 +46,7 @@ namespace Diabetes.MVC.Controllers
         [Authorize]
         public async Task<IActionResult> InsulinGraphics(StatisticsInsulinViewModel viewModel)
         {
+            if (viewModel.CustomDate == null) viewModel.CustomDate = DateTime.Now.ToString("yyyy-MM-dd");
             Func<InsulinType, bool> IFilter = viewModel.InsulinAdditional switch
             {
                 "1" => a => a == InsulinType.Short,
@@ -61,6 +61,8 @@ namespace Diabetes.MVC.Controllers
                 "3" => a => (DateTime.Now.Year - a.Year) * 12 +
                 DateTime.Now.Month - a.Month +
                 (DateTime.Now.Day >= a.Day ? 0 : -1) == 0,
+                "4" => a => a.Date == DateTime.ParseExact(viewModel.CustomDate, "yyyy-MM-dd",
+                CultureInfo.InvariantCulture).Date,
                 _ => a => true,
             };
 

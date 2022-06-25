@@ -17,6 +17,17 @@
     <form asp-controller="StatisticsInsulin" asp-action="InsulinGraphics" role="form" method="get">
         <select asp-for="InsulinAdditional" asp-items="Html.GetEnumSelectList<InsulinTypeExtended>()" onchange="this.form.submit()"></select>
         <select asp-for="InsulinTimePeriod" asp-items="Html.GetEnumSelectList<TimePeriods>()" onchange="this.form.submit()"></select>
+        @if (Model.InsulinTimePeriod == "4")
+        {
+            <script>
+                var now = new Date()
+                var day = ("0" + now.getDate()).slice(-2);
+                var month = ("0" + (now.getMonth() + 1)).slice(-2);
+                var date = now.getFullYear() + "-" + (month) + "-" + (day);
+                $('#datePicker').val(date);
+            </script>
+            <input asp-for="CustomDate" type="date" class="form-control" id="datePicker" min="0001-01-01" max="9999-12-31" onfocusout="this.form.submit()">
+        }
     </form>
 
     @(Html.ShieldChart(Model.GetData())
@@ -45,3 +56,11 @@
 </div>
 
 <div class="row mt-3"></div>
+
+<script>
+    var now = new Date()
+    var day = ("0" + now.getDate()).slice(-2);
+    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+    var date = now.getFullYear() + "-" + (month) + "-" + (day);
+    $('#datePicker').val(date);
+</script>

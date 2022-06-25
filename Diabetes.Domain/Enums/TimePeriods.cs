@@ -10,6 +10,8 @@ namespace Diabetes.Domain.Enums
         [Display(Name = "За неделю")]
         ThisWeek,
         [Display(Name = "За месяц")]
-        ThisMonth
+        ThisMonth,
+        [Display(Name = "Произвольная дата")]
+        CustomDate
     }
 }
