@@ -6,7 +6,7 @@ namespace Diabetes.MVC.Attributes.Validation
 {
     public class DoubleAttribute:ValidationAttribute
     {
-        public static Regex regex = new Regex("^[0-9]([0-9]{0,2})?((\\,|\\.)[0-9]{1,2})?$");
+        public static Regex regex = new Regex("^(0|[1-9][0-9]*)((\\,|\\.)[0-9]{1,2})?$");
         private int _min;
         private int _max;
 
