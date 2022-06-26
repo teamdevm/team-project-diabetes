@@ -1,5 +1,7 @@
 @using Diabetes.MVC.Models.Components
-@model Diabetes.MVC.Models.CreateGlucoseLevelViewModel
+@using Diabetes.Domain.Normalized.Enums
+@using Diabetes.Domain.Enums
+@model Diabetes.MVC.Models.Glucose.CreateGlucoseLevelViewModel
 
 @await Component.InvokeAsync("AddSelector", new{ model = new AddSelectorModel(false, false, true) })
 
@@ -10,7 +12,7 @@
 <form asp-controller="GlucoseLevel" asp-action="AddGlucoseLevel" role="form" method="post">
     <div class="mb-3">
         <label asp-for="ValueInMmol" class="form-label"></label>
-        <input asp-for="ValueInMmol" class="form-control" type="number" step="0.01" value="0">
+        <input asp-for="ValueInMmol" class="form-control" value="0">
         <span asp-validation-for="ValueInMmol" class="text-danger"></span>
     </div>
     <div class="mb-3">
@@ -24,20 +26,16 @@
         <span asp-validation-for="MeasuringTime" class="text-danger"></span>
     </div>
     <div class="mb-3">
-        <label asp-for="Comment" class="form-label"></label>
+        <label asp-for="Comment" class="form-label"></label><span><small class="text-muted "> (необязательно)</small></span>
         <textarea asp-for="Comment" class="form-control"></textarea>
     </div>
     <div class="mb-3">
-        <label asp-for="BeforeAfterEating" class="form-label"></label>
-        <select name="eating" onchange="$('#eatingValue').val(this.value)">
-            <option value="Before">До еды</option>
-            <option value="After">После еды</option>
-        </select>
-        <input asp-for="BeforeAfterEating" id="eatingValue" value="Before" class="invisible">
-        <span asp-validation-for="BeforeAfterEating" class="text-danger"></span>
+        <label asp-for="MeasuringTimeType" class="form-label"></label>
+        <select asp-for="MeasuringTimeType" asp-items="Html.GetEnumSelectList<MeasuringTimeType>()"></select>
+        <span asp-validation-for="MeasuringTimeType" class="text-danger"></span>
     </div>
     <div class="col-lg-6 col-sm-8 pull-right">
-        <button id="btnCancel" class="btn btn-default" type="button">Отмена</button>
+        <a class="btn btn-default" asp-controller="Home" asp-action="Index">Отмена</a>
         <button class="btn btn-success" id="btn" type="submit">Подтвердить</button>
     </div>
 </form>

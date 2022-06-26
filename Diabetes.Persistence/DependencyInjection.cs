@@ -11,11 +11,18 @@ namespace Diabetes.Persistence
         public static IServiceCollection AddPersistence(this IServiceCollection services,
             IConfiguration configuration)
         {
-            services.AddDbContext<DataDbContext>(opt=>opt.UseSqlite(configuration.GetConnectionString("Default")));
-            services.AddDbContext<AccountContext>(opt=>opt.UseSqlite(configuration.GetConnectionString("Users")));
+            services.AddEntityFrameworkNpgsql()
+                .AddDbContext<DataDbContext>(opt=>opt.UseNpgsql(configuration.GetConnectionString("Default")));
+            services.AddEntityFrameworkNpgsql()
+                .AddDbContext<AccountContext>(opt=>opt.UseNpgsql(configuration.GetConnectionString("Users")));
 
             services.AddTransient<IGlucoseLevelDbContext, DataDbContext>();
             services.AddTransient<INoteInsulinDbContext, DataDbContext>();
+            services.AddTransient<IFoodDbContext, DataDbContext>();
+            services.AddTransient<IUsersFoodDbContext, DataDbContext>();
+            services.AddTransient<ICarbohydrateNoteDbContext, DataDbContext>();
+            services.AddTransient<IFoodPortionDbContext, DataDbContext>();
+
             return services;
         }
     }

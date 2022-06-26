@@ -1,3 +1,4 @@
+using System;
 using Diabetes.Application;
 using Diabetes.Persistence;
 using Diabetes.Persistence.Contexts;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ShieldUI.AspNetCore.Mvc;
 
 namespace Diabetes.MVC
 {
@@ -22,9 +24,16 @@ namespace Diabetes.MVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDistributedMemoryCache();
+            services.AddSession();
+            
             services.AddControllersWithViews();
             services.AddApplication();
             services.AddPersistence(Configuration);
+            services.Configure<SecurityStampValidatorOptions>(options =>
+            {
+                options.ValidationInterval = TimeSpan.FromDays(1);
+            });
             services.AddIdentity<Account, IdentityRole>(opts=> {
                     opts.User.RequireUniqueEmail = true;
                     opts.Password.RequiredLength = 6;
@@ -35,6 +44,12 @@ namespace Diabetes.MVC
                 })
                 .AddRussianIdentityErrorDescriber()
                 .AddEntityFrameworkStores<AccountContext>();
+
+            services.AddShieldUI();
+            services.AddMvcCore().AddMvcOptions(options =>
+            {
+                options.ModelBindingMessageProvider.SetAttemptedValueIsInvalidAccessor((x,y) => $"Значение \"{x}\" недопустимо");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,9 +70,12 @@ namespace Diabetes.MVC
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseShieldUI();
 
             app.UseAuthentication();
-            app.UseAuthorization();     
+            app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

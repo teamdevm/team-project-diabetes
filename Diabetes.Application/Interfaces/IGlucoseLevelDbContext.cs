@@ -7,7 +7,7 @@ namespace Diabetes.Application.Interfaces
 {
     public interface IGlucoseLevelDbContext
     {
-        DbSet<Domain.GlucoseLevel> GlucoseLevels { get; set; }
+        DbSet<GlucoseNote> GlucoseNotes { get; set; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

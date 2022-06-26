@@ -1,0 +1,30 @@
+@model Diabetes.MVC.Models.Components.PaginationViewModel
+
+<nav>
+    <ul class="pagination d-flex justify-content-center">
+        @if (Model.HasPreviousPage)
+        {
+            <li class="page-item" aria-current="page">
+                <a class="page-link"
+                   asp-action="Pagination" 
+                   asp-route-currentPage="@(Model.PageIndex - 1)"
+                   asp-route-searchString="@Model.SearchString">
+                    @(Model.PageIndex - 1)
+                </a>
+            </li>
+        }
+        <li class="page-item active"><span class="page-link">@Model.PageIndex</span></li>
+        @if (Model.HasNextPage)
+        {
+            <li class="page-item" aria-current="page">
+                
+                <a class="page-link" 
+                   asp-action="Pagination" 
+                   asp-route-currentPage="@(Model.PageIndex + 1)"
+                   asp-route-searchString="@Model.SearchString">
+                    @(Model.PageIndex + 1)
+                </a>
+            </li>
+        }
+    </ul>
+</nav>

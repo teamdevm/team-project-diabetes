@@ -2,25 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="~/css/site.css"/>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <link rel="stylesheet" href="lib/anim/dist/css/animsition.min.css">
+    <script src="lib/anim/dist/js/animsition.min.js"></script>
+    <link rel="stylesheet" href="~/lib/shieldui/css/light/all.min.css" />
+    <script src="~/lib/shieldui/js/shieldui-all.min.js"></script>
+
 </head>
 <body>
 <div class="container mobile-container">
-    <div class="row mt-5"></div>
+    <div class="row mt-3"></div>
     @RenderBody()
-    <div class="row" style="margin: 4rem 0;"></div>
+    <div class="row" style="margin: 3.5rem 0;"></div>
 </div>
 <nav class="container navbar fixed-bottom d-flex justify-content-around mobile-container">
     <a class="navbar-item" asp-controller="Home" asp-action="Index"><img src="~/icons/home.svg"></a>
-    <a class="navbar-item" href="#"><img src="~/icons/statistics.svg"></a>
-    <a class="plus-item" asp-controller="Meal" asp-action="AddMeal"><img src="~/icons/add.svg"></a>
-    <a class="navbar-item" href="#"><img src="~/icons/menu.svg"></a>
+    <a class="navbar-item" asp-controller="StatisticsGlucose" asp-action="Index"><img src="~/icons/statistics.svg"></a>
+    <a class="plus-item" asp-controller="Carbohydrate" asp-action="Add" asp-route-newCard="true"><img src="~/icons/add.svg"></a>
+    <a class="navbar-item" asp-controller="Food" asp-action="Index"><img src="~/icons/menu.svg"></a>
     <a class="navbar-item" asp-controller="Account" asp-action="Index"><img src="~/icons/account.svg"></a>
 </nav>
 </body>

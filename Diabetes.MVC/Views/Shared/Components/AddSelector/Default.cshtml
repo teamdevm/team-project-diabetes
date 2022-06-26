@@ -5,13 +5,13 @@
     ViewData["insulin-img"] = Model.IsInsulinActive ? "/icons/insulin(active).svg" : "/icons/insulin(inactive).svg";
     ViewData["sugar-img"] = Model.IsSugarActive ? "/icons/sugar(active).svg" : "/icons/sugar(inactive).svg";
     
-    ViewData["meal-class"] = Model.IsMealActive ? "active" : "inactive";
-    ViewData["insulin-class"] = Model.IsInsulinActive ? "active" : "inactive";
-    ViewData["sugar-class"] = Model.IsSugarActive ? "active" : "inactive";
+    ViewData["meal-class"] = Model.IsMealActive ? "active-menu" : "inactive-menu";
+    ViewData["insulin-class"] = Model.IsInsulinActive ? "active-menu" : "inactive-menu";
+    ViewData["sugar-class"] = Model.IsSugarActive ? "active-menu" : "inactive-menu";
 }
 
 <div class="mobile-container container d-flex justify-content-around">
-    <a asp-controller="Meal" asp-action="AddMeal" class="d-flex flex-column align-items-center text-decoration-none primary">
+    <a asp-controller="Carbohydrate" asp-action="Add" class="d-flex flex-column align-items-center text-decoration-none primary">
         <img src=@ViewData["meal-img"] class="@ViewData["meal-class"] icon">
         <span>Еда</span>
     </a>
