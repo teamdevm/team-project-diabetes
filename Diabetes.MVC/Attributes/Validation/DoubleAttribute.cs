@@ -6,6 +6,7 @@ namespace Diabetes.MVC.Attributes.Validation
 {
     public class DoubleAttribute:ValidationAttribute
     {
+        public static Regex regex = new Regex("^[0-9]([0-9]{0,2})?((\\,|\\.)[0-9]{1,2})?$");
         private int _min;
         private int _max;
 
@@ -22,7 +23,6 @@ namespace Diabetes.MVC.Attributes.Validation
 
         private bool Validate(string value)
         {
-            var regex = new Regex("^[0-9]([0-9]{0,2})?((\\,|\\.)[0-9]{1,2})?$");
             var match = regex.IsMatch(value);
             value = value.Replace(',', '.');
             var parse = double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture , out var res);

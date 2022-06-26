@@ -7,6 +7,8 @@ using MediatR;
 using System.Threading.Tasks;
 using Diabetes.Domain.Normalized.Enums.Units;
 using System;
+using System.Text.RegularExpressions;
+using Diabetes.MVC.Attributes.Validation;
 
 namespace Diabetes.MVC.Controllers
 {
@@ -49,7 +51,10 @@ namespace Diabetes.MVC.Controllers
                     m_vbe_alt = Math.Round(vbe_alt, 2);
                     m_vae_alt = Math.Round(vae_alt, 2);
 
-                    if (vae_alt == m_vae_alt && vbe_alt == m_vbe_alt)
+                    var match_vbe = DoubleAttribute.regex.IsMatch(model.ValueBeforeEatingAlt);
+                    var match_vae = DoubleAttribute.regex.IsMatch(model.ValueAfterEatingAlt);
+
+                    if (vae_alt == m_vae_alt && vbe_alt == m_vbe_alt && match_vbe && match_vae)
                     {
                         isAccurate = true;
                         m_vbe = Math.Round(vbe, 2);
@@ -63,10 +68,13 @@ namespace Diabetes.MVC.Controllers
                     else if (isNanVbeAlt && !isNanVbe)
                         m_vbe_alt = vbe_alt = vbe / unit;
 
+                    var match_vbe = DoubleAttribute.regex.IsMatch(model.ValueBeforeEating);
+                    var match_vae = DoubleAttribute.regex.IsMatch(model.ValueAfterEating);
+
                     m_vbe = Math.Round(vbe, 2);
                     m_vae = Math.Round(vae, 2);
 
-                    if (vae == m_vae && vbe == m_vbe)
+                    if (vae == m_vae && vbe == m_vbe && match_vbe && match_vae)
                     {
                         isAccurate = true;
                         m_vbe_alt = Math.Round(vbe_alt, 2);
