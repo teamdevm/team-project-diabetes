@@ -1,0 +1,89 @@
+﻿@using Diabetes.Domain.Enums.User
+@model Diabetes.MVC.Models.ProfileViewModel
+
+@{
+    ViewData["Title"] = "Аккаунт";
+}
+
+<form asp-controller="Profile" asp-action="Index" role="form" method="post">
+    <div asp-validation-summary="ModelOnly"></div>
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label"></label>
+        <input asp-for="Email" class="form-control" value="@Model.Email">
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Password" class="form-label"></label>
+        <input asp-for="Password" id="pass" class="form-control" readonly onfocus="this.removeAttribute('readonly')">
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <div class="mb-3 d-none" id="pass_old">
+        <label asp-for="PasswordOld" class="form-label"></label>
+        <input asp-for="PasswordOld" class="form-control" readonly onfocus="this.removeAttribute('readonly')">
+        <span asp-validation-for="PasswordOld" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control" value="@Model.Name">
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="DiabetesType" class="form-label"></label>
+        <select asp-for="DiabetesType" asp-items="Html.GetEnumSelectList<DiabetesType>()" value="@Model.DiabetesType"></select>
+        <span asp-validation-for="DiabetesType" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Birthdate" class="form-label"></label>
+        <input asp-for="Birthdate" type="date" class="form-control" id="datePicker" min="0001-01-01" max="9999-12-31">
+        <span asp-validation-for="Birthdate" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Gender" class="form-label"></label>
+        <select asp-for="Gender" asp-items="Html.GetEnumSelectList<Gender>()" value="@Model.Gender"></select>
+        <span asp-validation-for="Gender" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Height" class="form-label"></label>
+        <input asp-for="Height" class="form-control" type="number" min="0" value="@Model.Height">
+        <span asp-validation-for="Height" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Weight" class="form-label"></label>
+        <input asp-for="Weight" class="form-control" type="number" min="0" value="@Model.Weight">
+        <span asp-validation-for="Weight" class="text-danger"></span>
+    </div>
+    <div class="mb-3 invisible" id="danger">
+        <span class="text-danger">Изменения не сохранены</span>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 col-sm-9 pull-right">
+                <button class="btn btn-success" id="btn" type="submit">Подтвердить</button>
+            </div>
+            <div class="col-lg-2 pull-right">
+                <a class="btn btn-danger"
+                   asp-controller="Account" asp-action="Index">
+                    Отмена
+                </a>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    $('input').on('edit change', function (e) {
+        e.preventDefault()
+        if ($('#danger').hasClass('invisible'))
+            $('#danger').removeClass('invisible')
+    })
+
+    $('#pass').on('edit change', function (e) {
+        e.preventDefault()
+        if ($('#pass_old').hasClass('d-none'))
+            $('#pass_old').removeClass('d-none')
+        if ($('#pass').val() == "")
+            if (!$('#pass_old').hasClass('d-none'))
+                $('#pass_old').addClass('d-none')
+    })
+</script>

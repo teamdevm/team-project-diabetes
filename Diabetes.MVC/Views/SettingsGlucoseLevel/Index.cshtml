@@ -1,0 +1,140 @@
+﻿@using Diabetes.Domain.Normalized.Enums.Units
+@model Diabetes.MVC.Models.SettingsGlucoseLevelViewModel
+
+@{
+    ViewData["Title"] = "Глюкоза";
+}
+
+<form asp-controller="SettingsGlucoseLevel" asp-action="Index" role="form" method="post">
+    <h2>Глюкоза</h2>
+    <div class="row mt-3"></div>
+
+    <div class="mb-3">
+        <label asp-for="GlucoseUnitsUsed" class="form-label col-lg-12"></label>
+        <select asp-for="GlucoseUnitsUsed" id="units" asp-items="Html.GetEnumSelectList<GlucoseUnits>()" value="@Model.GlucoseUnitsUsed"></select>
+        <span asp-validation-for="GlucoseUnitsUsed" class="text-danger"></span>
+    </div>
+    <div class="mb-3" id="vbe">
+        <label asp-for="ValueBeforeEating" class="form-label"></label>
+        <input asp-for="ValueBeforeEating" class="form-control" id="inp_vbe" value=@Model.ValueBeforeEating>
+        <span asp-validation-for="ValueBeforeEating" class="text-danger"></span>
+    </div>
+    <div class="mb-3" id="vbe_alt">
+        <label asp-for="ValueBeforeEatingAlt" class="form-label"></label>
+        <input asp-for="ValueBeforeEatingAlt" class="form-control" id="inp_vbe_alt" value=@Model.ValueBeforeEatingAlt>
+        <span asp-validation-for="ValueBeforeEatingAlt" class="text-danger"></span>
+    </div>
+    <div class="mb-3" id="vae">
+        <label asp-for="ValueAfterEating" class="form-label"></label>
+        <input asp-for="ValueAfterEating" class="form-control" id="inp_vae" value=@Model.ValueAfterEating>
+        <span asp-validation-for="ValueAfterEating" class="text-danger"></span>
+    </div>
+    <div class="mb-3" id="vae_alt">
+        <label asp-for="ValueAfterEatingAlt" class="form-label"></label>
+        <input asp-for="ValueAfterEatingAlt" class="form-control" id="inp_vae_alt" value=@Model.ValueAfterEatingAlt>
+        <span asp-validation-for="ValueAfterEatingAlt" class="text-danger"></span>
+    </div>
+    <div class="mb-3 invisible" id="danger">
+        <span class="text-danger">Изменения не сохранены</span>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-2 pull-right"> </div>
+            <div class="col-lg-4 pull-right">
+                <button class="btn btn-success" id="btn" type="submit">Подтвердить</button>
+            </div>
+            <div class="col-lg-4 pull-right">
+                <a class="btn btn-danger"
+                   asp-controller="Settings" asp-action="Index">
+                    Отмена
+                </a>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    if ($('#units').val() == '1') {
+
+        $('#vbe').addClass('d-none')
+        $('#vae').addClass('d-none')
+    }
+    else
+    {
+        $('#vbe_alt').addClass('d-none')
+        $('#vae_alt').addClass('d-none')
+    }
+
+    $('input').on('edit change', function (e) {
+        e.preventDefault()
+        if ($('#danger').hasClass('invisible'))
+            $('#danger').removeClass('invisible')
+    })
+
+    $('#units').on('edit change', function (e) {
+        e.preventDefault()
+        if ($('#danger').hasClass('invisible'))
+            $('#danger').removeClass('invisible')
+        if ($('#units').val() == '1')
+        {
+            var val1 = $('#inp_vbe').val() * 18
+            var val2 = $('#inp_vae').val() * 18
+            if (!isNaN(val1))
+                $('#inp_vbe_alt').val(val1.toFixed(2))
+            else
+                $('#inp_vbe_alt').val("Недопустимое значение")
+            if (!isNaN(val2))
+                $('#inp_vae_alt').val(val2.toFixed(2))
+            else
+                $('#inp_vae_alt').val("Недопустимое значение")
+
+            $('#vbe').addClass('d-none')
+            $('#vae').addClass('d-none')
+            $('#vbe_alt').removeClass('d-none')
+            $('#vae_alt').removeClass('d-none')
+        }
+        else
+        {
+            var val1 = $('#inp_vbe_alt').val() / 18
+            var val2 = $('#inp_vae_alt').val() / 18
+            if (!isNaN(val1))
+                $('#inp_vbe').val(val1.toFixed(2))
+            else
+                $('#inp_vbe').val("Недопустимое значение")
+            if (!isNaN(val2))
+                $('#inp_vae').val(val2.toFixed(2))
+            else
+                $('#inp_vae').val("Недопустимое значение")
+
+            $('#vbe_alt').addClass('d-none')
+            $('#vae_alt').addClass('d-none')
+            $('#vbe').removeClass('d-none')
+            $('#vae').removeClass('d-none')
+        }
+    })
+
+    $('#inp_vbe').on('edit change', function (e) {
+        e.preventDefault()
+        var val = $('#inp_vbe').val() * 18
+        $('#inp_vbe_alt').val(val.toFixed(2))
+    })
+
+    $('#inp_vae').on('edit change', function (e) {
+        e.preventDefault()
+        var val = $('#inp_vae').val() * 18
+        $('#inp_vae_alt').val(val.toFixed(2))
+    })
+
+    $('#inp_vbe_alt').on('edit change', function (e) {
+        e.preventDefault()
+        var val = $('#inp_vbe_alt').val() / 18
+        $('#inp_vbe').val(val.toFixed(2))
+    })
+
+    $('#inp_vae_alt').on('edit change', function (e) {
+        e.preventDefault()
+        var val = $('#inp_vae_alt').val() / 18
+        $('#inp_vae').val(val.toFixed(2))
+    })
+</script>

@@ -66,7 +66,7 @@ namespace Diabetes.MVC.Controllers
 
             return View(model);
         }
-        
+
         [HttpGet]
         public IActionResult Login(string returnUrl = null)
         {

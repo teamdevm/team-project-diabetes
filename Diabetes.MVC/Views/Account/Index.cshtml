@@ -2,6 +2,43 @@
     ViewData["Title"] = "Профиль";
 }
 
+<div class="container mobile-container">
+    <h2>Профиль</h2>
+    <div class="row mt-3"></div>
+
+    <div class="row">
+        <a class="btn btn-outline-secondary"
+           asp-controller="Profile" asp-action="Index">
+            Данные об аккаунте
+        </a>
+    </div>
+
+    <div class="row mt-2"></div>
+
+    <div class="row">
+        <a class="btn btn-outline-secondary"
+           asp-controller="Settings" asp-action="Index">
+            Настройки
+        </a>
+    </div>
+
+    <div class="row mt-2"></div>
+
+    <div class="row">
+        <a class="btn btn-outline-secondary"
+           asp-controller="About" asp-action="Index">
+            О приложении
+        </a>
+    </div>
+
+    <div class="row mt-5"></div>
+</div>
+
 <form method="post" asp-controller="Account" asp-action="Logout">
-    <input type="submit" value="Выход"/>
+    <div class="row">
+        <button class="btn btn-danger" type="submit" value="Выход">
+            Выйти из аккаунта
+        </button>
+    </div>
 </form>
+

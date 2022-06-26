@@ -1,0 +1,40 @@
+﻿@model Diabetes.MVC.Models.AboutViewModel
+
+@{
+    ViewData["Title"] = "О приложении";
+}
+
+<div class="container mobile-container">
+    <div class="row">
+        <h2>@Model.ProgramName</h2>
+    </div>
+    <div class="row mt-3"></div>
+    <div class="row">
+        @Model.Description
+    </div>
+    <div class="row mt-3"></div>
+    <div class="row">
+        @Model.Authors[0]
+    </div>
+    <div class="row">
+        @Model.Authors[1]
+    </div>
+    <div class="row">
+        @Model.Authors[2]
+    </div>
+    <div class="row">
+        @Model.Authors[3]
+    </div>
+    <div class="row">
+        @Model.Authors[4]
+    </div>
+    <div class="row">
+        @Model.Authors[5]
+    </div>
+
+    <div class="row mt-5"></div>
+    <div class="row">
+        <a class="btn btn-primary"
+           asp-controller="Account" asp-action="Index">Назад</a>
+    </div>
+</div>
