@@ -7,8 +7,11 @@ namespace Diabetes.MVC.Models
 {
     public class AboutViewModel
     {
-        public string ProgramName { get; set; } = "Diabetes v1.0";
-        public string Description { get; set; } = "Приложение для больных диабетом";
+        public string ProgramName { get; set; } = "DiaDiary - дневник диабета";
+        public string Description { get; set; } =
+            "Приложение для людей страдающих от диабета. " +
+            "Позволяет вести учёт принимаемых углеводов, введённых доз инсулина, " +
+            "а также контролировать уровень глюкозы в крови. В приложении нет платных услуг";
         public string[] Authors { get; set; } =
         {
             "Разработчики",
@@ -18,5 +21,6 @@ namespace Diabetes.MVC.Models
             "- Чирухин Дмитрий",
             "- Шерстобитов Андрей"
         };
+        public string Version { get; set; } = "v1.0 pre-alpha";
     }
 }
