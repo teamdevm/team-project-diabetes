@@ -9,6 +9,7 @@ using Diabetes.Domain.Normalized.Enums.Units;
 using System;
 using System.Text.RegularExpressions;
 using Diabetes.MVC.Attributes.Validation;
+using System.Globalization;
 
 namespace Diabetes.MVC.Controllers
 {
@@ -31,10 +32,20 @@ namespace Diabetes.MVC.Controllers
         {
             //Значения без округления
             double vbe, vae, vbe_alt, vae_alt;
-            bool isNanVbe = !double.TryParse(model.ValueBeforeEating.Replace('.', ','), out vbe);
-            bool isNanVae = !double.TryParse(model.ValueAfterEating.Replace('.', ','), out vae);
-            bool isNanVbeAlt = !double.TryParse(model.ValueBeforeEatingAlt.Replace('.', ','), out vbe_alt);
-            bool isNanVaeAlt = !double.TryParse(model.ValueAfterEatingAlt.Replace('.', ','), out vae_alt);
+            bool isNanVbe = !double.TryParse(model.ValueBeforeEating.Replace(',', '.'), NumberStyles.Float, CultureInfo.InvariantCulture, out vbe);
+            bool isNanVae = !double.TryParse(model.ValueAfterEating.Replace(',', '.'), NumberStyles.Float, CultureInfo.InvariantCulture, out vae);
+            bool isNanVbeAlt = !double.TryParse(model.ValueBeforeEatingAlt.Replace(',', '.'), NumberStyles.Float, CultureInfo.InvariantCulture, out vbe_alt);
+            bool isNanVaeAlt = !double.TryParse(model.ValueAfterEatingAlt.Replace(',', '.'), NumberStyles.Float, CultureInfo.InvariantCulture, out vae_alt);
+
+            if (model.ValueBeforeEating == "NaN")
+                isNanVbe = true;
+            if (model.ValueAfterEating == "NaN")
+                isNanVae = true;
+            if (model.ValueBeforeEatingAlt == "NaN")
+                isNanVbeAlt = true;
+            if (model.ValueAfterEatingAlt == "NaN")
+                isNanVaeAlt = true;
+
             bool isAccurate = false;
 
             if (!ModelState.IsValid)
