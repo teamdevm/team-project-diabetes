@@ -11,17 +11,13 @@
 
     <div class="d-flex justify-content-between">
         <h4>Список продуктов</h4>
-        <a class="btn btn-primary" asp-controller="FoodForNote" asp-action="Index">Добавить продукт</a>
+        <button class="btn btn-primary" type="submit" asp-controller="Carbohydrate" asp-action="AddFoodToListAdding">Добавить продукт</button>
     </div>
 
     @await Component.InvokeAsync("FoodListInMeal", new{ model = new FoodForNoteListViewModel(Model.Foods)})
 
     <hr>
-    
-    <div class="d-flex justify-content-end">
-        <button class="btn btn-outline-primary" asp-controller="FoodForNote" asp-action="RememberData">Запомнить данные</button>
-    </div>
-    
+
     <div class="mb-3">
         <label asp-for="Value" class="form-label"></label>
         <input oninput="onInput()" id="value"  asp-for="Value" class="form-control">

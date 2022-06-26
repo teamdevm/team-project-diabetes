@@ -20,8 +20,15 @@ namespace Diabetes.MVC.Models.FoodForNote
 
         private string _massInGram = "0";
         
-        public double MassInGramNum => double.Parse(MassInGram, NumberStyles.Float, CultureInfo.InvariantCulture);
-        
+        public double MassInGramNum
+        {
+            get
+            { 
+                var success = double.TryParse(MassInGram,  NumberStyles.Float, CultureInfo.InvariantCulture, out var result);
+                return success ? result : default;
+            }
+        }
+
         public Guid FoodId { get; set; }
         public Food Food { get; set; }
         

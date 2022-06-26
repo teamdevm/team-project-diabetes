@@ -24,7 +24,7 @@ namespace Diabetes.MVC.Controllers
     {
         private readonly IMediator _mediator;
         private const int PageSize = 10;
-        private List<Guid> UsedFood => HttpContext.GetMeal(HttpContextExtensions.AddKey).Foods.Select(f=>f.Food.Id).ToList(); 
+        private List<Guid> UsedFood => HttpContext.GetMeal(HttpContextExtensions.EditKey).Foods.Select(f=>f.Food.Id).ToList(); 
 
         public UsersFoodForNoteEditingController(IMediator mediator)
         {
@@ -202,9 +202,7 @@ namespace Diabetes.MVC.Controllers
 
             HttpContext.AddFood(vm, HttpContextExtensions.EditKey);
 
-            var meal = HttpContext.GetMeal(HttpContextExtensions.EditKey);
-
-            return RedirectToAction("Edit", "Carbohydrate", new {id = meal.Id});
+            return RedirectToAction("Edit", "Carbohydrate");
         }
         
         [HttpGet("{id:guid}")]
@@ -214,7 +212,10 @@ namespace Diabetes.MVC.Controllers
             if(id == Guid.Empty) 
                 return NotFound();
             
-            var command = new DeleteUsersFoodCommand() 
+            HttpContext.RemoveFood(id, HttpContextExtensions.EditKey);
+            HttpContext.RemoveFood(id, HttpContextExtensions.AddKey);
+            
+            var command = new DeleteUsersFoodCommand
             {
                 UserId = User.GetId(), 
                 Id = id,
