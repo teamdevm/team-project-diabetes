@@ -41,7 +41,7 @@ namespace Diabetes.MVC.Controllers
         }
         
         [Authorize]
-        [HttpPost]
+        [HttpPost("{newCard:bool?}")]
         public async Task<IActionResult> Add(MealViewModel vm)
         {
             vm.Foods = HttpContext.GetMeal(HttpContextExtensions.AddKey).Foods;
