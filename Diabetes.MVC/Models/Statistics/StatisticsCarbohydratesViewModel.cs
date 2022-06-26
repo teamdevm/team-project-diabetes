@@ -15,7 +15,8 @@ namespace Diabetes.MVC.Models
     {
         [DisplayName("Временной промежуток")]
         public string CarbohydratesTimePeriod { get; set; }
-
+        [DisplayName("Единица измерения")]
+        public string CarbohydratesUnit { get; set; }
         [DisplayName("Произвольная дата")]
         public string CustomDate { get; set; }
 
