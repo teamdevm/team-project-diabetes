@@ -62,9 +62,9 @@ namespace Diabetes.MVC.Controllers
             viewModel.HasNormalAfterEating = user.NormalGlucoseAfterEating.HasValue;
             if (viewModel.GlucoseUnit == "1")
             {
-                viewModel.Values = viewModel.Values.Select(a => 18 * a).ToList();
-                viewModel.NormalValuesBeforeEating = viewModel.NormalValuesBeforeEating.Select(a => 18 * a).ToList();
-                viewModel.NormalValuesAfterEating = viewModel.NormalValuesAfterEating.Select(a => 18 * a).ToList();
+                viewModel.Values = viewModel.Values.Select(a => Math.Round(18 * a, 2)).ToList();
+                viewModel.NormalValuesBeforeEating = viewModel.NormalValuesBeforeEating.Select(a => a.HasValue ? Math.Round(18 * a.Value, 2) : a).ToList();
+                viewModel.NormalValuesAfterEating = viewModel.NormalValuesAfterEating.Select(a => a.HasValue ? Math.Round(18 * a.Value, 2) : a).ToList();
             }
             return View(viewModel);
         }
@@ -111,9 +111,9 @@ namespace Diabetes.MVC.Controllers
             viewModel.HasNormalAfterEating = user.NormalGlucoseAfterEating.HasValue;
             if (viewModel.GlucoseUnit == "1")
             {
-                viewModel.Values = viewModel.Values.Select(a => 18 * a).ToList();
-                viewModel.NormalValuesBeforeEating = viewModel.NormalValuesBeforeEating.Select(a => 18 * a).ToList();
-                viewModel.NormalValuesAfterEating = viewModel.NormalValuesAfterEating.Select(a => 18 * a).ToList();
+                viewModel.Values = viewModel.Values.Select(a => Math.Round(18 * a, 2)).ToList();
+                viewModel.NormalValuesBeforeEating = viewModel.NormalValuesBeforeEating.Select(a => a.HasValue ? Math.Round(18 * a.Value, 2) : a).ToList();
+                viewModel.NormalValuesAfterEating = viewModel.NormalValuesAfterEating.Select(a => a.HasValue ? Math.Round(18 * a.Value, 2) : a).ToList();
             }
             return View(viewModel);
         }
