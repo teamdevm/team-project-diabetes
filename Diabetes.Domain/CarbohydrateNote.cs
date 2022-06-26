@@ -23,7 +23,8 @@ namespace Diabetes.Domain
                 Value = $"{Value + PortionsCarbohydrates:f2}",
                 DateTime = MeasuringDateTime,
                 CreationDateTime = LastUpdate,
-                Details = $"Добавлено продуктов: {Portions.Count}"
+                Details = $"Добавлено продуктов: {Portions.Count}",
+                Comment = Comment
             };
         }
     }

@@ -3,44 +3,72 @@
 
 @foreach (var item in Model.Items)
 {
-    <div class="card mb-3">
-        <div class="row no-gutters">
-            <div class="col-8">
-                <div class="card-body">
-                    <h5 class="card-title">@item.Title</h5>
-                    <h4 class="card-text">@item.Value</h4>
-                    <span class="card-text"><small >@item.Details</small></span>
-                    <p class="card-text"><small class="text-muted">@item.DateTime.ToString("dd-MM-yyyy HH:mm")</small></p>
+    <details class="card">
+        <summary>
+            <div>
+                <div class="row no-gutters">
+                    <div class="col-8">
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Title</h5>
+                            <h5 class="card-text">
+                                @item.Value
+                                @if (item.Type == NoteType.Glucose && 
+                                     (ViewBag.NormalGlucoseBeforeEating != null &&
+                                      item.Details == MeasuringTimeType.BeforeEating.ToLocalizedString() && 
+                                      Math.Abs(item.ValueNum - ViewBag.NormalGlucoseBeforeEating) > 0.9 ) ||
+                                     (ViewBag.NormalGlucoseAfterEating != null &&
+                                      item.Details == MeasuringTimeType.AfterEating.ToLocalizedString() && 
+                                      Math.Abs(item.ValueNum - ViewBag.NormalGlucoseAfterEating) > 0.9 ))
+                                {
+                                    
+                                    <img  src="~/icons/alarm.svg" title="Значение выходит за границы нормы"/>
+                                }
+                            </h5>
+                            <h6 class="card-text"><small >@item.Details</small></h6>
+                            <h6 class="card-text"><small class="text-muted">Время: @item.DateTime.ToString("dd-MM-yyyy HH:mm")</small></h6>
+                            <h6 class="card-text"><small class="text-muted">Последнее изменение: @item.CreationDateTime.ToString("dd-MM-yyyy HH:mm")</small></h6>
+                        </div>
+                    </div>
+                    @switch(item.Type)
+                    {
+                        case NoteType.Glucose:
+                            <div class="col-2 d-flex align-items-center">
+                                <a asp-controller="GlucoseLevel" asp-action="EditGlucoseLevel" asp-route-id="@item.Id"><img src="~/icons/edit.svg"></a>
+                            </div>
+                            <div class="col-1 d-flex align-items-center">
+                                <a asp-controller="GlucoseLevel" asp-action="DeleteGlucoseLevel" asp-route-id="@item.Id"><img src="~/icons/delete.svg"></a>
+                            </div>
+                            break;
+                                
+                        case NoteType.Insulin:
+                            <div class="col-2 d-flex align-items-center">
+                                <a asp-controller="Insulin" asp-action="EditInsulin" asp-route-id="@item.Id"><img src="~/icons/edit.svg"></a>
+                            </div>
+                            <div class="col-1 d-flex align-items-center">
+                                <a asp-controller="Insulin" asp-action="DeleteInsulin" asp-route-id="@item.Id"><img src="~/icons/delete.svg"></a>
+                            </div>
+                            break;
+                        case NoteType.Carbohydrate:
+                            <div class="col-2 d-flex align-items-center">
+                                <a asp-controller="Carbohydrate" asp-action="Edit" asp-route-id="@item.Id">
+                                    @if (@item.Id == ViewBag.EditingCard)
+                                    {
+                                        <img src="~/icons/edit(active).svg">
+                                    }
+                                    else
+                                    {
+                                        <img src="~/icons/edit.svg">
+                                    }
+                                </a>
+                            </div>
+                            <div class="col-1 d-flex align-items-center">
+                                <a asp-controller="Carbohydrate" asp-action="Delete" asp-route-id="@item.Id"><img src="~/icons/delete.svg"></a>
+                            </div>
+                            break;
+                    }
                 </div>
             </div>
-            @switch(item.Type)
-            {
-                case NoteType.Glucose:
-                    <div class="col-2 d-flex align-items-center">
-                        <a asp-controller="GlucoseLevel" asp-action="EditGlucoseLevel" asp-route-id="@item.Id"><img src="~/icons/edit.svg"></a>
-                    </div>
-                    <div class="col-1 d-flex align-items-center">
-                        <a asp-controller="GlucoseLevel" asp-action="DeleteGlucoseLevel" asp-route-id="@item.Id"><img src="~/icons/delete.svg"></a>
-                    </div>
-                    break;
-                        
-                case NoteType.Insulin:
-                    <div class="col-2 d-flex align-items-center">
-                        <a asp-controller="Insulin" asp-action="EditInsulin" asp-route-id="@item.Id"><img src="~/icons/edit.svg"></a>
-                    </div>
-                    <div class="col-1 d-flex align-items-center">
-                        <a asp-controller="Insulin" asp-action="DeleteInsulin" asp-route-id="@item.Id"><img src="~/icons/delete.svg"></a>
-                    </div>
-                    break;
-                case NoteType.Carbohydrate:
-                    <div class="col-2 d-flex align-items-center">
-                        <a asp-controller="Carbohydrate" asp-action="Edit" asp-route-id="@item.Id"><img src="~/icons/edit.svg"></a>
-                    </div>
-                    <div class="col-1 d-flex align-items-center">
-                        <a asp-controller="Carbohydrate" asp-action="Delete" asp-route-id="@item.Id"><img src="~/icons/delete.svg"></a>
-                    </div>
-                    break;
-            }
-        </div>
-    </div>
+        </summary>
+        <p class="mt-2 mb-0">@item.Comment</p>
+    </details>
 }
