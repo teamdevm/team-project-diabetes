@@ -21,6 +21,8 @@ namespace Diabetes.MVC.Models
 
         [DisplayName("Временной промежуток")]
         public string GlucoseTimePeriod { get; set; }
+        [DisplayName("Единица измерения")]
+        public string GlucoseUnit { get; set; }
 
         [DisplayName("Произвольная дата")]
         public string CustomDate { get; set; }

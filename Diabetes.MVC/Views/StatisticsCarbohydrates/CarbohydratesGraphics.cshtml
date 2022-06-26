@@ -1,5 +1,6 @@
 ﻿@using ShieldUI.AspNetCore.Mvc
 @using Diabetes.Domain.Enums
+@using Diabetes.Domain.Normalized.Enums.Units
 @model Diabetes.MVC.Models.StatisticsCarbohydratesViewModel
 @{
     ViewData["Title"] = "Статистика";
@@ -16,6 +17,7 @@
 <div class="container mobile-container">
     <form asp-controller="StatisticsCarbohydrates" asp-action="CarbohydratesGraphics" role="form" method="get">
         <select asp-for="CarbohydratesTimePeriod" asp-items="Html.GetEnumSelectList<TimePeriods>()" onchange="this.form.submit()"></select>
+        <select asp-for="CarbohydratesUnit" asp-items="Html.GetEnumSelectList<CarbohydrateUnits>()" onchange="this.form.submit()"></select>
         @if (Model.CarbohydratesTimePeriod == "3")
         {
             <script>
