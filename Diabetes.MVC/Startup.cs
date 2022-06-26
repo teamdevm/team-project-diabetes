@@ -32,7 +32,7 @@ namespace Diabetes.MVC
             services.AddPersistence(Configuration);
             services.Configure<SecurityStampValidatorOptions>(options =>
             {
-                options.ValidationInterval = TimeSpan.FromMinutes(10);
+                options.ValidationInterval = TimeSpan.FromDays(1);
             });
             services.AddIdentity<Account, IdentityRole>(opts=> {
                     opts.User.RequireUniqueEmail = true;

@@ -17,6 +17,8 @@
     @await Component.InvokeAsync("FoodListInMeal", new{ model = new FoodForNoteListViewModel(Model.Foods)})
 
     <hr>
+    
+    <div class="row mt-5"></div>
 
     <div class="mb-3">
         <label asp-for="Value" class="form-label"></label>

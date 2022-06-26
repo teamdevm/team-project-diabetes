@@ -5,33 +5,26 @@
     ViewData["Title"] = "Продукты";
 }
 
-<div class="row mt-5"></div>
-<div class="row mt-5"></div>
-
-<div class="container food-navbar fixed-top mobile-container">
-    
-    <div class="row mt-3"></div>
-    
+<div class="d-flex justify-content-around">
+    <a class="btn btn-primary btn-sm" asp-controller="Carbohydrate" asp-action="Add">Назад к записи</a>
     <div class="d-flex justify-content-around">
-        <a class="btn btn-primary" asp-controller="Carbohydrate" asp-action="Add">Назад к записи</a>
-        <div class="d-flex justify-content-around">
-            <a class="btn active me-3" asp-controller="FoodForNote" asp-action="Index">Все продукты</a>
-            <a class="btn" asp-controller="UsersFoodForNote" asp-action="Index">Мои продукты</a>
-        </div>
+        <a class="btn active btn-sm me-1" asp-controller="FoodForNote" asp-action="Index">Все продукты</a>
+        <a class="btn btn-sm" asp-controller="UsersFoodForNote" asp-action="Index">Мои продукты</a>
     </div>
-
-    <div class="row mt-3"></div>
-
-    <div class="d-flex justify-content-between container mobile-container">
-        <form class="container mobile-container input-group" asp-controller="FoodForNote" asp-action="Index">
-            <input type="search" class="form-control" placeholder="Название продукта..." asp-for="SearchString"/>
-            <button type="submit" class="btn btn-outline-primary">Поиск</button>
-        </form>
-        <a class="btn btn-primary" asp-controller="UsersFoodForNote" asp-action="Add"><img src="~/icons/add.svg"></a>
-    </div>
-    
-    <div class="row mt-3"></div>
 </div>
+
+
+<div class="row mt-3"></div>
+
+<div class="d-flex justify-content-between container mobile-container">
+    <form class="container mobile-container input-group" asp-controller="FoodForNote" asp-action="Index">
+        <input type="search" class="form-control form-control-sm" placeholder="Название продукта..." asp-for="SearchString" />
+        <button type="submit" class="btn btn-sm btn-outline-primary">Поиск</button>
+    </form>
+    <a class="btn btn-sm btn-primary" asp-controller="UsersFoodForNote" asp-action="Add"><img src="~/icons/plus.svg"></a>
+</div>
+
+<div class="row mt-3"></div>
 
 <div class="container mobile-container">
     @await Component.InvokeAsync("FoodItemsListForNote", new{ model = new FoodListViewModel(Model.FoodItems)})

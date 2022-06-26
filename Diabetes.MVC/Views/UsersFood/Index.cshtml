@@ -6,18 +6,18 @@
 }
 
 <div class="d-flex justify-content-around">
-    <a class="btn" asp-controller="Food" asp-action="Index">Все продукты</a>
-    <a class="btn active" asp-controller="UsersFood" asp-action="Index">Мои продукты</a>
+    <a class="btn btn-sm" asp-controller="Food" asp-action="Index">Все продукты</a>
+    <a class="btn active btn-sm" asp-controller="UsersFood" asp-action="Index">Мои продукты</a>
 </div>
 
 <div class="row mt-4"></div>
 
 <div class="d-flex justify-content-between container mobile-container">
     <form class="container mobile-container input-group" asp-controller="UsersFood" asp-action="Index">
-        <input type="search" class="form-control" placeholder="Название продукта..." asp-for="SearchString" />
-        <button type="submit" class="btn btn-outline-primary">Поиск</button>
+        <input type="search" class="form-control form-control-sm" placeholder="Название продукта..." asp-for="SearchString" />
+        <button type="submit" class="btn btn-sm btn-outline-primary">Поиск</button>
     </form>
-    <a class="btn btn-primary" asp-controller="UsersFood" asp-action="Add"><img src="~/icons/add.svg"></a>
+    <a class="btn btn-sm btn-primary" asp-controller="UsersFood" asp-action="Add"><img src="~/icons/plus.svg"></a>
 </div>
 
 <div class="row mt-4"></div>
