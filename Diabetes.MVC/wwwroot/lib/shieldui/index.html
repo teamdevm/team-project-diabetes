@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Shield UI for JavaScript and HTML5</title>
+<meta charset="utf-8" />
+
+<link rel="stylesheet" type="text/css" href="css/light/all.min.css" />
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="js/shieldui-all.min.js"></script>
+
+<script src="https://demos.shieldui.com/Content/Json/gridData.js"></script>
+<script src="https://demos.shieldui.com/Content/Json/countries.js"></script>
+
+</head>
+<body>
+
+<h1>Shield UI for JavaScript and HTML5</h1>
+<p>
+    Shield UI is a rich multi-platform user interface library featuring powerful components, that can be seamlessly used in most business scenarios.
+</p>
+<p>
+    Check out our online <a href="https://demos.shieldui.com/">demos</a> and <a href="https://www.shieldui.com/documentation">documentation</a>, as well as the different technology support for 
+    <a href="https://www.shieldui.com/products/javascript">JavaScript</a>, 
+    <a href="https://www.shieldui.com/products/aspnet">ASP.NET</a>, 
+    <a href="https://www.shieldui.com/products/aspnet-mvc">ASP.NET MVC</a>, 
+    <a href="https://www.shieldui.com/products/aspnet-core">ASP.NET Core</a> and 
+    <a href="https://www.shieldui.com/products/java-wicket">Java</a>.
+</p>
+
+<div style="display:inline-block; float:left; width:45%;">
+    <h2>Inputs</h2>
+    <table width="100%">
+        <tr>
+            <td width="50%">
+                Input as TextBox: <input id="textbox1" value="" placeholder="Enter something" /><br /><br />
+                Input as AutoComplete: <input id="textbox2" placeholder="Enter Country" value="" /><br /><br />
+                ComboBox:
+                <select id="combobox1">
+                    <option value="one">one</option>
+                    <option value="two" selected>two</option>
+                    <option value="three">three</option>
+                    <option value="four">four</option>
+                </select><br /><br />
+                ListBox: <select id="listbox1"></select>
+            </td>
+            <td>
+                Textarea as TextBox: <textarea id="textarea1" placeholder="Enter text"></textarea><br /><br /><br />
+                <label><input type="radio" id="radio1" name="package" value="1" /> Local</label>&nbsp;&nbsp;&nbsp;
+                <label><input type="radio" id="radio2" name="package" value="2" checked="checked" /> International</label><br /><br />
+                <label><input type="checkbox" id="checkbox1" checked="checked" value="1" /> Weekdays</label>&nbsp;&nbsp;&nbsp;
+                <label><input type="checkbox" id="checkbox2" value="2" /> Weekend</label><br /><br />
+                <br />
+                NumericTextBox: <input id="numeric1" value="50" /><br /><br />
+                MaskedTextBox: <input id="masked1" value="" /><br /><br />
+                <br />
+                <button id="button1"><div class="flag flag-us" style="margin-top:5px; margin-right:5px; float:left;"></div> Click me</button>
+                &nbsp;
+                &nbsp;
+                <button id="button2">Toggle Button</button>
+                <br /><br />
+                Switch: <input id="switch1" type="checkbox" checked="checked" />
+            </td>
+        </tr>
+    </table>
+
+    <br />
+
+    <table width="100%" cellpadding="0" cellspacing="0">
+        <tr valign="top">
+            <td>
+                <h2>Rating</h2>
+                <div id="rating1"></div>
+            </td>
+            <td>
+                <h2>Tooltip</h2>
+                <a id="tooltip_link" href="#" title="This is a link with a title element and tooltip initialized for it. A very good one!!!">Link with Tooltip</a>
+            </td>
+            <td>
+                <h2>Loading Panel</h2>
+                <div style="float:left; width:100px; height:100px;" id="loadingpanel1"></div>
+                <div style="float:left; width:100px; height:100px; margin-left:20px;" id="loadingpanel2"></div>
+            </td>
+            <td>
+                <h2>Window</h2>
+                <button id="window_open">Open Window</button>
+                <br /><br />
+                <button id="window_modal">Modal Window</button>
+            </td>
+        </tr>
+    </table>
+
+    <br />
+
+    <table width="100%" cellpadding="0" cellspacing="0">
+        <tr valign="top">
+            <td width="50%">
+                <h2>Slider</h2>
+                <input id="slider1" type="text" value="4" />
+                <br />
+                <h2>Context Menu</h2>
+                <ul id="contextmenu1">
+                    <li>Open</li>
+                    <li>Save</li>
+                    <li>
+                        <p>Save As</p>
+                        <ul>
+                            <li>
+                                <p>.DOC</p>
+                                <ul>
+                                    <li>.ODT</li>
+                                    <li>.DOCX</li>
+                                </ul>
+                            </li>
+                            <li>.PDF</li>
+                            <li>.PPT</li>
+                        </ul>
+                    </li>
+                    <li data-role="separator"></li>
+                    <li>Exit</li>
+                </ul>
+                <div id="contextmenutarget1" style="width:90%; height:60px; background-color:#e3e3e3; text-align:center;">
+                    <br />
+                    Click here to show
+                </div>
+            </td>
+            <td width="50%">
+                <h2>Accordion</h2>
+                <ul id="accordion1">
+                    <li>
+                        <h2>Title 1</h2>
+                        <div>Content for item 1</div>
+                        <ul>
+                            <li>
+                                <h3>Sub-Title 1.1</h3>
+                                <p>sub content 111 xx asd.<br />asd asdasd a <p>xxx</p><div>ooooooo</div></p>
+                            </li>
+                            <li>
+                                <h3>Sub-Title 1.2</h3>
+                                <p>222 2222222 22222 222 22 22 222</p>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <h2>Title 2</h2>
+                        <div>Content for item two<br />very very good content... <hr /></div>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+
+    <br />
+
+    <table width="100%" cellpadding="0" cellspacing="0">
+        <tr valign="top">
+            <td>
+                <h2>TreeMap</h2>
+                <div id="treemap1" style="width:100%; height:300px;"></div>
+            </td>
+        </tr>
+    </table>
+
+</div>
+
+<div style="display:inline-block; float:left; width:45%; margin-left:50px;">
+    <table width="100%">
+        <tr>
+            <td width="50%">
+                <h2>Progress Bars</h2>
+                <div id="progress1" style="width:200px; float:left;"></div>&nbsp;&nbsp;
+                <button id="progress1dec" style="width:30px;"> - </button>&nbsp;
+                <button id="progress1inc" style="width:30px;"> + </button>
+            </td>
+            <td>
+                <div id="progress2" style="float:left; margin-left:30px;"></div>
+            </td>
+        </tr>
+    </table>
+
+    <br />
+
+    <table width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>
+                <div id="splitter1" style="width:100%; height:330px;">
+                    <div id="splitter1_pane1" style="width:50%; padding:5px;">
+                        <h2>Calendar, Pickers and Splitter</h2>
+                        <div id="calendar1"></div>
+                    </div>
+                    <div id="splitter1_pane2" style="width:50%; padding:5px;">
+                        <br /><br /><br />
+                        <input id="datepicker1" /><br /><br />
+                        <input id="timepicker1" /><br /><br />
+                        <input id="datetimepicker1" />
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <h2>Grid with Pager</h2>
+    <div id="grid1"></div>
+
+    <br />
+
+    <h2>TagCloud</h2>
+    <div id="tagcloud1"></div>
+
+</div>
+
+<div style="display:block; clear:both; width:100%; height:50px;"></div>
+
+<script type="text/javascript">
+jQuery(function($) {
+
+    $("#textbox1").shieldTextBox();
+
+    $("#textbox2").shieldAutoComplete({
+        dataSource: {
+            data: countries,
+            filter: {
+                and: [
+                    { path: "name", filter: "contains", value: "" }
+                ]
+            }
+        },
+        textTemplate: function(item) {
+            return item.name + " (" + item.code + ")";
+        },
+        valueTemplate: "{name}",
+        delay: 0
+    });
+
+    $("#textarea1").shieldTextBox();
+
+    $("#radio1").shieldRadioButton();
+    $("#radio2").shieldRadioButton();
+
+    $("#checkbox1").shieldCheckBox();
+    $("#checkbox2").shieldCheckBox();
+
+    $("#button1").shieldButton();
+    $("#button2").shieldButton({
+        toggle: true,
+        checked: true
+    });
+
+    $("#switch1").shieldSwitch({
+        onText: "ON",
+        offText: "OFF"
+    });
+
+    $("#numeric1").shieldNumericTextBox();
+
+    $("#masked1").shieldMaskedTextBox({
+        // TODO
+    });
+
+    $("#listbox1").shieldListBox({
+		dataSource: {
+			data: countries
+		},
+		textTemplate: function(item) {
+			return item.name;
+		},
+		selected: 1,
+        width: 300,
+        height: 250,
+		multiple: true
+	});
+
+    $("#combobox1").shieldComboBox();
+
+    $("#rating1").shieldRating({
+        max: 5,
+        value: 3
+    });
+
+    $("#tooltip_link").shieldTooltip({
+        width: 120
+    });
+
+    $("#loadingpanel1").shieldLoadingPanel({
+        show: true
+    });
+    $("#loadingpanel2").shieldLoadingPanel({
+        show: true,
+        useSmallImage: true
+    });
+
+    $("#window_open").shieldButton({
+        events: {
+            click: function() {
+                $("#window").remove();
+                $('<div id="window">A non-modal window</div>')
+                    .appendTo(document.body)
+                    .shieldWindow({
+                        title: "Window"
+                    });
+            }
+        }
+    });
+    $("#window_modal").shieldButton({
+        events: {
+            click: function() {
+                $("#window").remove();
+                $('<div id="window">A modal window</div>')
+                    .appendTo(document.body)
+                    .shieldWindow({
+                        title: "Modal Window",
+                        modal: true
+                    });
+            }
+        }
+    });
+
+    $("#progress1").shieldProgressBar({
+		value: 30,
+		text: {
+			enabled: true,
+			template: "{0} %"
+		}
+	});
+    $("#progress1inc").shieldButton({
+        events: {
+            click: function() {
+                $("#progress1").swidget().value($("#progress1").swidget().value() + 10);
+            }
+        }
+    });
+    $("#progress1dec").shieldButton({
+        events: {
+            click: function() {
+                $("#progress1").swidget().value($("#progress1").swidget().value() - 10);
+            }
+        }
+    });
+
+    $("#progress2").shieldProgressBar({
+		value: 30,
+		layout: "circular"
+	});
+
+    $("#grid1").shieldGrid({
+        dataSource: {
+            data: gridData
+        },
+        filtering: {
+            enabled: true
+        },
+        paging: {
+            pageSize: 5
+        },
+        rowHover: true,
+        selection:{
+            type: "row",
+            multiple: true,
+            toggle: false
+        },
+        columns: [
+            { field: "id", width: "70px", title: "ID" },
+            { field: "name", title: "Person Name" },
+            { field: "company", title: "Company Name" },
+            {
+                width: "120px",
+                title: "Progress",
+                columnTemplate: function (cell, item) {
+                    $('<div />')
+                        .appendTo(cell)
+                        .shieldProgressBar({
+                            min: 0,
+                            max: 100,
+                            value: item["age"],
+                            text: {
+                                enabled: true,
+                                template: '{0:n0}%'
+                            }
+                        });
+                }
+            },
+            {
+                width: "120px",
+                title: "Credit Rating",
+                columnTemplate: function (cell, item) {
+                    $('<div />')
+                        .appendTo(cell)
+                        .shieldRating({
+                            max: 5,
+                            value: item["balance"] * 5 / 5000
+                        });
+                }
+            }
+        ],
+        toolbar: [
+            {
+                buttons: [
+                    {
+                        commandName: "excel",
+                        caption: '<span class="sui-sprite sui-grid-icon-export-excel"></span> <span class="sui-grid-button-text">Export to Excel</span>'
+                    },
+                    {
+                        commandName: "pdf",
+                        caption: '<span class="sui-sprite sui-grid-icon-export-pdf"></span> <span class="sui-grid-button-text">Export to PDF</span>'
+                    }
+                ]
+            }
+        ]
+    });
+
+    $("#calendar1").shieldCalendar({
+        //readOnly: true,
+        //enabled: false,
+        footer: {
+            enabled: true,
+            footerTemlpate: "{0:dd.MM.yy}"
+        },
+        //view: {
+        //    depth: "year",
+        //    start: "year"
+        //},
+        min: new Date("2009/2/23"),
+        max: new Date("2039/3/1"),
+        value: new Date()
+        //dayTemplate: "<span style='background-color: red;'>{date:MM.dd.yyyy}</span>"
+        //otherMonthDayTemplate: "<span style='background-color: red;'>{date:dd}</span>"
+        //focused: new Date(2015, 1, 29),
+        //value: new Date(2015, 1, 29)
+    });
+    $("#calendar2").shieldCalendar({
+        footer: {
+            enabled: true,
+            footerTemlpate: "Today"
+        },
+        view: {
+            start: "year"
+        },
+        focused: new Date(2016, 2, 31)
+    });
+    $("#calendar3").shieldCalendar({
+        footer: {
+            enabled: true,
+            footerTemlpate: "Today"
+        },
+        view: {
+            start: "decade"
+        },
+        focused: new Date(2016, 11, 31)
+    });
+    $("#calendar4").shieldCalendar({
+        footer: {
+            enabled: true,
+            footerTemlpate: "Today"
+        },
+        view: {
+            start: "century"
+        },
+        focused: new Date(2016, 11, 31)
+    });
+
+    $("#datepicker1").shieldDatePicker();
+    $("#timepicker1").shieldTimePicker();
+    $("#datetimepicker1").shieldDateTimePicker();
+
+    $("#splitter1").shieldSplitter({
+        orientation: "horizontal"
+    });
+
+    $("#slider1").shieldSlider({
+        min: 1,
+        max: 32,
+        values: {
+            template: "{0} GB"
+        },
+        tooltip: {
+            enabled: true,
+            template: "{0} GB"
+        }
+    });
+
+    $("#accordion1").shieldAccordion({
+        
+    });
+
+    $("#treemap1").shieldTreeMap({
+        tooltip: {
+            enabled: true,
+            template: "{name} - {age} years old"
+        },
+        dataSource: {
+            data: gridData.slice(0, 20)
+        },
+        valueTemplate: "{age}",
+        textTemplate: "{name}"
+    });
+
+    $("#tagcloud1").shieldTagCloud({
+        dataSource: {
+            data: gridData.slice(0, 10)
+        },
+		title: "Test TagCloud",
+        textTemplate: "{name}",
+        hrefTemplate: "{picture}",
+        frequencyTemplate: "{age}"
+	});
+
+    $("#contextmenu1").shieldContextMenu({
+        target: "#contextmenutarget1",
+        events: {
+            click: function(e) {
+                // clicked
+            }
+        }
+    })
+
+});
+</script>
+
+</body>
+</html>

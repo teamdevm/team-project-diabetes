@@ -1,0 +1,56 @@
+@using System.Globalization
+@model Diabetes.MVC.Models.FoodForNote.FoodForNoteViewModel
+
+<form asp-controller="UsersFoodForNoteEditing" asp-action="AddToNoteList" method="post">
+    <div class="mb-3">
+        <input asp-for="FoodId" value="@Model.FoodId" class="d-none">
+    </div>
+    <div class="mb-3">
+        <label asp-for="MassInGram" class="form-label"></label>
+        <input id="mass" asp-for="MassInGram" class="form-control" oninput="onMassChanged()">
+        <span asp-validation-for="MassInGram" class="text-danger"></span>
+    </div>
+    
+    <div class="mb-3">
+        <div>
+            Ккал: <span id="kcal">0.00</span>
+            <input class="d-none" id="kcal-val" value="@Model.Food.Kcal.ToString(CultureInfo.InvariantCulture)">
+        </div>
+        <div>
+            Белки: <span id="protein">0.00</span>
+            <input class="d-none" id="protein-val" value="@Model.Food.Protein.ToString(CultureInfo.InvariantCulture)">
+        </div>
+        <div>
+            Жиры: <span id="fat">0.00</span>
+            <input class="d-none" id="fat-val" value="@Model.Food.Fat.ToString(CultureInfo.InvariantCulture)">
+        </div>
+        <div>
+            Углеводы: <span id="carbohydrate">0.00</span>
+            <input class="d-none" id="carbohydrate-val" value="@Model.Food.Carbohydrate.ToString(CultureInfo.InvariantCulture)">
+        </div>
+    </div>
+    <div class="col-lg-6 col-sm-8 pull-right">
+        <a class="btn btn-default" asp-controller="UsersFoodForNote" asp-action="Index">Отмена</a>
+        <button class="btn btn-success" id="btn" type="submit">Подтвердить</button>
+    </div>
+</form>
+
+<script>
+function onMassChanged(){
+    let mass = Number($("#mass").val().replace(',','.'))
+    if(!isNaN(mass)){
+        $("#kcal").text(($("#kcal-val").val() / 100 * mass).toFixed(2));
+        $("#fat").text(($("#fat-val").val() / 100 * mass).toFixed(2));
+        $("#carbohydrate").text(($("#carbohydrate-val").val() / 100 * mass).toFixed(2));
+        $("#protein").text(($("#protein-val").val() / 100 * mass).toFixed(2));
+    }
+    else{
+        $("#kcal").text("Некорректное значение");
+        $("#fat").text("Некорректное значение");
+        $("#carbohydrate").text("Некорректное значение");
+        $("#protein").text("Некорректное значение");
+    }
+}
+
+onMassChanged();
+</script>

@@ -1,10 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Diabetes.Application.Food.Commands.GetFoodById;
 using Diabetes.Application.Food.Commands.GetFoodListItems;
 using Diabetes.Application.UsersFood.Commands.AddUsersFood;
-using Diabetes.Domain;
 using Diabetes.MVC.Extensions;
 using Diabetes.MVC.Models.Foods;
 using MediatR;
@@ -13,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Diabetes.MVC.Controllers
 {
+    [Route("[controller]/[action]")]
     public class FoodController:Controller
     {
         private readonly IMediator _mediator;

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ShieldUI.AspNetCore.Mvc;
 
 namespace Diabetes.MVC
 {
@@ -23,6 +24,9 @@ namespace Diabetes.MVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDistributedMemoryCache();
+            services.AddSession();
+            
             services.AddControllersWithViews();
             services.AddApplication();
             services.AddPersistence(Configuration);
@@ -40,7 +44,8 @@ namespace Diabetes.MVC
                 })
                 .AddRussianIdentityErrorDescriber()
                 .AddEntityFrameworkStores<AccountContext>();
-            
+
+            services.AddShieldUI();
             services.AddMvcCore().AddMvcOptions(options =>
             {
                 options.ModelBindingMessageProvider.SetAttemptedValueIsInvalidAccessor((x,y) => $"Значение \"{x}\" недопустимо");
@@ -65,9 +70,12 @@ namespace Diabetes.MVC
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseShieldUI();
 
             app.UseAuthentication();
-            app.UseAuthorization();     
+            app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

@@ -31,6 +31,7 @@ namespace Diabetes.MVC.Models.Glucose
         public MeasuringTimeType MeasuringTimeType { get; set; }
 
         [DisplayName("Заметка")]
+        [StringLength(200, ErrorMessage = "Длина должна быть не более 200 символов")]
         public string Comment { get; set; }
 
         public Guid Id { get; set; }

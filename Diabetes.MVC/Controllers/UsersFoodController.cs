@@ -108,7 +108,7 @@ namespace Diabetes.MVC.Controllers
             
             if (model == null)
                 return RedirectToAction("Index", "UsersFood");
-            
+           
             var viewModel = new EditUsersFoodViewModel
             {
                 Id = model.Id,

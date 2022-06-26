@@ -15,12 +15,14 @@ namespace Diabetes.Application.ActionHistoryItem.Commands.GetAllActionHistoryIte
     {
         private readonly IGlucoseLevelDbContext _dbContextClucose;
         private readonly INoteInsulinDbContext _dbContextInsulin;
+        private readonly ICarbohydrateNoteDbContext _dbContextCarbohydrate;
 
         public GetAllActionHistoryItems(
-            IGlucoseLevelDbContext dbContextClucose, INoteInsulinDbContext dbContextInsulin)
+            IGlucoseLevelDbContext dbContextClucose, INoteInsulinDbContext dbContextInsulin, ICarbohydrateNoteDbContext dbContextCarbohydrate)
         {
             _dbContextClucose = dbContextClucose;
             _dbContextInsulin = dbContextInsulin;
+            _dbContextCarbohydrate = dbContextCarbohydrate;
         }
 
         public async Task<List<Domain.ActionHistoryItem>> Handle(GetAllActionHistoryItemsCommand request, CancellationToken cancellationToken)
@@ -36,8 +38,16 @@ namespace Diabetes.Application.ActionHistoryItem.Commands.GetAllActionHistoryIte
                 .OrderByDescending(p => p.LastUpdate)
                 .Select(glu=> glu.ToHistoryItem())
                 .ToListAsync(cancellationToken);
+            
+            var queryCarbohydrate = await _dbContextCarbohydrate.CarbohydrateNotes
+                .Where(p => p.UserId == request.UserId)
+                .OrderByDescending(p => p.LastUpdate)
+                .Include(c=>c.Portions)
+                .Include(c=>c.Foods)
+                .Select(c => c.ToHistoryItem())
+                .ToListAsync(cancellationToken);
 
-            var actions = queryInsulin.Union(queryGlucose)
+            var actions = queryInsulin.Union(queryGlucose).Union(queryCarbohydrate)
                 .OrderByDescending(a => a.CreationDateTime)
                 .ToList();
 
