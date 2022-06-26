@@ -117,36 +117,24 @@
     $('#inp_vbe').on('edit change', function (e) {
         e.preventDefault()
         var val = $('#inp_vbe').val() * 18
-        if (!isNaN(val))
-            $('#inp_vbe_alt').val(val.toFixed(2))
-        else
-            $('#inp_vbe_alt').val("Недопустимое значение")
+        $('#inp_vbe_alt').val(val.toFixed(2))
     })
 
     $('#inp_vae').on('edit change', function (e) {
         e.preventDefault()
         var val = $('#inp_vae').val() * 18
-        if (!isNaN(val))
-            $('#inp_vae_alt').val(val.toFixed(2))
-        else
-            $('#inp_vbe_alt').val("Недопустимое значение")
+        $('#inp_vae_alt').val(val.toFixed(2))
     })
 
     $('#inp_vbe_alt').on('edit change', function (e) {
         e.preventDefault()
         var val = $('#inp_vbe_alt').val() / 18
-        if (!isNaN(val))
-            $('#inp_vbe').val(val.toFixed(2))
-        else
-            $('#inp_vbe_alt').val("Недопустимое значение")
+        $('#inp_vbe').val(val.toFixed(2))
     })
 
     $('#inp_vae_alt').on('edit change', function (e) {
         e.preventDefault()
         var val = $('#inp_vae_alt').val() / 18
-        if (!isNaN(val))
-            $('#inp_vae').val(val.toFixed(2))
-        else
-            $('#inp_vbe_alt').val("Недопустимое значение")
+        $('#inp_vae').val(val.toFixed(2))
     })
 </script>
