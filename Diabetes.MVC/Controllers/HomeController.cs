@@ -51,10 +51,8 @@ namespace Diabetes.MVC.Controllers
                 ActionHistoryItems = list
             };
 
-            ViewBag.MinimalGlucoseBeforeEating = user.MinimalGlucoseBeforeEating;     
-            ViewBag.MaximalGlucoseBeforeEating = user.MaximalGlucoseBeforeEating;  
-            ViewBag.MinimalGlucoseAfterEating = user.MinimalGlucoseAfterEating;  
-            ViewBag.MaximalGlucoseAfterEating = user.MaximalGlucoseAfterEating;  
+            ViewBag.NormalGlucoseBeforeEating = user.NormalGlucoseBeforeEating;
+            ViewBag.NormalGlucoseAfterEating = user.NormalGlucoseAfterEating;
 
             return View(viewModel);
         }
@@ -77,10 +75,8 @@ namespace Diabetes.MVC.Controllers
             
             var user = await GetAccount();
             
-            ViewBag.MinimalGlucoseBeforeEating = user.MinimalGlucoseBeforeEating;     
-            ViewBag.MaximalGlucoseBeforeEating = user.MaximalGlucoseBeforeEating;  
-            ViewBag.MinimalGlucoseAfterEating = user.MinimalGlucoseAfterEating;  
-            ViewBag.MaximalGlucoseAfterEating = user.MaximalGlucoseAfterEating; 
+            ViewBag.NormalGlucoseBeforeEating = user.NormalGlucoseBeforeEating;
+            ViewBag.NormalGlucoseAfterEating = user.NormalGlucoseAfterEating;
 
             return View(viewModel);
         }

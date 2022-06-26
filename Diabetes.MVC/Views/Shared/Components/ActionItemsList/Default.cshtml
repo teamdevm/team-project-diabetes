@@ -13,19 +13,19 @@
                             <h5 class="card-text">
                                 @item.Value
                                 @if (item.Type == NoteType.Glucose && 
-                                     (ViewBag.MinimalGlucoseBeforeEating != null && ViewBag.MaximalGlucoseBeforeEating != null &&
+                                     (ViewBag.NormalGlucoseBeforeEating != null &&
                                       item.Details == MeasuringTimeType.BeforeEating.ToLocalizedString() && 
-                                      (item.ValueNum > ViewBag.MaximalGlucoseBeforeEating || item.ValueNum < ViewBag.MinimalGlucoseBeforeEating)) ||
-                                     (ViewBag.MinimalGlucoseAfterEating != null && ViewBag.MaximalGlucoseAfterEating != null &&
+                                      Math.Abs(item.ValueNum - ViewBag.NormalGlucoseBeforeEating) > 0.9 ) ||
+                                     (ViewBag.NormalGlucoseAfterEating != null &&
                                       item.Details == MeasuringTimeType.AfterEating.ToLocalizedString() && 
-                                      (item.ValueNum > ViewBag.MaximalGlucoseAfterEating || item.ValueNum < ViewBag.MinimalGlucoseAfterEating)))
+                                      Math.Abs(item.ValueNum - ViewBag.NormalGlucoseAfterEating) > 0.9 ))
                                 {
                                     
                                     <img  src="~/icons/alarm.svg" title="Значение выходит за границы нормы"/>
                                 }
                             </h5>
                             <h6 class="card-text"><small >@item.Details</small></h6>
-                            <h6 class="card-text"><small class="text-muted">Установленное время: @item.DateTime.ToString("dd-MM-yyyy HH:mm")</small></h6>
+                            <h6 class="card-text"><small class="text-muted">Время: @item.DateTime.ToString("dd-MM-yyyy HH:mm")</small></h6>
                             <h6 class="card-text"><small class="text-muted">Последнее изменение: @item.CreationDateTime.ToString("dd-MM-yyyy HH:mm")</small></h6>
                         </div>
                     </div>
